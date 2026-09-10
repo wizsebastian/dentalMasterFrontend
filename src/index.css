@@ -1,26 +1,31 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   Sistema de color
-   Los 35 colores de `condicion_dental` cubren casi toda la rueda cromática y
-   todos son saturados: en el odontograma, un rojo significa caries y un azul
-   significa restauración. Por eso la interfaz es deliberadamente acromática —
-   si el chrome usara hues saturados, diluiría la señal clínica.
-   El único color de marca es un teal muy desaturado y oscuro: el verde de
-   campo quirúrgico, que se lee como neutro y nunca como un hallazgo.
+   Línea gráfica · Dr. Gabriel Martínez, implantólogo
+   Tomada de LOGO/PNG: el isotipo es una G cuya contraforma es un molar.
+
+   Azul marino #223262 y malva #9F63A5 son los colores de marca.
+
+   El malva se reserva a filetes y detalles, nunca a rellenos de dato: queda
+   cerca de los púrpuras del catálogo clínico (#7B1FA2, #6A1B9A), y en el
+   odontograma un color saturado tiene significado. Esa es también la razón de
+   que el resto de la interfaz siga siendo acromática.
 --------------------------------------------------------------------------- */
 @theme {
-  --color-esmalte:      #f4f5f3;  /* fondo: esmalte, no crema */
-  --color-superficie:   #ffffff;
-  --color-tinta:        #16211f;  /* texto principal */
-  --color-tinta-suave:  #5d6d6a;  /* texto secundario */
-  --color-linea:        #dde1de;
-  --color-linea-fuerte: #c4ccc9;
-  --color-marca:        #1e4b45;  /* teal quirúrgico */
-  --color-marca-viva:   #2c6b62;
-  --color-marca-tenue:  #e4edea;
+  --color-marca:        #223262;  /* azul marino de marca */
+  --color-marca-viva:   #2e4480;  /* hover y estados activos */
+  --color-marca-tenue:  #e7eaf2;  /* fondo de selección */
+  --color-acento:       #9f63a5;  /* malva: filetes y detalles */
+  --color-acento-tenue: #f0e7f1;
 
-  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --color-esmalte:      #f4f5f7;  /* fondo de página */
+  --color-superficie:   #ffffff;
+  --color-tinta:        #1a1f2e;  /* texto principal */
+  --color-tinta-suave:  #5c6478;  /* texto secundario */
+  --color-linea:        #dde0e8;
+  --color-linea-fuerte: #c3c8d6;
+
+  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
   /* Mono sólo para códigos reales: FDI, REST-001, PT-2026-0001, NCF, lotes. */
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
 }
@@ -45,21 +50,37 @@
   }
 }
 
-/* El diente del spinner se llena desde la raíz hacia la corona. */
-@keyframes llenado-diente {
-  0%   { transform: translateY(100%); }
-  55%  { transform: translateY(0%); }
-  100% { transform: translateY(-100%); }
+/* El logotipo lleva la firma en versalitas espaciadas, como en el manual. */
+.bajada-marca {
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
-.diente-llenado {
-  animation: llenado-diente 1.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-  transform-origin: bottom;
+/* ---------------------------------------------------------------------------
+   Cargando: los isotipos se relevan uno a otro, todos el mismo tiempo.
+   La duración total y el retardo de cada uno los fija el componente.
+--------------------------------------------------------------------------- */
+@keyframes relevo-isotipo {
+  0%, 4%    { opacity: 0; transform: scale(0.9) rotate(-8deg); }
+  8%, 22%   { opacity: 1; transform: scale(1) rotate(0deg); }
+  28%, 100% { opacity: 0; transform: scale(1.06) rotate(6deg); }
+}
+
+.isotipo-relevo {
+  animation-name: relevo-isotipo;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-iteration-count: infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .diente-llenado {
+  .isotipo-relevo {
     animation: none;
-    transform: none;
+  }
+  /* Sin movimiento se muestra sólo el primero, ya visible. */
+  .isotipo-relevo:not(:first-child) {
+    opacity: 0;
+  }
+  .isotipo-relevo:first-child {
+    opacity: 1;
   }
 }

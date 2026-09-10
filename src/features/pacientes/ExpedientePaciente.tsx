@@ -2,7 +2,7 @@ import { useState } from "react"
 import { ArrowLeft } from "lucide-react"
 import { Link, useParams } from "react-router-dom"
 
-import { ToothSpinner } from "../../components/brand"
+import { Cargando } from "../../components/brand"
 import { ErrorCarga } from "../../components/ui"
 import { BannerAlertas } from "./BannerAlertas"
 import { PanelFicha } from "./PanelFicha"
@@ -27,7 +27,7 @@ export function ExpedientePaciente() {
   if (isPending) {
     return (
       <div className="grid place-items-center py-24 text-marca">
-        <ToothSpinner size="lg" label="Cargando el expediente" />
+        <Cargando size="lg" label="Cargando el expediente" />
       </div>
     )
   }

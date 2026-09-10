@@ -30,6 +30,26 @@ El navegador siempre habla con `:5173`. Vite hace de proxy hacia la API en
 endpoint: es lo que mantiene el contrato entre backend y frontend sin
 desincronizarse en silencio.
 
+## Línea gráfica
+
+Tomada de `LOGO/PNG`. El isotipo es una **G cuya contraforma es un molar**; el
+logotipo añade el filete malva y la firma «Dr. Gabriel Martínez · Implantólogo».
+Las seis versiones del isotipo viven en `public/marca/` y están registradas en
+`src/components/brand/isotipos.ts`, cada una con el fondo sobre el que debe ir.
+
+| | |
+|---|---|
+| Azul marino | `#223262` — color de marca, acciones y estados activos |
+| Malva | `#9F63A5` — **sólo filetes y detalles** |
+
+El malva no se usa nunca como relleno de dato: queda cerca de los púrpuras del
+catálogo clínico (`#7B1FA2`, `#6A1B9A`), y ahí un color saturado significa algo.
+
+`Cargando` releva las seis versiones del isotipo, cada una exactamente el mismo
+tiempo (el retardo de cada una es su posición partida por el total). La versión
+positiva es blanca, así que arrastra su propio fondo azul marino: es la única
+forma de incluirla sin romper el manual.
+
 ## El color es dato, no decoración
 
 El catálogo `condicion_dental` define 35 colores —teales, azules, índigos,
@@ -62,6 +82,24 @@ rejilla de 24×24 de lucide, así que convive con el resto de la iconografía.
 `ToothSpinner` llena el diente desde la raíz hacia la corona en lugar de girar:
 una silueta dentada rotando se lee como una mancha a 20px. Con
 `prefers-reduced-motion` el relleno se queda quieto y visible.
+
+## Bancos de pruebas
+
+Dos rutas fuera de la sesión y con estado local: no leen ni escriben datos de
+ningún paciente.
+
+| Ruta | Qué prueba |
+|---|---|
+| `/odontogram` | Arcada anatómica propia, con marcado por cara |
+| `/odontogram-especial` | `react-advanced-odontogram`, la librería |
+
+El odontograma de `ficha_clinica.docx` —el documento que se genera en cada
+visita— es el clásico en **filas lineales**, con vista facial y raíces más la
+oclusal. La librería usa ese mismo formato; la arcada propia, no.
+
+A cambio, la librería pesa 2,8 MB (675 KB gz) más jsPDF y fuentes Noto, trae su
+propia interfaz y su propia marca visible, e impone su modelo de datos. Se carga
+diferida para que no toque el bundle de las pantallas clínicas.
 
 ## Banco de pruebas: `/odontogram`
 

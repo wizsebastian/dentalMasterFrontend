@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react"
 
 import { ApiError } from "../../api/client"
-import { Logo, ToothSpinner } from "../../components/brand"
+import { Logo, Cargando } from "../../components/brand"
 import { Boton, Campo } from "../../components/ui"
 import { useAuth } from "./contexto"
 
@@ -66,7 +66,7 @@ export function PantallaLogin() {
           <Boton type="submit" disabled={enviando} className="w-full">
             {enviando ? (
               <>
-                <ToothSpinner size="sm" label="Entrando" />
+                <Cargando size="sm" label="Entrando" />
                 Entrando…
               </>
             ) : (

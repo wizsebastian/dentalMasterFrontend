@@ -1,5 +1,5 @@
 import { ApiError } from "../../api/client"
-import { ToothSpinner } from "../../components/brand"
+import { Cargando } from "../../components/brand"
 import { ErrorCarga, Tarjeta, Vacio } from "../../components/ui"
 import { useFicha } from "./consultas"
 
@@ -51,7 +51,7 @@ export function PanelFicha({ pacienteId }: { pacienteId: number }) {
   if (isPending) {
     return (
       <div className="grid place-items-center py-16 text-marca">
-        <ToothSpinner label="Cargando la ficha" />
+        <Cargando label="Cargando la ficha" />
       </div>
     )
   }

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Search } from "lucide-react"
 import { Link } from "react-router-dom"
 
-import { ToothSpinner } from "../../components/brand"
+import { Cargando } from "../../components/brand"
 import { ErrorCarga, Tarjeta, Vacio } from "../../components/ui"
 import { usePacientes } from "./consultas"
 
@@ -51,7 +51,7 @@ export function ListaPacientes() {
       <Tarjeta className="mt-6 overflow-hidden">
         {isPending ? (
           <div className="grid place-items-center py-14 text-marca">
-            <ToothSpinner label="Cargando pacientes" />
+            <Cargando label="Cargando pacientes" />
           </div>
         ) : error ? (
           <ErrorCarga error={error} className="m-4 border-0" />

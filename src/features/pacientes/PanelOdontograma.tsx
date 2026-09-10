@@ -3,7 +3,7 @@ import { History, Plus, Trash2 } from "lucide-react"
 
 import { ApiError } from "../../api/client"
 import type { CondicionDental, EstadoHallazgo } from "../../api/tipos"
-import { ToothSpinner } from "../../components/brand"
+import { Cargando } from "../../components/brand"
 import { Odontograma } from "../../components/odontograma/Odontograma"
 import { PaletaCondiciones } from "../../components/odontograma/PaletaCondiciones"
 import { Boton, ErrorCarga, Tarjeta, Vacio } from "../../components/ui"
@@ -44,7 +44,7 @@ export function PanelOdontograma({ pacienteId }: { pacienteId: number }) {
   if (catalogos.isPending || vigente.isPending) {
     return (
       <div className="grid place-items-center py-16 text-marca">
-        <ToothSpinner label="Cargando el odontograma" />
+        <Cargando label="Cargando el odontograma" />
       </div>
     )
   }
@@ -152,7 +152,7 @@ export function PanelOdontograma({ pacienteId }: { pacienteId: number }) {
           />
         ) : (
           <div className="grid place-items-center py-10 text-marca">
-            <ToothSpinner label="Cargando la versión" />
+            <Cargando label="Cargando la versión" />
           </div>
         )}
       </Tarjeta>

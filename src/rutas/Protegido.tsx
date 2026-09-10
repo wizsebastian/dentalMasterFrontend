@@ -1,4 +1,4 @@
-import { ToothSpinner } from "../components/brand"
+import { Cargando } from "../components/brand"
 import { PantallaLogin } from "../features/auth/PantallaLogin"
 import { useAuth } from "../features/auth/contexto"
 import { Layout } from "./Layout"
@@ -10,7 +10,7 @@ export function Protegido() {
   if (cargando) {
     return (
       <div className="grid min-h-dvh place-items-center text-marca">
-        <ToothSpinner size="lg" label="Abriendo la sesión" />
+        <Cargando size="lg" label="Abriendo la sesión" />
       </div>
     )
   }

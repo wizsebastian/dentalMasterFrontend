@@ -1,4 +1,4 @@
+export { Cargando } from "./Cargando"
+export { Isotipo } from "./Isotipo"
 export { Logo } from "./Logo"
-export { ToothMark } from "./ToothMark"
-export { ToothSpinner } from "./ToothSpinner"
-export { TOOTH_PATH, TOOTH_VIEWBOX } from "./tooth-path"
+export { ISOTIPOS, LOGOTIPOS, type VersionIsotipo } from "./isotipos"
