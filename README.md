@@ -63,6 +63,23 @@ rejilla de 24×24 de lucide, así que convive con el resto de la iconografía.
 una silueta dentada rotando se lee como una mancha a 20px. Con
 `prefers-reduced-motion` el relleno se queda quieto y visible.
 
+## Banco de pruebas: `/odontogram`
+
+Ruta fuera de la sesión, con estado local: no lee ni escribe datos de ningún
+paciente. Compara dos representaciones sobre los mismos hallazgos —arcada
+anatómica y rejilla— para decidir cuál se lleva al expediente.
+
+Las librerías publicadas de odontograma en arcada
+([`react-odontogram`](https://github.com/biomathcode/react-odontogram),
+[`react-advanced-odontogram`](https://github.com/ZoliQua/React-Odontogram-Modul))
+marcan la **pieza entera**, y este modelo de datos registra **por cara**. La
+salida es dibujar la silueta anatómica y usarla de `clipPath` sobre sectores que
+salen del centro del diente: silueta de diente y marcado por superficie a la vez.
+
+Las piezas se reparten por **longitud de arco proporcional a su ancho**, no a
+intervalos de ángulo iguales: un molar es casi el doble de ancho que un incisivo
+lateral y con paso uniforme se solapan.
+
 ## El odontograma
 
 Cada pieza es un SVG de cinco caras: cuatro trapecios alrededor de un centro que

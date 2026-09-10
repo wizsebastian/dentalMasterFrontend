@@ -22,7 +22,7 @@ type ToothSpinnerProps = {
  * `prefers-reduced-motion` el relleno se queda quieto y visible.
  */
 export function ToothSpinner({ size = "md", label = "Cargando", className }: ToothSpinnerProps) {
-  const clipId = useId()
+  const clipId = useId().replace(/:/g, "")
 
   return (
     <span role="status" aria-live="polite" className={className}>

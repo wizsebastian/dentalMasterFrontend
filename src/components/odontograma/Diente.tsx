@@ -37,7 +37,7 @@ export function Diente({
   soloLectura = false,
   onElegirCara,
 }: DienteProps) {
-  const patronId = useId()
+  const patronId = useId().replace(/:/g, "")
 
   const deSuperficie = hallazgos.filter((h) => h.superficie !== null)
   const dePieza = hallazgos.filter(
