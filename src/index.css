@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Sistema de color
+   Los 35 colores de `condicion_dental` cubren casi toda la rueda cromática y
+   todos son saturados: en el odontograma, un rojo significa caries y un azul
+   significa restauración. Por eso la interfaz es deliberadamente acromática —
+   si el chrome usara hues saturados, diluiría la señal clínica.
+   El único color de marca es un teal muy desaturado y oscuro: el verde de
+   campo quirúrgico, que se lee como neutro y nunca como un hallazgo.
+--------------------------------------------------------------------------- */
+@theme {
+  --color-esmalte:      #f4f5f3;  /* fondo: esmalte, no crema */
+  --color-superficie:   #ffffff;
+  --color-tinta:        #16211f;  /* texto principal */
+  --color-tinta-suave:  #5d6d6a;  /* texto secundario */
+  --color-linea:        #dde1de;
+  --color-linea-fuerte: #c4ccc9;
+  --color-marca:        #1e4b45;  /* teal quirúrgico */
+  --color-marca-viva:   #2c6b62;
+  --color-marca-tenue:  #e4edea;
+
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  /* Mono sólo para códigos reales: FDI, REST-001, PT-2026-0001, NCF, lotes. */
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  body {
+    background-color: var(--color-esmalte);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Los códigos y cifras se alinean en columna: numerales tabulares siempre. */
+  code, kbd, samp, .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-marca);
+    outline-offset: 2px;
+  }
+}
+
+/* El diente del spinner se llena desde la raíz hacia la corona. */
+@keyframes llenado-diente {
+  0%   { transform: translateY(100%); }
+  55%  { transform: translateY(0%); }
+  100% { transform: translateY(-100%); }
+}
+
+.diente-llenado {
+  animation: llenado-diente 1.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  transform-origin: bottom;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diente-llenado {
+    animation: none;
+    transform: none;
+  }
+}
