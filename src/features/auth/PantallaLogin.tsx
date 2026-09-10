@@ -1,9 +1,15 @@
 import { useState, type FormEvent } from "react"
+import { Link } from "react-router-dom"
 
 import { ApiError } from "../../api/client"
 import { Logo, Cargando } from "../../components/brand"
 import { Boton, Campo } from "../../components/ui"
 import { useAuth } from "./contexto"
+
+const PRUEBAS = [
+  { a: "/odontogram", titulo: "En arcada", nota: "Propio, marcado por cara" },
+  { a: "/odontogram-especial", titulo: "Con librería", nota: "react-advanced-odontogram" },
+]
 
 export function PantallaLogin() {
   const { entrar } = useAuth()
@@ -46,7 +52,7 @@ export function PantallaLogin() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="nombre@dentalsonrisa.do"
+            placeholder="nombre@correo.com"
           />
           <Campo
             etiqueta="Contraseña"
@@ -74,6 +80,25 @@ export function PantallaLogin() {
             )}
           </Boton>
         </form>
+
+        {/* Bancos de pruebas del odontograma. No necesitan sesión: son sólo
+            representación, con datos locales. */}
+        <div className="mt-10 border-t border-linea pt-5">
+          <p className="text-sm text-tinta-suave">Probar el odontograma sin entrar</p>
+          <div className="mt-3 grid gap-2 sm:grid-cols-2">
+            {PRUEBAS.map((prueba) => (
+              <Link
+                key={prueba.a}
+                to={prueba.a}
+                className="rounded-lg border border-linea-fuerte bg-superficie px-3 py-2.5
+                  text-sm transition-colors hover:border-marca hover:bg-marca-tenue"
+              >
+                <span className="block font-medium">{prueba.titulo}</span>
+                <span className="mt-0.5 block text-xs text-tinta-suave">{prueba.nota}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   )

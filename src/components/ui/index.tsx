@@ -91,3 +91,5 @@ export function ErrorCarga({ error, className = "" }: { error: unknown; classNam
     </div>
   )
 }
+
+export { VolverAtras } from "./VolverAtras"

@@ -6,7 +6,7 @@ import { Logo } from "../../components/brand"
 import { ArcadaDental } from "../../components/odontograma/ArcadaDental"
 import { Odontograma } from "../../components/odontograma/Odontograma"
 import { PaletaCondiciones } from "../../components/odontograma/PaletaCondiciones"
-import { Boton, Tarjeta } from "../../components/ui"
+import { Boton, Tarjeta, VolverAtras } from "../../components/ui"
 import {
   catalogoDientes,
   CONDICIONES,
@@ -94,9 +94,12 @@ export function PruebaOdontograma() {
       <div className="mx-auto max-w-6xl">
         <header className="flex flex-wrap items-center justify-between gap-4 border-b border-linea pb-5">
           <Logo />
-          <span className="rounded-lg border border-linea-fuerte px-2.5 py-1 text-xs text-tinta-suave">
-            Banco de pruebas · no toca ningún paciente
-          </span>
+          <div className="flex items-center gap-3">
+            <span className="rounded-lg border border-linea-fuerte px-2.5 py-1 text-xs text-tinta-suave">
+              Banco de pruebas · no toca ningún paciente
+            </span>
+            <VolverAtras />
+          </div>
         </header>
 
         <h1 className="mt-8 text-2xl font-semibold tracking-tight">

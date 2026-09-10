@@ -25,6 +25,7 @@ El navegador siempre habla con `:5173`. Vite hace de proxy hacia la API en
 | `npm run lint` | oxlint |
 | `npm run gen:api` | Regenera `src/api/schema.d.ts` desde el OpenAPI de la API |
 | `npm run e2e` | Prueba de humo de la interfaz en un navegador real (necesita Docker) |
+| `npm run e2e botones` | Comprueba los dos bancos de pruebas y su botón de volver |
 
 `gen:api` necesita la API corriendo. Conviene ejecutarlo cada vez que cambie un
 endpoint: es lo que mantiene el contrato entre backend y frontend sin
@@ -86,7 +87,8 @@ una silueta dentada rotando se lee como una mancha a 20px. Con
 ## Bancos de pruebas
 
 Dos rutas fuera de la sesión y con estado local: no leen ni escriben datos de
-ningún paciente.
+ningún paciente. Se llega a ambas desde el pie de la pantalla de acceso, sin
+credenciales, y cada una vuelve con su botón.
 
 | Ruta | Qué prueba |
 |---|---|

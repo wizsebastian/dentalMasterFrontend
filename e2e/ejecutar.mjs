@@ -19,8 +19,10 @@ if (!ip) {
   process.exit(1)
 }
 
+// Un argumento opcional elige el guion: `node e2e/ejecutar.mjs botones`
+const guion = `${process.argv[2] ?? "smoke"}.mjs`
 const base = `http://${ip}:5173`
-console.log(`Probando contra ${base}\n`)
+console.log(`Probando ${guion} contra ${base}\n`)
 
 execFileSync(
   "docker",
@@ -31,7 +33,7 @@ execFileSync(
     "-v", `${salida}:/salida`,
     "-w", "/e2e",
     "mcr.microsoft.com/playwright:v1.49.0-noble",
-    "sh", "-c", "npm i -s playwright@1.49.0 >/dev/null 2>&1 && node smoke.mjs",
+    "sh", "-c", `npm i -s playwright@1.49.0 >/dev/null 2>&1 && node ${guion}`,
   ],
   { stdio: "inherit" },
 )
