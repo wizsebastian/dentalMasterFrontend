@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# artefactos de la prueba de humo
+e2e/salida/
+e2e/node_modules/
+e2e/package*.json

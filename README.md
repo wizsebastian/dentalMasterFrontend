@@ -24,6 +24,7 @@ El navegador siempre habla con `:5173`. Vite hace de proxy hacia la API en
 | `npm run typecheck` | Sólo comprobación de tipos |
 | `npm run lint` | oxlint |
 | `npm run gen:api` | Regenera `src/api/schema.d.ts` desde el OpenAPI de la API |
+| `npm run e2e` | Prueba de humo de la interfaz en un navegador real (necesita Docker) |
 
 `gen:api` necesita la API corriendo. Conviene ejecutarlo cada vez que cambie un
 endpoint: es lo que mantiene el contrato entre backend y frontend sin
@@ -62,14 +63,37 @@ rejilla de 24×24 de lucide, así que convive con el resto de la iconografía.
 una silueta dentada rotando se lee como una mancha a 20px. Con
 `prefers-reduced-motion` el relleno se queda quieto y visible.
 
+## El odontograma
+
+Cada pieza es un SVG de cinco caras: cuatro trapecios alrededor de un centro que
+es **oclusal** en molares y premolares e **incisal** en incisivos y caninos. Lo
+decide `diente.grupo`, que llega del catálogo.
+
+Mesial y distal cambian de lado según el cuadrante —mesial siempre apunta a la
+línea media—, así que el esquema se lee como se mira la boca de frente.
+
+Cuando una cara acumula varios hallazgos, **lo planificado nunca tapa lo real**:
+una caries con una resina propuesta encima sigue siendo una caries, y el plan
+aparece como un punto de color en esa cara. Entre los hallazgos que sí
+ocurrieron gana el más reciente, porque una resina completada después resuelve
+la caries que había.
+
+El estado sólo decide la textura: sólido lo existente y lo completado, rayado lo
+planificado, translúcido lo que está en proceso. Así un mismo diagnóstico se
+reconoce esté propuesto o ya ejecutado.
+
 ## Estructura
 
 ```
 src/
-├── api/         cliente HTTP y schema.d.ts generado desde el OpenAPI
+├── api/         cliente HTTP, sesión y schema.d.ts generado desde el OpenAPI
 ├── components/
-│   └── brand/   molar compartido: logo, favicon y spinner
-└── index.css    tokens de color y tipografía (@theme de Tailwind v4)
+│   ├── brand/       molar compartido: logo, favicon y spinner
+│   ├── odontograma/ geometría de las cinco caras, lienzo y paleta
+│   └── ui/          primitivas, sin variantes de color
+├── features/    auth y pacientes (listado, expediente, ficha, odontograma)
+└── rutas/       layout y router
+e2e/             prueba de humo en navegador real
 ```
 
 ## Nota de dependencias

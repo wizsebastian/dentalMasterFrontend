@@ -1,0 +1,17 @@
+# Prueba de humo
+
+```bash
+# 1. API levantada
+cd ../dentalMasterApi && make up
+
+# 2. Servidor de desarrollo accesible desde el contenedor
+npm run dev -- --host
+
+# 3. La prueba, contra la IP de red que imprime Vite
+npm run e2e
+```
+
+`npm run e2e` detecta la IP automáticamente. Las capturas quedan en `e2e/salida/`.
+
+No se usa `host.docker.internal` porque Vite lo rechaza por `server.allowedHosts`;
+por IP sí responde.

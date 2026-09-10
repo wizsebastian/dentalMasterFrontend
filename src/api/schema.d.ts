@@ -4,6 +4,327 @@
  */
 
 export interface paths {
+    "/api/v1/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Login */
+        post: operations["login_api_v1_auth_login_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Refrescar */
+        post: operations["refrescar_api_v1_auth_refresh_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Yo */
+        get: operations["yo_api_v1_auth_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/catalogos/odontograma": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Catalogos Odontograma
+         * @description Piezas, caras y condiciones en una sola llamada.
+         *
+         *     Van juntas porque el odontograma no puede dibujarse sin las tres, y pedirlas
+         *     por separado sólo añade viajes.
+         */
+        get: operations["catalogos_odontograma_api_v1_catalogos_odontograma_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/catalogos/condiciones-medicas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Condiciones Medicas
+         * @description Antecedentes sistémicos, para el formulario de la ficha médica.
+         */
+        get: operations["condiciones_medicas_api_v1_catalogos_condiciones_medicas_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/catalogos/alergias": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Alergias */
+        get: operations["alergias_api_v1_catalogos_alergias_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/pacientes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listar */
+        get: operations["listar_api_v1_pacientes_get"];
+        put?: never;
+        /** Crear */
+        post: operations["crear_api_v1_pacientes_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener */
+        get: operations["obtener_api_v1_pacientes__paciente_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Actualizar */
+        patch: operations["actualizar_api_v1_pacientes__paciente_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}/alertas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Alertas
+         * @description Condiciones de riesgo alto y alergias, para la cabecera clínica.
+         *
+         *     Sale de la vista `v_alertas_paciente`, que ya cruza ambas fuentes.
+         */
+        get: operations["alertas_api_v1_pacientes__paciente_id__alertas_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}/ficha": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener */
+        get: operations["obtener_api_v1_pacientes__paciente_id__ficha_get"];
+        /**
+         * Guardar
+         * @description Crea o reemplaza la ficha completa.
+         *
+         *     Es un PUT y no un PATCH a propósito: la ficha es un formulario que el doctor
+         *     revisa entero en cada visita. Las tres colecciones se reemplazan, así que
+         *     quitar una alergia es simplemente no enviarla.
+         */
+        put: operations["guardar_api_v1_pacientes__paciente_id__ficha_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}/odontograma": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Vigente
+         * @description Versión vigente del odontograma, lista para dibujar.
+         */
+        get: operations["vigente_api_v1_pacientes__paciente_id__odontograma_get"];
+        put?: never;
+        /**
+         * Nueva Version
+         * @description Cierra la versión vigente y abre la siguiente.
+         *
+         *     La anterior queda como historial de solo lectura: no se borra nunca.
+         */
+        post: operations["nueva_version_api_v1_pacientes__paciente_id__odontograma_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}/odontograma/versiones": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Versiones
+         * @description Historial completo, de la más reciente a la más antigua.
+         */
+        get: operations["versiones_api_v1_pacientes__paciente_id__odontograma_versiones_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/odontogramas/{odontograma_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Por Id
+         * @description Una versión concreta, incluidas las históricas (solo lectura).
+         */
+        get: operations["por_id_api_v1_odontogramas__odontograma_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/odontogramas/{odontograma_id}/hallazgos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Registrar Hallazgo */
+        post: operations["registrar_hallazgo_api_v1_odontogramas__odontograma_id__hallazgos_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/odontogramas/{odontograma_id}/hallazgos/{hallazgo_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Borrar Hallazgo
+         * @description Elimina un hallazgo mal registrado en la versión vigente.
+         *
+         *     No es un borrado clínico: las versiones históricas son intocables, así que
+         *     esto sólo corrige lo que se acaba de anotar por error.
+         */
+        delete: operations["borrar_hallazgo_api_v1_odontogramas__odontograma_id__hallazgos__hallazgo_id__delete"];
+        options?: never;
+        head?: never;
+        /** Actualizar Hallazgo */
+        patch: operations["actualizar_hallazgo_api_v1_odontogramas__odontograma_id__hallazgos__hallazgo_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/odontogramas/{odontograma_id}/dientes/{codigo_fdi}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Estado Pieza
+         * @description Registra movilidad, sondaje, recesión y sangrado de una pieza.
+         */
+        put: operations["estado_pieza_api_v1_odontogramas__odontograma_id__dientes__codigo_fdi__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -27,7 +348,822 @@ export interface paths {
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: never;
+    schemas: {
+        /** AlergiaEscribir */
+        AlergiaEscribir: {
+            /** Alergia Id */
+            alergia_id: number;
+            /**
+             * Severidad
+             * @default moderada
+             */
+            severidad: string;
+            /** Reaccion */
+            reaccion?: string | null;
+        };
+        /** AlergiaLeer */
+        AlergiaLeer: {
+            /** Alergia Id */
+            alergia_id: number;
+            /** Codigo */
+            codigo: string;
+            /** Nombre */
+            nombre: string;
+            /** Tipo */
+            tipo?: string | null;
+            /** Severidad */
+            severidad?: string | null;
+            /** Reaccion */
+            reaccion?: string | null;
+        };
+        /**
+         * Alerta
+         * @description Aviso clínico que se muestra antes de cualquier procedimiento.
+         */
+        Alerta: {
+            /** Tipo */
+            tipo: string;
+            /** Detalle */
+            detalle: string;
+            /** Riesgo */
+            riesgo: string | null;
+        };
+        /**
+         * AmbitoCondicion
+         * @enum {string}
+         */
+        AmbitoCondicion: "superficie" | "diente" | "raiz" | "periodontal" | "protesico";
+        /**
+         * Catalogos
+         * @description Todo lo que el odontograma necesita para dibujarse, en una sola llamada.
+         */
+        Catalogos: {
+            /** Dientes */
+            dientes: components["schemas"]["DienteLeer"][];
+            /** Superficies */
+            superficies: components["schemas"]["SuperficieLeer"][];
+            /** Condiciones */
+            condiciones: components["schemas"]["CondicionDentalLeer"][];
+        };
+        /** CondicionDentalLeer */
+        CondicionDentalLeer: {
+            /** Id */
+            id: number;
+            /** Codigo */
+            codigo: string;
+            /** Nombre */
+            nombre: string;
+            ambito: components["schemas"]["AmbitoCondicion"];
+            /**
+             * Color Hex
+             * @description Único origen del color con que se pinta la pieza
+             */
+            color_hex: string;
+            /** Patologico */
+            patologico: boolean;
+            /** Orden */
+            orden: number | null;
+        };
+        /** CondicionEscribir */
+        CondicionEscribir: {
+            /** Condicion Medica Id */
+            condicion_medica_id: number;
+            /** Diagnosticado En */
+            diagnosticado_en?: string | null;
+            /**
+             * Controlado
+             * @default true
+             */
+            controlado: boolean;
+            /** Detalle */
+            detalle?: string | null;
+        };
+        /** CondicionLeer */
+        CondicionLeer: {
+            /** Condicion Medica Id */
+            condicion_medica_id: number;
+            /** Codigo */
+            codigo: string;
+            /** Nombre */
+            nombre: string;
+            /** Riesgo */
+            riesgo?: string | null;
+            /** Alerta */
+            alerta?: string | null;
+            /** Diagnosticado En */
+            diagnosticado_en?: string | null;
+            /** Controlado */
+            controlado?: boolean | null;
+            /** Detalle */
+            detalle?: string | null;
+        };
+        /** ContactoLeer */
+        ContactoLeer: {
+            /** Nombre */
+            nombre: string;
+            /** Parentesco */
+            parentesco?: string | null;
+            /** Telefono */
+            telefono: string;
+            /**
+             * Es Emergencia
+             * @default true
+             */
+            es_emergencia: boolean;
+            /**
+             * Es Tutor
+             * @default false
+             */
+            es_tutor: boolean;
+            /** Id */
+            id: number;
+        };
+        /** Credenciales */
+        Credenciales: {
+            /**
+             * Email
+             * Format: email
+             */
+            email: string;
+            /** Password */
+            password: string;
+        };
+        /**
+         * Denticion
+         * @enum {string}
+         */
+        Denticion: "permanente" | "temporal";
+        /**
+         * DienteEstado
+         * @description Estado global de una pieza: lo que no pertenece a una cara concreta.
+         */
+        "DienteEstado-Input": {
+            /** Codigo Fdi */
+            codigo_fdi: number;
+            /**
+             * Presente
+             * @default true
+             */
+            presente: boolean;
+            /** Movilidad */
+            movilidad?: number | null;
+            /** Recesion Mm */
+            recesion_mm?: number | string | null;
+            /** Sondaje Mm */
+            sondaje_mm?: number | string | null;
+            /**
+             * Sangrado
+             * @default false
+             */
+            sangrado: boolean;
+            /** Notas */
+            notas?: string | null;
+        };
+        /**
+         * DienteEstado
+         * @description Estado global de una pieza: lo que no pertenece a una cara concreta.
+         */
+        "DienteEstado-Output": {
+            /** Codigo Fdi */
+            codigo_fdi: number;
+            /**
+             * Presente
+             * @default true
+             */
+            presente: boolean;
+            /** Movilidad */
+            movilidad?: number | null;
+            /** Recesion Mm */
+            recesion_mm?: string | null;
+            /** Sondaje Mm */
+            sondaje_mm?: string | null;
+            /**
+             * Sangrado
+             * @default false
+             */
+            sangrado: boolean;
+            /** Notas */
+            notas?: string | null;
+        };
+        /** DienteLeer */
+        DienteLeer: {
+            /** Codigo Fdi */
+            codigo_fdi: number;
+            /** Cuadrante */
+            cuadrante: number;
+            /** Posicion */
+            posicion: number;
+            denticion: components["schemas"]["Denticion"];
+            /** Nombre */
+            nombre: string;
+            /** Grupo */
+            grupo: string;
+            /** Arcada */
+            arcada: string;
+            /** Lado */
+            lado: string;
+            /** Universal */
+            universal: number | null;
+            /**
+             * Centro Oclusal
+             * @description Cara central de la pieza: 'I' en anteriores, 'O' en posteriores
+             */
+            centro_oclusal: string;
+        };
+        /**
+         * EstadoHallazgo
+         * @enum {string}
+         */
+        EstadoHallazgo: "existente" | "planificado" | "en_proceso" | "completado" | "anulado";
+        /**
+         * FichaGuardar
+         * @description PUT completo de la ficha, colecciones incluidas.
+         *
+         *     La ficha es un formulario que el doctor rellena de una vez, no un recurso
+         *     que se parchee campo a campo. Las tres colecciones se reemplazan enteras.
+         */
+        FichaGuardar: {
+            /** Motivo Consulta */
+            motivo_consulta?: string | null;
+            /** Enfermedad Actual */
+            enfermedad_actual?: string | null;
+            /** Antecedentes Familiares */
+            antecedentes_familiares?: string | null;
+            /**
+             * Fuma
+             * @default false
+             */
+            fuma: boolean;
+            /** Cigarrillos Dia */
+            cigarrillos_dia?: number | null;
+            /**
+             * Consume Alcohol
+             * @default false
+             */
+            consume_alcohol: boolean;
+            /**
+             * Bruxismo
+             * @default false
+             */
+            bruxismo: boolean;
+            /**
+             * Onicofagia
+             * @default false
+             */
+            onicofagia: boolean;
+            /**
+             * Respirador Bucal
+             * @default false
+             */
+            respirador_bucal: boolean;
+            /** Ultima Visita Dental */
+            ultima_visita_dental?: string | null;
+            /** Cepillados Dia */
+            cepillados_dia?: number | null;
+            /**
+             * Usa Hilo Dental
+             * @default false
+             */
+            usa_hilo_dental: boolean;
+            /**
+             * Sangrado Encias
+             * @default false
+             */
+            sangrado_encias: boolean;
+            /**
+             * Sensibilidad
+             * @default false
+             */
+            sensibilidad: boolean;
+            /**
+             * Dolor Atm
+             * @default false
+             */
+            dolor_atm: boolean;
+            /**
+             * Embarazada
+             * @default false
+             */
+            embarazada: boolean;
+            /** Semanas Gestacion */
+            semanas_gestacion?: number | null;
+            /**
+             * Anticoagulantes
+             * @default false
+             */
+            anticoagulantes: boolean;
+            /**
+             * Bifosfonatos
+             * @default false
+             */
+            bifosfonatos: boolean;
+            /** Observaciones */
+            observaciones?: string | null;
+            /**
+             * Condiciones
+             * @default []
+             */
+            condiciones: components["schemas"]["CondicionEscribir"][];
+            /**
+             * Alergias
+             * @default []
+             */
+            alergias: components["schemas"]["AlergiaEscribir"][];
+            /**
+             * Medicamentos
+             * @default []
+             */
+            medicamentos: components["schemas"]["MedicamentoEscribir"][];
+        };
+        /** FichaLeer */
+        FichaLeer: {
+            /** Motivo Consulta */
+            motivo_consulta?: string | null;
+            /** Enfermedad Actual */
+            enfermedad_actual?: string | null;
+            /** Antecedentes Familiares */
+            antecedentes_familiares?: string | null;
+            /**
+             * Fuma
+             * @default false
+             */
+            fuma: boolean;
+            /** Cigarrillos Dia */
+            cigarrillos_dia?: number | null;
+            /**
+             * Consume Alcohol
+             * @default false
+             */
+            consume_alcohol: boolean;
+            /**
+             * Bruxismo
+             * @default false
+             */
+            bruxismo: boolean;
+            /**
+             * Onicofagia
+             * @default false
+             */
+            onicofagia: boolean;
+            /**
+             * Respirador Bucal
+             * @default false
+             */
+            respirador_bucal: boolean;
+            /** Ultima Visita Dental */
+            ultima_visita_dental?: string | null;
+            /** Cepillados Dia */
+            cepillados_dia?: number | null;
+            /**
+             * Usa Hilo Dental
+             * @default false
+             */
+            usa_hilo_dental: boolean;
+            /**
+             * Sangrado Encias
+             * @default false
+             */
+            sangrado_encias: boolean;
+            /**
+             * Sensibilidad
+             * @default false
+             */
+            sensibilidad: boolean;
+            /**
+             * Dolor Atm
+             * @default false
+             */
+            dolor_atm: boolean;
+            /**
+             * Embarazada
+             * @default false
+             */
+            embarazada: boolean;
+            /** Semanas Gestacion */
+            semanas_gestacion?: number | null;
+            /**
+             * Anticoagulantes
+             * @default false
+             */
+            anticoagulantes: boolean;
+            /**
+             * Bifosfonatos
+             * @default false
+             */
+            bifosfonatos: boolean;
+            /** Observaciones */
+            observaciones?: string | null;
+            /** Id */
+            id: number;
+            /** Paciente Id */
+            paciente_id: number;
+            /**
+             * Condiciones
+             * @default []
+             */
+            condiciones: components["schemas"]["CondicionLeer"][];
+            /**
+             * Alergias
+             * @default []
+             */
+            alergias: components["schemas"]["AlergiaLeer"][];
+            /**
+             * Medicamentos
+             * @default []
+             */
+            medicamentos: components["schemas"]["MedicamentoLeer"][];
+        };
+        /** HTTPValidationError */
+        HTTPValidationError: {
+            /** Detail */
+            detail?: components["schemas"]["ValidationError"][];
+        };
+        /** HallazgoActualizar */
+        HallazgoActualizar: {
+            estado?: components["schemas"]["EstadoHallazgo"] | null;
+            /** Notas */
+            notas?: string | null;
+        };
+        /** HallazgoCrear */
+        HallazgoCrear: {
+            /** Codigo Fdi */
+            codigo_fdi: number;
+            /** Superficie */
+            superficie?: string | null;
+            /** Condicion Dental Id */
+            condicion_dental_id: number;
+            /** @default existente */
+            estado: components["schemas"]["EstadoHallazgo"];
+            /** Notas */
+            notas?: string | null;
+        };
+        /** HallazgoLeer */
+        HallazgoLeer: {
+            /** Id */
+            id: number;
+            /** Codigo Fdi */
+            codigo_fdi: number;
+            /**
+             * Superficie
+             * @description Código de cara, o null si el hallazgo aplica a toda la pieza
+             */
+            superficie: string | null;
+            /** Condicion Dental Id */
+            condicion_dental_id: number;
+            /** Condicion Codigo */
+            condicion_codigo: string;
+            /** Condicion Nombre */
+            condicion_nombre: string;
+            /** Color Hex */
+            color_hex: string;
+            ambito: components["schemas"]["AmbitoCondicion"];
+            estado: components["schemas"]["EstadoHallazgo"];
+            /** Doctor Id */
+            doctor_id: number | null;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            /** Notas */
+            notas: string | null;
+        };
+        /** MedicamentoEscribir */
+        MedicamentoEscribir: {
+            /** Nombre */
+            nombre: string;
+            /** Dosis */
+            dosis?: string | null;
+            /** Frecuencia */
+            frecuencia?: string | null;
+            /** Motivo */
+            motivo?: string | null;
+            /** Desde */
+            desde?: string | null;
+            /**
+             * Activo
+             * @default true
+             */
+            activo: boolean;
+        };
+        /** MedicamentoLeer */
+        MedicamentoLeer: {
+            /** Id */
+            id: number;
+            /** Nombre */
+            nombre: string;
+            /** Dosis */
+            dosis?: string | null;
+            /** Frecuencia */
+            frecuencia?: string | null;
+            /** Motivo */
+            motivo?: string | null;
+            /** Desde */
+            desde?: string | null;
+            /** Activo */
+            activo: boolean;
+        };
+        /**
+         * OdontogramaCrear
+         * @description Crea la versión N+1 del odontograma de un paciente.
+         */
+        OdontogramaCrear: {
+            /** @default permanente */
+            denticion: components["schemas"]["Denticion"];
+            /** Observaciones */
+            observaciones?: string | null;
+            /**
+             * Copiar Hallazgos
+             * @description Arrastra los hallazgos 'existente' y 'completado' de la versión anterior. Lo planificado no se copia: pertenece al plan que lo originó.
+             * @default true
+             */
+            copiar_hallazgos: boolean;
+        };
+        /** OdontogramaLeer */
+        OdontogramaLeer: {
+            /** Id */
+            id: number;
+            /** Version */
+            version: number;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            denticion: components["schemas"]["Denticion"];
+            /** Es Actual */
+            es_actual: boolean;
+            /** Doctor Id */
+            doctor_id: number | null;
+            /** Observaciones */
+            observaciones: string | null;
+            /** Paciente Id */
+            paciente_id: number;
+            /**
+             * Dientes
+             * @default []
+             */
+            dientes: components["schemas"]["DienteEstado-Output"][];
+            /**
+             * Hallazgos
+             * @default []
+             */
+            hallazgos: components["schemas"]["HallazgoLeer"][];
+        };
+        /**
+         * OdontogramaResumen
+         * @description Fila del historial de versiones.
+         */
+        OdontogramaResumen: {
+            /** Id */
+            id: number;
+            /** Version */
+            version: number;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            denticion: components["schemas"]["Denticion"];
+            /** Es Actual */
+            es_actual: boolean;
+            /** Doctor Id */
+            doctor_id: number | null;
+            /** Observaciones */
+            observaciones: string | null;
+        };
+        /**
+         * PacienteActualizar
+         * @description Todos los campos opcionales: es un PATCH.
+         */
+        PacienteActualizar: {
+            /** Nombres */
+            nombres?: string | null;
+            /** Apellidos */
+            apellidos?: string | null;
+            /** Fecha Nacimiento */
+            fecha_nacimiento?: string | null;
+            sexo?: components["schemas"]["Sexo"] | null;
+            /** Documento */
+            documento?: string | null;
+            /** Telefono */
+            telefono?: string | null;
+            /** Celular */
+            celular?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Direccion */
+            direccion?: string | null;
+            /** Ciudad */
+            ciudad?: string | null;
+            /** Ocupacion */
+            ocupacion?: string | null;
+            /** Estado Civil */
+            estado_civil?: string | null;
+            /** Tipo Sangre */
+            tipo_sangre?: string | null;
+            /** Referido Por */
+            referido_por?: string | null;
+            /** Sede Id */
+            sede_id?: number | null;
+            /** Notas */
+            notas?: string | null;
+            /** Activo */
+            activo?: boolean | null;
+        };
+        /**
+         * PacienteCrear
+         * @description El `codigo` de expediente lo genera el servidor: no se acepta del cliente.
+         */
+        PacienteCrear: {
+            /** Nombres */
+            nombres: string;
+            /** Apellidos */
+            apellidos: string;
+            /**
+             * Fecha Nacimiento
+             * Format: date
+             */
+            fecha_nacimiento: string;
+            sexo: components["schemas"]["Sexo"];
+            /** Documento */
+            documento?: string | null;
+            /** Telefono */
+            telefono?: string | null;
+            /** Celular */
+            celular?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Direccion */
+            direccion?: string | null;
+            /** Ciudad */
+            ciudad?: string | null;
+            /** Ocupacion */
+            ocupacion?: string | null;
+            /** Estado Civil */
+            estado_civil?: string | null;
+            /** Tipo Sangre */
+            tipo_sangre?: string | null;
+            /** Referido Por */
+            referido_por?: string | null;
+            /** Sede Id */
+            sede_id?: number | null;
+            /** Notas */
+            notas?: string | null;
+        };
+        /** PacienteDetalle */
+        PacienteDetalle: {
+            /** Id */
+            id: number;
+            /** Codigo */
+            codigo: string;
+            /** Documento */
+            documento: string | null;
+            /** Nombres */
+            nombres: string;
+            /** Apellidos */
+            apellidos: string;
+            /**
+             * Fecha Nacimiento
+             * Format: date
+             */
+            fecha_nacimiento: string;
+            /** Edad */
+            edad: number;
+            sexo: components["schemas"]["Sexo"];
+            /** Celular */
+            celular: string | null;
+            /** Activo */
+            activo: boolean;
+            /** Telefono */
+            telefono: string | null;
+            /** Email */
+            email: string | null;
+            /** Direccion */
+            direccion: string | null;
+            /** Ciudad */
+            ciudad: string | null;
+            /** Ocupacion */
+            ocupacion: string | null;
+            /** Estado Civil */
+            estado_civil: string | null;
+            /** Tipo Sangre */
+            tipo_sangre: string | null;
+            /** Referido Por */
+            referido_por: string | null;
+            /** Sede Id */
+            sede_id: number | null;
+            /** Notas */
+            notas: string | null;
+            /**
+             * Contactos
+             * @default []
+             */
+            contactos: components["schemas"]["ContactoLeer"][];
+        };
+        /**
+         * PacienteResumen
+         * @description Fila del listado: lo justo para buscar y elegir.
+         */
+        PacienteResumen: {
+            /** Id */
+            id: number;
+            /** Codigo */
+            codigo: string;
+            /** Documento */
+            documento: string | null;
+            /** Nombres */
+            nombres: string;
+            /** Apellidos */
+            apellidos: string;
+            /**
+             * Fecha Nacimiento
+             * Format: date
+             */
+            fecha_nacimiento: string;
+            /** Edad */
+            edad: number;
+            sexo: components["schemas"]["Sexo"];
+            /** Celular */
+            celular: string | null;
+            /** Activo */
+            activo: boolean;
+        };
+        /** Pagina[PacienteResumen] */
+        Pagina_PacienteResumen_: {
+            /** Items */
+            items: components["schemas"]["PacienteResumen"][];
+            /**
+             * Total
+             * @description Total de resultados que cumplen el filtro
+             */
+            total: number;
+            /** Limite */
+            limite: number;
+            /** Offset */
+            offset: number;
+        };
+        /** Refresco */
+        Refresco: {
+            /** Refresh Token */
+            refresh_token: string;
+        };
+        /**
+         * RolUsuario
+         * @enum {string}
+         */
+        RolUsuario: "admin" | "doctor" | "asistente" | "recepcion" | "facturacion";
+        /**
+         * Sexo
+         * @enum {string}
+         */
+        Sexo: "M" | "F" | "O";
+        /** SuperficieLeer */
+        SuperficieLeer: {
+            /** Codigo */
+            codigo: string;
+            /** Nombre */
+            nombre: string;
+            /** Aplica A */
+            aplica_a: string;
+        };
+        /** Tokens */
+        Tokens: {
+            /** Access Token */
+            access_token: string;
+            /** Refresh Token */
+            refresh_token: string;
+            /**
+             * Token Type
+             * @default bearer
+             */
+            token_type: string;
+        };
+        /**
+         * UsuarioActual
+         * @description Identidad del usuario en sesión, para la cabecera de la aplicación.
+         */
+        UsuarioActual: {
+            /** Id */
+            id: number;
+            /** Email */
+            email: string;
+            rol: components["schemas"]["RolUsuario"];
+            /** Doctor Id */
+            doctor_id?: number | null;
+            /** Doctor Nombre */
+            doctor_nombre?: string | null;
+        };
+        /** ValidationError */
+        ValidationError: {
+            /** Location */
+            loc: (string | number)[];
+            /** Message */
+            msg: string;
+            /** Error Type */
+            type: string;
+        };
+    };
     responses: never;
     parameters: never;
     requestBodies: never;
@@ -36,6 +1172,648 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    login_api_v1_auth_login_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Credenciales"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Tokens"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    refrescar_api_v1_auth_refresh_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Refresco"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Tokens"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    yo_api_v1_auth_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UsuarioActual"];
+                };
+            };
+        };
+    };
+    catalogos_odontograma_api_v1_catalogos_odontograma_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Catalogos"];
+                };
+            };
+        };
+    };
+    condiciones_medicas_api_v1_catalogos_condiciones_medicas_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>[];
+                };
+            };
+        };
+    };
+    alergias_api_v1_catalogos_alergias_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>[];
+                };
+            };
+        };
+    };
+    listar_api_v1_pacientes_get: {
+        parameters: {
+            query?: {
+                /** @description Nombre, expediente o documento */
+                buscar?: string | null;
+                incluir_inactivos?: boolean;
+                limite?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Pagina_PacienteResumen_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    crear_api_v1_pacientes_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PacienteCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PacienteDetalle"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    obtener_api_v1_pacientes__paciente_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PacienteDetalle"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_api_v1_pacientes__paciente_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PacienteActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PacienteDetalle"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    alertas_api_v1_pacientes__paciente_id__alertas_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Alerta"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    obtener_api_v1_pacientes__paciente_id__ficha_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FichaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    guardar_api_v1_pacientes__paciente_id__ficha_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FichaGuardar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FichaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    vigente_api_v1_pacientes__paciente_id__odontograma_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OdontogramaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    nueva_version_api_v1_pacientes__paciente_id__odontograma_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OdontogramaCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OdontogramaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    versiones_api_v1_pacientes__paciente_id__odontograma_versiones_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OdontogramaResumen"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    por_id_api_v1_odontogramas__odontograma_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                odontograma_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OdontogramaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    registrar_hallazgo_api_v1_odontogramas__odontograma_id__hallazgos_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                odontograma_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HallazgoCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HallazgoLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    borrar_hallazgo_api_v1_odontogramas__odontograma_id__hallazgos__hallazgo_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                odontograma_id: number;
+                hallazgo_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_hallazgo_api_v1_odontogramas__odontograma_id__hallazgos__hallazgo_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                odontograma_id: number;
+                hallazgo_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HallazgoActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HallazgoLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    estado_pieza_api_v1_odontogramas__odontograma_id__dientes__codigo_fdi__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                odontograma_id: number;
+                codigo_fdi: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DienteEstado-Input"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DienteEstado-Output"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     health_health_get: {
         parameters: {
             query?: never;

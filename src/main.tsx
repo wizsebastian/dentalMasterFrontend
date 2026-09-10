@@ -1,17 +1,20 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { RouterProvider } from "react-router-dom"
 
-import App from "./App.tsx"
+import { ProveedorAuth } from "./features/auth/ProveedorAuth"
+import { router } from "./rutas"
 import "./index.css"
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      // Los catálogos clínicos (dientes, superficies, condiciones) no cambian
-      // durante una sesión; el resto se revalida al volver a la pestaña.
       staleTime: 30_000,
+      // Un 401 ya lo resuelve el cliente renovando el token; reintentar más
+      // sólo retrasa el mensaje de error.
       retry: 1,
+      refetchOnWindowFocus: true,
     },
   },
 })
@@ -19,7 +22,9 @@ const queryClient = new QueryClient({
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <App />
+      <ProveedorAuth>
+        <RouterProvider router={router} />
+      </ProveedorAuth>
     </QueryClientProvider>
   </StrictMode>,
 )
