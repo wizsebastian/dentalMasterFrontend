@@ -1,4 +1,4 @@
-import { ISOTIPOS } from "./isotipos"
+import { ISOTIPOS, type VersionIsotipo } from "./isotipos"
 
 const TAMANOS = {
   sm: { caja: "h-8 w-8", radio: "rounded-lg" },
@@ -13,6 +13,8 @@ type CargandoProps = {
   size?: keyof typeof TAMANOS
   /** Qué se está esperando. Se anuncia a lectores de pantalla. */
   label?: string
+  /** Qué versiones se relevan. Por defecto, las seis. */
+  versiones?: VersionIsotipo[]
   className?: string
 }
 
@@ -25,20 +27,25 @@ type CargandoProps = {
  * La versión positiva es blanca, así que lleva su propio fondo azul marino: es
  * la única forma de que se vea sin romper el manual de marca.
  */
-export function Cargando({ size = "md", label = "Cargando", className }: CargandoProps) {
+export function Cargando({
+  size = "md",
+  label = "Cargando",
+  versiones = ISOTIPOS,
+  className,
+}: CargandoProps) {
   const medida = TAMANOS[size]
 
   return (
     <span role="status" aria-live="polite" className={`inline-flex ${className ?? ""}`}>
       <span className={`relative block ${medida.caja}`}>
-        {ISOTIPOS.map((version, indice) => (
+        {versiones.map((version, indice) => (
           <span
             key={version.archivo}
             className={`isotipo-relevo absolute inset-0 grid place-items-center ${medida.radio}
               ${version.fondo === "oscuro" ? "bg-marca" : ""}`}
             style={{
               animationDuration: `${CICLO_MS}ms`,
-              animationDelay: `${(indice * CICLO_MS) / ISOTIPOS.length}ms`,
+              animationDelay: `${(indice * CICLO_MS) / versiones.length}ms`,
               opacity: 0,
             }}
           >

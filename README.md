@@ -26,6 +26,7 @@ El navegador siempre habla con `:5173`. Vite hace de proxy hacia la API en
 | `npm run gen:api` | Regenera `src/api/schema.d.ts` desde el OpenAPI de la API |
 | `npm run e2e` | Prueba de humo de la interfaz en un navegador real (necesita Docker) |
 | `npm run e2e botones` | Comprueba los dos bancos de pruebas y su botón de volver |
+| `npm run e2e loaders` | Comprueba el loading de isotipos de ambos bancos |
 
 `gen:api` necesita la API corriendo. Conviene ejecutarlo cada vez que cambie un
 endpoint: es lo que mantiene el contrato entre backend y frontend sin
@@ -46,10 +47,14 @@ Las seis versiones del isotipo viven en `public/marca/` y están registradas en
 El malva no se usa nunca como relleno de dato: queda cerca de los púrpuras del
 catálogo clínico (`#7B1FA2`, `#6A1B9A`), y ahí un color saturado significa algo.
 
-`Cargando` releva las seis versiones del isotipo, cada una exactamente el mismo
-tiempo (el retardo de cada una es su posición partida por el total). La versión
-positiva es blanca, así que arrastra su propio fondo azul marino: es la única
-forma de incluirla sin romper el manual.
+`Cargando` releva versiones del isotipo, cada una exactamente el mismo tiempo
+(el retardo de cada una es su posición partida por el total).
+
+Con las seis, la versión positiva es blanca y arrastra su propio fondo azul
+marino: es la única forma de incluirla sin romper el manual. Los bancos de
+pruebas del odontograma usan en cambio `ISOTIPOS_COLOR` —sólo A, B, C y D—,
+porque positiva y negativa son versiones de reproducción a una tinta y en una
+animación sólo aportan un latido en blanco y otro en negro.
 
 ## El color es dato, no decoración
 

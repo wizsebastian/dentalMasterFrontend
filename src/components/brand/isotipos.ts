@@ -20,6 +20,15 @@ export const ISOTIPOS: VersionIsotipo[] = [
   { archivo: "/marca/isotipo-positivo.png", nombre: "Isotipo en blanco", fondo: "oscuro" },
 ]
 
+/**
+ * Las cuatro versiones cromáticas.
+ *
+ * Positiva y negativa son las versiones monocromas para reproducción —una tinta,
+ * fondos oscuros—, no variantes de color. En una animación no aportan color:
+ * aportan un latido en blanco y otro en negro.
+ */
+export const ISOTIPOS_COLOR: VersionIsotipo[] = ISOTIPOS.slice(0, 4)
+
 export const LOGOTIPOS = {
   color: "/marca/logotipo-a.png",
   soloIsotipo: "/marca/logotipo-b.png",

@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react"
 
-import { Cargando, Logo } from "../../components/brand"
+import { Logo } from "../../components/brand"
+import { CargandoOdontograma } from "./CargandoOdontograma"
 import { Tarjeta, VolverAtras } from "../../components/ui"
 
 // La librería es sólo de cliente y pesa: se carga aparte para no arrastrarla
@@ -51,11 +52,7 @@ export function OdontogramaEspecial() {
 
         <Tarjeta className="mt-6 overflow-hidden p-2">
           <Suspense
-            fallback={
-              <div className="grid place-items-center py-24">
-                <Cargando size="lg" label="Cargando el odontograma" />
-              </div>
-            }
+            fallback={<CargandoOdontograma que="la librería del odontograma" />}
           >
             <Odontograma language="es" numberingSystem="FDI" darkMode={false} enableNotes />
           </Suspense>

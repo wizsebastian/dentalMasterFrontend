@@ -1,16 +1,15 @@
 import { Navigate, createBrowserRouter } from "react-router-dom"
 
-import { OdontogramaEspecial } from "../features/laboratorio/OdontogramaEspecial"
-import { PruebaOdontograma } from "../features/laboratorio/PruebaOdontograma"
 import { ExpedientePaciente } from "../features/pacientes/ExpedientePaciente"
 import { ListaPacientes } from "../features/pacientes/ListaPacientes"
+import { BancoArcada, BancoLibreria } from "./bancos-de-pruebas"
 import { Protegido } from "./Protegido"
 
 export const router = createBrowserRouter([
-  // Banco de pruebas de la representación del odontograma. Va fuera de la
-  // sesión a propósito: no lee ni escribe datos de ningún paciente.
-  { path: "/odontogram", element: <PruebaOdontograma /> },
-  { path: "/odontogram-especial", element: <OdontogramaEspecial /> },
+  // Bancos de pruebas de la representación del odontograma. Van fuera de la
+  // sesión a propósito: no leen ni escriben datos de ningún paciente.
+  { path: "/odontogram", element: <BancoArcada /> },
+  { path: "/odontogram-especial", element: <BancoLibreria /> },
   {
     path: "/",
     element: <Protegido />,

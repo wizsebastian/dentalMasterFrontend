@@ -10,6 +10,7 @@ npm run dev -- --host
 # 3. Las pruebas, contra la IP de red que imprime Vite
 npm run e2e            # recorrido clínico completo (smoke.mjs)
 npm run e2e botones    # los dos bancos de pruebas y su vuelta
+npm run e2e loaders    # el loading de isotipos de ambos bancos
 ```
 
 `npm run e2e` detecta la IP automáticamente. Las capturas quedan en `e2e/salida/`.

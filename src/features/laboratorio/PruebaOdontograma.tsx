@@ -1,10 +1,16 @@
-import { useMemo, useState } from "react"
+import { lazy, Suspense, useMemo, useState } from "react"
 import { RotateCcw } from "lucide-react"
 
 import type { CondicionDental, EstadoHallazgo, Hallazgo } from "../../api/tipos"
 import { Logo } from "../../components/brand"
-import { ArcadaDental } from "../../components/odontograma/ArcadaDental"
 import { Odontograma } from "../../components/odontograma/Odontograma"
+import { CargandoOdontograma } from "./CargandoOdontograma"
+
+// La arcada sí sale del bundle principal: sólo la usa este banco de pruebas.
+// La rejilla no, porque el expediente clínico la importa de todas formas.
+const ArcadaDental = lazy(async () => ({
+  default: (await import("../../components/odontograma/ArcadaDental")).ArcadaDental,
+}))
 import { PaletaCondiciones } from "../../components/odontograma/PaletaCondiciones"
 import { Boton, Tarjeta, VolverAtras } from "../../components/ui"
 import {
@@ -145,22 +151,24 @@ export function PruebaOdontograma() {
 
         <div className="mt-5 grid gap-4 lg:grid-cols-[1fr_320px]">
           <Tarjeta className="p-5">
-            {representacion === "arcada" ? (
-              <ArcadaDental
-                dientes={dientes}
-                hallazgos={hallazgos}
-                ausentes={PIEZAS_AUSENTES}
-                piezaSeleccionada={pieza}
-                onElegirCara={marcar}
-              />
-            ) : (
-              <Odontograma
-                datos={comoOdontograma}
-                catalogos={{ dientes, superficies: [], condiciones: CONDICIONES }}
-                piezaSeleccionada={pieza}
-                onElegirCara={marcar}
-              />
-            )}
+            <Suspense fallback={<CargandoOdontograma que="el odontograma" />}>
+              {representacion === "arcada" ? (
+                <ArcadaDental
+                  dientes={dientes}
+                  hallazgos={hallazgos}
+                  ausentes={PIEZAS_AUSENTES}
+                  piezaSeleccionada={pieza}
+                  onElegirCara={marcar}
+                />
+              ) : (
+                <Odontograma
+                  datos={comoOdontograma}
+                  catalogos={{ dientes, superficies: [], condiciones: CONDICIONES }}
+                    piezaSeleccionada={pieza}
+                  onElegirCara={marcar}
+                />
+              )}
+            </Suspense>
           </Tarjeta>
 
           <Tarjeta className="p-5">
