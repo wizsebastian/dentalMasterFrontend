@@ -27,6 +27,7 @@ El navegador siempre habla con `:5173`. Vite hace de proxy hacia la API en
 | `npm run e2e` | Prueba de humo de la interfaz en un navegador real (necesita Docker) |
 | `npm run e2e botones` | Comprueba los dos bancos de pruebas y su botón de volver |
 | `npm run e2e loaders` | Comprueba el loading de isotipos de ambos bancos |
+| `npm run e2e notaciones` | Comprueba el menú contextual sobre el lienzo de la librería |
 
 `gen:api` necesita la API corriendo. Conviene ejecutarlo cada vez que cambie un
 endpoint: es lo que mantiene el contrato entre backend y frontend sin
@@ -104,9 +105,24 @@ El odontograma de `ficha_clinica.docx` —el documento que se genera en cada
 visita— es el clásico en **filas lineales**, con vista facial y raíces más la
 oclusal. La librería usa ese mismo formato; la arcada propia, no.
 
-A cambio, la librería pesa 2,8 MB (675 KB gz) más jsPDF y fuentes Noto, trae su
-propia interfaz y su propia marca visible, e impone su modelo de datos. Se carga
-diferida para que no toque el bundle de las pantallas clínicas.
+De la librería se conserva el **motor y el lienzo**; su interfaz no se usa.
+`OdontogramProvider` sólo renderiza el envoltorio alrededor de sus hijos, así que
+montando únicamente `OdontogramChartSurface` desaparecen el panel derecho de diez
+tarjetas y la cabecera con su marca. No hay nada oculto con CSS: no se renderiza.
+
+Encima va `MenuNotaciones`, que aplica las notaciones de la ficha con la API
+imperativa (`set*ForSelection`). La selección se lee del DOM: el lienzo es una
+listbox accesible y cada pieza es un `role="option"` con `data-tooth` y
+`aria-selected`. La librería no exporta getter para esto —su propio código llama
+a la selección *module-private state*—, pero `aria-selected` es contrato de
+accesibilidad, no detalle interno, y da además la caja para anclar el menú.
+
+Ojo al leer el DOM: hay **dos tiles por pieza**, la vista facial y la oclusal.
+Sólo la facial lleva `role="option"`; filtrar por rol evita contar cada diente
+dos veces.
+
+Sigue pesando 2,8 MB (675 KB gz) más jsPDF y fuentes Noto, así que se carga
+diferida para no tocar el bundle de las pantallas clínicas.
 
 ## Banco de pruebas: `/odontogram`
 
