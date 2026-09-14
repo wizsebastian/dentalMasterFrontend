@@ -42,7 +42,14 @@ type Props = {
   /** Modo acumulativo: cada clic suma una pieza, sin usar CMD. */
   acumular: boolean
   onAcumular: (activo: boolean) => void
-  onAplicado: (mensaje: string) => void
+  /** Qué se aplicó, para que quede registrado y se pueda quitar. */
+  onAplicado: (entrada: {
+    piezas: number[]
+    notacion: Notacion
+    cara?: string
+    valor?: string
+    etiquetaValor?: string
+  }) => void
 }
 
 export function MenuNotaciones({ seleccion, acumular, onAcumular, onAplicado }: Props) {
@@ -61,9 +68,13 @@ export function MenuNotaciones({ seleccion, acumular, onAcumular, onAplicado }: 
 
   function aplicar(n: Notacion, valor?: string) {
     n.aplicar(n.ambito === "cara" ? cara : valor)
-    const donde = n.ambito === "cara" ? ` · cara ${cara}` : ""
-    const sobre = piezas.length === 1 ? `pieza ${piezas[0]}` : `${piezas.length} piezas`
-    onAplicado(`${n.etiqueta}${donde} en ${sobre}`)
+    onAplicado({
+      piezas: [...piezas],
+      notacion: n,
+      cara: n.ambito === "cara" ? cara : undefined,
+      valor,
+      etiquetaValor: n.valores?.find((v) => v.valor === valor)?.etiqueta,
+    })
   }
 
   const porColor = (color: Notacion["color"]) => NOTACIONES.filter((n) => n.color === color)

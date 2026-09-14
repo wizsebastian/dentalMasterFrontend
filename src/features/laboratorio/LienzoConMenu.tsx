@@ -1,9 +1,35 @@
 import { useCallback, useEffect, useState } from "react"
-import { OdontogramChartSurface, OdontogramProvider } from "react-advanced-odontogram"
+import { OdontogramChartSurface, OdontogramProvider, clearSelection } from "react-advanced-odontogram"
 import "react-advanced-odontogram/style.css"
 
 import { MenuNotaciones } from "./MenuNotaciones"
+import { TablaRegistro } from "./TablaRegistro"
+import { useRegistro, type Anotacion } from "./useRegistro"
 import { useSeleccionPiezas } from "./useSeleccionPiezas"
+
+/**
+ * Selecciona unas piezas concretas, ejecuta algo sobre ellas y devuelve la
+ * selección a como estaba.
+ *
+ * Los setters del motor actúan sobre «la selección actual», así que para
+ * deshacer una notación en otras piezas hay que seleccionarlas primero. Se
+ * restaura después para no mover el sitio donde estaba trabajando el doctor.
+ */
+function sobrePiezas(piezas: number[], hacer: () => void, restaurar: number[]) {
+  const pulsar = (n: number, sumar: boolean) =>
+    document
+      .querySelector<HTMLElement>(`.tooth-tile[role="option"][data-tooth="${n}"]`)
+      ?.dispatchEvent(
+        new MouseEvent("click", { bubbles: true, cancelable: true, metaKey: sumar, ctrlKey: sumar }),
+      )
+
+  clearSelection()
+  piezas.forEach((n, i) => pulsar(n, i > 0))
+  hacer()
+
+  clearSelection()
+  restaurar.forEach((n, i) => pulsar(n, i > 0))
+}
 
 /**
  * El lienzo de la librería, sin su interfaz.
@@ -18,6 +44,7 @@ import { useSeleccionPiezas } from "./useSeleccionPiezas"
  */
 export function LienzoConMenu() {
   const seleccion = useSeleccionPiezas()
+  const { anotaciones, registrar, olvidar } = useRegistro()
   const [acumular, setAcumular] = useState(false)
   const [aviso, setAviso] = useState<string | null>(null)
 
@@ -42,11 +69,32 @@ export function LienzoConMenu() {
     return () => document.removeEventListener("click", alPulsar, true)
   }, [acumular])
 
-  const alAplicar = useCallback((mensaje: string) => {
-    setAviso(mensaje)
-    const t = setTimeout(() => setAviso(null), 2600)
+  const alAplicar = useCallback(
+    (entrada: Omit<Anotacion, "id" | "cuando">) => {
+      registrar(entrada)
+      const donde = entrada.cara ? ` · cara ${entrada.cara}` : ""
+      const sobre =
+        entrada.piezas.length === 1 ? `pieza ${entrada.piezas[0]}` : `${entrada.piezas.length} piezas`
+      setAviso(`${entrada.notacion.etiqueta}${donde} en ${sobre}`)
+    },
+    [registrar],
+  )
+
+  // Quitar una fila deshace la notación en el lienzo, no sólo en la lista.
+  const alQuitar = useCallback(
+    (a: Anotacion) => {
+      sobrePiezas(a.piezas, () => a.notacion.quitar(a.cara ?? a.valor), seleccion.piezas)
+      olvidar(a.id)
+      setAviso(`Quitado: ${a.notacion.etiqueta} de ${a.piezas.join(", ")}`)
+    },
+    [olvidar, seleccion.piezas],
+  )
+
+  useEffect(() => {
+    if (!aviso) return
+    const t = setTimeout(() => setAviso(null), 2800)
     return () => clearTimeout(t)
-  }, [])
+  }, [aviso])
 
   return (
     <div className="relative">
@@ -61,11 +109,19 @@ export function LienzoConMenu() {
         onAplicado={alAplicar}
       />
 
-      {seleccion.piezas.length === 0 && (
-        <p className="border-t border-linea px-1 pt-4 text-sm text-tinta-suave">
-          Haz clic en una pieza para registrar. Para varias, mantén CMD o usa «Añadir».
-        </p>
-      )}
+      <div className="mt-5 border-t border-linea pt-4">
+        <div className="flex flex-wrap items-baseline justify-between gap-2 px-1">
+          <h2 className="text-sm font-semibold">Marcado en esta ficha</h2>
+          <span className="text-xs text-tinta-suave">
+            {anotaciones.length === 0
+              ? "Haz clic en una pieza; para varias, mantén CMD o usa «Añadir»"
+              : `${anotaciones.length} ${anotaciones.length === 1 ? "anotación" : "anotaciones"} · la papelera la quita del odontograma`}
+          </span>
+        </div>
+        <div className="mt-3">
+          <TablaRegistro anotaciones={anotaciones} onQuitar={alQuitar} />
+        </div>
+      </div>
 
       {aviso && (
         <div

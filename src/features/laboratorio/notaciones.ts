@@ -42,7 +42,15 @@ export type Notacion = {
   marca: string
   /** Aplica la notación a la selección actual del motor. */
   aplicar: (valor?: string) => void
-  /** Valores fijos cuando la notación los tiene (movilidad 1-2-3). */
+  /**
+   * La deshace sobre la selección actual.
+   *
+   * Los valores «ninguno» no se adivinan: salen del propio motor
+   * (`mobilityOptions`, `wearEdgeOptions`, `restorationOptions`…). Adivinarlos
+   * fue el primer intento y mandaba valores que la librería ignora en silencio.
+   */
+  quitar: (valor?: string) => void
+  /** Valores fijos cuando la notación los tiene. */
   valores?: { valor: string; etiqueta: string }[]
 }
 
@@ -64,6 +72,7 @@ export const NOTACIONES: Notacion[] = [
     ambito: "cara",
     marca: "Punto rojo en la cara afectada",
     aplicar: (cara) => setCariesSurfaceForSelection(cara ?? "O", true),
+    quitar: (cara) => setCariesSurfaceForSelection(cara ?? "O", false),
   },
   {
     id: "extraer",
@@ -72,6 +81,7 @@ export const NOTACIONES: Notacion[] = [
     ambito: "pieza",
     marca: "X roja sobre la pieza",
     aplicar: () => setExtractionPlanForSelection(true),
+    quitar: () => setExtractionPlanForSelection(false),
   },
   {
     id: "corona-hacer",
@@ -80,6 +90,7 @@ export const NOTACIONES: Notacion[] = [
     ambito: "pieza",
     marca: "Pieza entera cubierta de rojo",
     aplicar: () => setCrownNeededForSelection(true),
+    quitar: () => setCrownNeededForSelection(false),
   },
   {
     id: "endodoncia-hacer",
@@ -88,6 +99,7 @@ export const NOTACIONES: Notacion[] = [
     ambito: "pieza",
     marca: "Raya roja sobre la pulpa (TCR)",
     aplicar: () => setPulpEndoForSelection("necrosis"),
+    quitar: () => setPulpEndoForSelection("normal"),
   },
   {
     id: "fractura",
@@ -100,6 +112,11 @@ export const NOTACIONES: Notacion[] = [
       else if (cara === "D") setBrokenDistalForSelection(true)
       else setBrokenIncisalForSelection(true)
     },
+    quitar: (cara) => {
+      if (cara === "M") setBrokenMesialForSelection(false)
+      else if (cara === "D") setBrokenDistalForSelection(false)
+      else setBrokenIncisalForSelection(false)
+    },
   },
   {
     id: "protesis-mala",
@@ -108,6 +125,7 @@ export const NOTACIONES: Notacion[] = [
     ambito: "pieza",
     marca: "Contorno azul y rojo",
     aplicar: () => setCrownLeakageForSelection(true),
+    quitar: () => setCrownLeakageForSelection(false),
   },
 
   // ---- Azul: lo que ya está hecho -------------------------------------
@@ -118,6 +136,7 @@ export const NOTACIONES: Notacion[] = [
     ambito: "cara",
     marca: "Punto azul: tenía caries y ya no",
     aplicar: (cara) => setFillingSurfaceForSelection(cara ?? "O", true),
+    quitar: (cara) => setFillingSurfaceForSelection(cara ?? "O", false),
   },
   {
     id: "ausente",
@@ -126,6 +145,7 @@ export const NOTACIONES: Notacion[] = [
     ambito: "pieza",
     marca: "X azul sobre la pieza",
     aplicar: () => setToothSelectionForSelection("none"),
+    quitar: () => setToothSelectionForSelection("tooth-base"),
   },
   {
     id: "corona-hecha",
@@ -134,6 +154,7 @@ export const NOTACIONES: Notacion[] = [
     ambito: "pieza",
     marca: "Pieza entera cubierta de azul",
     aplicar: (valor) => setRestorationForSelection(valor ?? "crown|metal-ceramic"),
+    quitar: () => setRestorationForSelection("none|none"),
   },
   {
     id: "puente",
@@ -142,6 +163,7 @@ export const NOTACIONES: Notacion[] = [
     ambito: "pieza",
     marca: "Contorno azul y pilares circulares",
     aplicar: (valor) => setRestorationForSelection(valor ?? "bridge|metal-ceramic"),
+    quitar: () => setRestorationForSelection("none|none"),
   },
   {
     id: "endodoncia-hecha",
@@ -149,7 +171,8 @@ export const NOTACIONES: Notacion[] = [
     color: "azul",
     ambito: "pieza",
     marca: "Raya azul sobre la pulpa",
-    aplicar: () => setPulpEndoForSelection("endo-ok"),
+    aplicar: () => setPulpEndoForSelection("endo-filling"),
+    quitar: () => setPulpEndoForSelection("normal"),
   },
   {
     id: "implante",
@@ -158,6 +181,7 @@ export const NOTACIONES: Notacion[] = [
     ambito: "pieza",
     marca: "IMP y un tornillo",
     aplicar: () => setToothSelectionForSelection("implant"),
+    quitar: () => setToothSelectionForSelection("tooth-base"),
   },
   {
     id: "impactado",
@@ -166,6 +190,7 @@ export const NOTACIONES: Notacion[] = [
     ambito: "pieza",
     marca: "I mayúscula en azul",
     aplicar: () => setToothSelectionForSelection("tooth-under-gum"),
+    quitar: () => setToothSelectionForSelection("tooth-base"),
   },
   {
     id: "movilidad",
@@ -173,11 +198,12 @@ export const NOTACIONES: Notacion[] = [
     color: "azul",
     ambito: "pieza",
     marca: "M con el grado al lado",
-    aplicar: (valor) => setMobilityForSelection(valor ?? "1"),
+    aplicar: (valor) => setMobilityForSelection(valor ?? "m1"),
+    quitar: () => setMobilityForSelection("none"),
     valores: [
-      { valor: "1", etiqueta: "M1" },
-      { valor: "2", etiqueta: "M2" },
-      { valor: "3", etiqueta: "M3" },
+      { valor: "m1", etiqueta: "M1" },
+      { valor: "m2", etiqueta: "M2" },
+      { valor: "m3", etiqueta: "M3" },
     ],
   },
   {
@@ -187,6 +213,7 @@ export const NOTACIONES: Notacion[] = [
     ambito: "pieza",
     marca: "Curva azul hacia donde está girado",
     aplicar: () => setOrthoRotationForSelection(true),
+    quitar: () => setOrthoRotationForSelection(false),
   },
   {
     id: "migracion",
@@ -195,6 +222,7 @@ export const NOTACIONES: Notacion[] = [
     ambito: "pieza",
     marca: "Flecha azul hacia la dirección",
     aplicar: (valor) => setOrthoDriftForSelection(valor ?? "mesial"),
+    quitar: () => setOrthoDriftForSelection("none"),
     valores: [
       { valor: "mesial", etiqueta: "Hacia mesial" },
       { valor: "distal", etiqueta: "Hacia distal" },
@@ -207,6 +235,7 @@ export const NOTACIONES: Notacion[] = [
     ambito: "pieza",
     marca: "Flecha vertical, arriba o abajo",
     aplicar: (valor) => setOrthoVerticalForSelection(valor ?? "intrusion"),
+    quitar: () => setOrthoVerticalForSelection("none"),
     valores: [
       { valor: "intrusion", etiqueta: "Intruido" },
       { valor: "extrusion", etiqueta: "Extruido" },
@@ -219,6 +248,7 @@ export const NOTACIONES: Notacion[] = [
     ambito: "pieza",
     marca: "Cuadro azul con cruz, o zigzag si es removible",
     aplicar: (valor) => setOrthoApplianceForSelection(valor ?? "bracket"),
+    quitar: () => setOrthoApplianceForSelection("none"),
   },
   {
     id: "desgaste",
@@ -226,7 +256,8 @@ export const NOTACIONES: Notacion[] = [
     color: "azul",
     ambito: "pieza",
     marca: "DES y una línea azul",
-    aplicar: (valor) => setWearEdgeForSelection(valor ?? "1"),
+    aplicar: (valor) => setWearEdgeForSelection(valor ?? "attrition"),
+    quitar: () => setWearEdgeForSelection("none"),
   },
 ]
 

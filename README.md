@@ -121,6 +121,23 @@ Ojo al leer el DOM: hay **dos tiles por pieza**, la vista facial y la oclusal.
 Sólo la facial lleva `role="option"`; filtrar por rol evita contar cada diente
 dos veces.
 
+Debajo del lienzo va **la tabla de lo marcado**, con una papelera por fila que
+no borra sólo la línea: deshace la notación en el odontograma llamando a su
+inversa sobre las mismas piezas.
+
+Esa tabla existe porque el motor no permite otra cosa. `getToothStateSummary`
+devuelve el estado de cada pieza ya traducido a texto, sin forma de saber qué
+llamada lo puso ahí; sin eso no se puede quitar una notación concreta, sólo
+reiniciar el diente entero. El registro lo lleva la aplicación, y como sólo se
+llena desde el menú —y ni el registro ni el lienzo sobreviven a una recarga—,
+los dos se mantienen en el mismo estado.
+
+**Los valores «ninguno» no se adivinan.** Salen del motor: `mobilityOptions`,
+`wearEdgeOptions`, `restorationOptions`, `pulpEndoGroups`. Adivinarlos fue el
+primer intento y mandaba valores que la librería ignora en silencio —movilidad
+no es `1/2/3` sino `m1/m2/m3`, y la endodoncia hecha no es `endo-ok` sino
+`endo-filling`.
+
 Sigue pesando 2,8 MB (675 KB gz) más jsPDF y fuentes Noto, así que se carga
 diferida para no tocar el bundle de las pantallas clínicas.
 

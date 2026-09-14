@@ -1,12 +1,3 @@
-/**
- * El menú contextual de notaciones sobre el lienzo de la librería.
- *
- * Comprueba que no queda rastro de la interfaz de la librería, que el menú sale
- * junto a la selección sin taparla, que la multiselección funciona por las tres
- * vías, y que lo aplicado va a las piezas correctas.
- *
- *   node e2e/ejecutar.mjs notaciones
- */
 import { chromium } from 'playwright'
 const B = process.env.BASE
 const fallos = []
@@ -70,6 +61,24 @@ check('anuncia las notaciones pendientes', (await menu.innerText()).includes('7 
 await menu.locator('summary').click(); await pag.waitForTimeout(300)
 check('al desplegarlas se listan', (await menu.innerText()).includes('Supernumerario'))
 check('sin errores de JavaScript', errs.length === 0, errs.slice(0,2).join(' | '))
+
+// --- la tabla de lo marcado ---
+const tabla = pag.locator('table')
+check('lo aplicado aparece en la tabla', await tabla.locator('tbody tr').count() === 1,
+  `${await tabla.locator('tbody tr').count()} filas`)
+const fila = await tabla.locator('tbody tr').first().innerText()
+check('la fila dice piezas, notación y cara', fila.includes('16') && fila.includes('26') && fila.includes('Caries') && fila.includes('O'), fila.replace(/\n/g,' | '))
+
+// Una segunda notación, de pieza completa
+await menu.getByRole('button', { name: 'A extraer', exact: true }).click(); await pag.waitForTimeout(700)
+check('se acumulan las anotaciones', await tabla.locator('tbody tr').count() === 2)
+check('distingue pieza completa de cara', (await tabla.innerText()).includes('pieza completa'))
+
+// Quitar la primera: debe irse de la tabla y deshacerse en el lienzo
+await tabla.locator('tbody tr').first().locator('button').click(); await pag.waitForTimeout(900)
+check('la papelera quita la fila', await tabla.locator('tbody tr').count() === 1, `${await tabla.locator('tbody tr').count()} filas`)
+check('queda la otra anotación', (await tabla.innerText()).includes('A extraer'))
+check('avisa de lo quitado', (await pag.locator('[role="status"]').innerText()).includes('Quitado'))
 
 // Con la pieza a la derecha el menú debe voltear al otro lado
 await pag.reload({ waitUntil: 'domcontentloaded' })
