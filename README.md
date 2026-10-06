@@ -28,6 +28,18 @@ El navegador siempre habla con `:5173`. Vite hace de proxy hacia la API en
 | `npm run e2e botones` | Comprueba los dos bancos de pruebas y su botón de volver |
 | `npm run e2e loaders` | Comprueba el loading de isotipos de ambos bancos |
 | `npm run e2e notaciones` | Comprueba el menú contextual sobre el lienzo de la librería |
+| `npm run e2e catalogo` | Catálogo de servicios, categorías, configuración y permisos por rol |
+| `npm run e2e paciente` | Alta y edición de paciente, buscador y ficha médica |
+| `npm run e2e recorrido` | Agenda, consulta, cobro y recibo, firma, caja, gastos, inventario e informes. **Escribe datos: `make reset` después** |
+| `npm run e2e extras` | Archivos, implantes, odontograma, comprobantes fiscales, cierre de caja, tarifas y vista de mes. **Escribe datos: `make reset` después** |
+| `npm run e2e informes` | Reporte por doctor desde Informes y «Mi producción» del propio doctor. Sólo lee |
+| `npm run e2e onboarding` | La guía de primeros pasos sobre una clínica vacía. **Necesita `make vacio`** y la deja configurada |
+| `npm run e2e mejoras` | «Salir», búsqueda sin tildes, teléfonos, selects con buscador, ítems del plan, pincel del odontograma y datos de la clínica. **Escribe datos: `make reset` después** |
+
+`npm run e2e <guion>` ejecuta `e2e/<guion>.mjs`. Los guiones que escriben (`catalogo`,
+`paciente`) deshacen lo que hacen: después de correrlos, `make verify` en la API sigue
+dando 101 PASS. Con `PUERTO=5174 npm run e2e …` se apunta a un segundo servidor de
+desarrollo sin parar el de `:5173`.
 
 `gen:api` necesita la API corriendo. Conviene ejecutarlo cada vez que cambie un
 endpoint: es lo que mantiene el contrato entre backend y frontend sin
@@ -66,29 +78,62 @@ restauración existente.
 
 Por eso **la interfaz es acromática a propósito**. Si el chrome usara hues
 saturados competiría con la señal clínica. El único color de marca es
-`--color-marca` (`#1e4b45`), un teal tan oscuro y desaturado que se lee como
-neutro: el verde del campo quirúrgico. Nunca se confunde con un hallazgo.
+`--color-marca` (`#223262`), el azul marino del manual, para acciones y estados
+activos; el resto de la paleta es gris. Los tokens viven en `@theme` de
+`src/index.css`, que es la autoridad.
 
-Al añadir pantallas: los colores de estado se toman del endpoint de catálogos,
-nunca se escriben a mano.
+Al añadir pantallas: los colores de estado se toman de la API, nunca se escriben
+a mano. `Insignia` recibe ese color y lo usa apagado —texto y borde en el tono,
+fondo casi blanco—; sin color es gris.
 
 ## Tipografía
 
-IBM Plex Sans para la interfaz, IBM Plex Mono **sólo para códigos reales**:
-piezas FDI, `REST-001`, `PT-2026-0001`, NCF, lotes de implante. El dominio está
-lleno de identificadores que hay que escanear y alinear en columna; para eso
-existe `.tabular`, que activa numerales tabulares. No se usa mono para
-etiquetas de interfaz.
+Archivo para la interfaz, IBM Plex Mono **sólo para códigos reales**: piezas
+FDI, `REST-001`, `PT-2026-0001`, NCF, lotes de implante. El dominio está lleno de
+identificadores que hay que escanear y alinear en columna; para eso existe
+`.tabular`, que activa numerales tabulares. No se usa mono para etiquetas de
+interfaz.
 
-## La marca
+## Primitivas, formularios y formato
 
-Un solo trazado de molar en `src/components/brand/tooth-path.ts`, compartido por
-el logo, el favicon (`public/favicon.svg`) y el spinner. Está dibujado sobre la
-rejilla de 24×24 de lucide, así que convive con el resto de la iconografía.
+`src/components/ui/` tiene pocas piezas y ninguna con variantes de color (salvo el tono de los
+mensajes):
 
-`ToothSpinner` llena el diente desde la raíz hacia la corona en lugar de girar:
-una silueta dentada rotando se lee como una mancha a 20px. Con
-`prefers-reduced-motion` el relleno se queda quieto y visible.
+| | |
+|---|---|
+| `Boton`, `Tarjeta`, `Vacio`, `ErrorCarga`, `Esqueleto` | Lo básico de cualquier pantalla |
+| `Campo`, `CampoFecha`, `CampoTelefono`, `AreaTexto`, `Casilla` | Campos con etiqueta, ayuda y error; aceptan `{...register("x")}`. El teléfono lleva máscara `(809) 555-0100` |
+| `Selector`, `SelectorFiltro` | **Todo select tiene buscador** (sin tildes). El `<select>` nativo sigue en el DOM, oculto, y es lo que lee el formulario; encima va la caja con la lista filtrable |
+| `Dialogo`, `PieDialogo` | Modal sobre el `<dialog>` nativo: el foco, Escape y el velo los pone el navegador |
+| `Pestanas` + `usePestana` | La pestaña activa vive en la URL (`?pestana=ficha`) |
+| `Tabla` + `Paginacion` | Tabla por columnas declaradas |
+| `Combobox` | Búsqueda con lista y teclado |
+| `Insignia` | Estado; el color llega de la API |
+| `Aviso`, `useAviso` | Mensaje en la página con `tono` (`error`, `advertencia`, `exito`, `info`: borde, icono y fondo tenue); confirmación pasajera |
+
+**Formularios:** react-hook-form + zod. Lo que falla en el servidor vuelve como
+`ApiError.campos` y `aplicarErrorApi` (`src/lib/formularios.ts`) lo pinta junto a
+su control; lo demás sale como mensaje general. Un texto vacío viaja como `null`
+(`oNulo`), no como cadena vacía.
+
+**Formato:** todo pasa por `src/lib/formato.ts` —`fecha`, `hora`, `moneda`,
+`telefono`, `edad`, `rol`, `doctor`—, con `Intl` en `es-DO`. Una fecha, una
+cifra o un teléfono no se formatean a mano en ninguna pantalla. El tratamiento
+«Dr(a).» lo pone `doctor()`: no forma parte del nombre guardado.
+
+**Impresión:** todo impreso empieza por `Membrete` (`src/features/clinica/`), que toma el logo y los datos
+de Configuración → Clínica. Se imprime desde el navegador. `.no-imprimir` oculta el marco,
+`.hoja` es un documento carta y `.hoja-ticket` un recibo de 80 mm
+(`src/index.css`).
+
+## El marco
+
+Barra lateral con los enlaces que el rol puede ver (`NAVEGACION` en
+`src/rutas/Layout.tsx`; sólo se enlaza lo que ya existe). Dos atajos globales:
+`⌘K` / `Ctrl K` abre el buscador de pacientes y `F1` el alta. El alta y la
+edición de paciente son **un solo formulario** (`DialogoPaciente`), y los datos
+de salud no están en él sino en la ficha médica (`DialogoFicha`), que es el
+único cuestionario.
 
 ## Bancos de pruebas
 
@@ -177,18 +222,42 @@ El estado sólo decide la textura: sólido lo existente y lo completado, rayado 
 planificado, translúcido lo que está en proceso. Así un mismo diagnóstico se
 reconoce esté propuesto o ya ejecutado.
 
+En el expediente, la tabla bajo el dibujo agrupa los hallazgos por pieza y condición y
+**calcula la clase de Black** a partir de las caras (`components/odontograma/black.ts`): no se
+guarda, así que no puede discrepar de lo dibujado. La paleta reparte las 35 condiciones en
+pestañas y las versiones se recorren como una línea de tiempo.
+
+## Archivos
+
+Las fotos, los exámenes y los comprobantes exigen sesión, así que **nunca van como `src`
+directo**. `useContenido(archivoId)` pide los bytes con el token (`apiBlob`) y devuelve una
+URL de objeto que vive en la caché de consultas; `main.tsx` la libera cuando la caché la
+descarta. Subir es un `FormData` por el mismo `apiFetch`.
+
 ## Estructura
 
 ```
 src/
 ├── api/         cliente HTTP, sesión y schema.d.ts generado desde el OpenAPI
 ├── components/
-│   ├── brand/       molar compartido: logo, favicon y spinner
+│   ├── brand/       isotipos, logotipo y Cargando
 │   ├── odontograma/ geometría de las cinco caras, lienzo y paleta
 │   └── ui/          primitivas, sin variantes de color
-├── features/    auth y pacientes (listado, expediente, ficha, odontograma)
-└── rutas/       layout y router
-e2e/             prueba de humo en navegador real
+├── features/
+│   ├── auth/          sesión y login
+│   ├── inicio/        tablero del día: por llegar, en sala, atendidos
+│   ├── agenda/        calendario propio, lista imprimible, cita y su detalle
+│   ├── pacientes/     listado, expediente, alta/edición, ficha, odontograma
+│   ├── historial/     planes de tratamiento, consultas con sus líneas, presupuesto
+│   ├── caja/          cuenta del paciente, pagos, recibo, cobros y cuentas por cobrar
+│   ├── documentos/    plantillas, documentos, receta, firma (página sin sesión)
+│   ├── gastos/  inventario/  informes/
+│   ├── catalogo/      servicios y precios, categorías, especialidades, receta de insumos
+│   ├── configuracion/ unidades dentales, doctores, usuarios, plantillas
+│   └── laboratorio/   bancos de pruebas del odontograma
+├── lib/         formato (es-DO) y ayudas de formulario
+└── rutas/       marco, router y contexto del marco
+e2e/             pruebas en navegador real, un guion por archivo
 ```
 
 ## Nota de dependencias

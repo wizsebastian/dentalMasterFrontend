@@ -28,7 +28,8 @@ const pagina = await contexto.newPage()
 pagina.on('console', (m) => { if (m.type() === 'error') errores.push(m.text()) })
 pagina.on('pageerror', (e) => errores.push(`pageerror: ${e.message}`))
 const respuestasFallidas = []
-pagina.on('response', (r) => { if (!r.ok()) respuestasFallidas.push(`${r.status()} ${new URL(r.url()).pathname}`) })
+pagina.on('response', (r) => { // Un 304 es el navegador revalidando un módulo, no un fallo: sólo cuentan los 4xx y 5xx.
+  if (r.status() >= 400) respuestasFallidas.push(`${r.status()} ${new URL(r.url()).pathname}`) })
 
 function check(nombre, condicion, detalle = '') {
   console.log(`${condicion ? 'PASS' : 'FAIL'}  ${nombre}${detalle ? ` — ${detalle}` : ''}`)
@@ -50,10 +51,14 @@ check('rechaza credenciales incorrectas', (await pagina.getByRole('alert').inner
 // 3. Login correcto
 await pagina.getByLabel('Contraseña').fill('dental2026')
 await pagina.getByRole('button', { name: 'Entrar' }).click()
-await pagina.waitForURL('**/pacientes', { timeout: 10000 })
+await pagina.waitForURL('**/inicio', { timeout: 10000 })
 await pagina.waitForLoadState('networkidle')
-check('entra y llega al listado', pagina.url().endsWith('/pacientes'))
-check('la cabecera muestra al doctor', await pagina.getByText('Laura Fernández Cruz').isVisible())
+check('entra y llega al tablero del día',
+  await pagina.getByRole('heading', { name: 'Hoy', exact: true }).waitFor({ timeout: 8000 }).then(() => true, () => false))
+await pagina.getByRole('navigation', { name: 'Principal' }).getByRole('link', { name: 'Pacientes' }).click()
+await pagina.waitForSelector('tbody tr', { timeout: 15000 })
+check('llega al listado de pacientes', pagina.url().endsWith('/pacientes'))
+check('el marco muestra al doctor', await pagina.getByText('Laura Fernández Cruz', { exact: true }).isVisible())
 await pagina.screenshot({ path: '/salida/02-pacientes.png' })
 
 // 4. Listado con los 4 pacientes del seed
@@ -69,6 +74,8 @@ await pagina.getByLabel('Buscar pacientes').fill('')
 await pagina.waitForTimeout(700)
 
 // 6. Expediente + odontograma
+// Con el filtro vaciado, la lista vuelve a las cuatro filas: se espera antes de pulsar.
+await pagina.locator('tbody tr').nth(3).waitFor({ timeout: 8000 })
 await pagina.getByRole('link', { name: 'PAC-2026-0001' }).click()
 await pagina.waitForLoadState('networkidle')
 const titulo = await pagina.getByRole('heading', { level: 1 }).innerText()
@@ -77,6 +84,10 @@ check('abre el expediente', titulo.includes('Juan Carlos Peña Rosario'), titulo
 const alerta = await pagina.getByRole('alert').innerText()
 check('muestra el banner de alertas', alerta.includes('Penicilina'), alerta.split('\n')[0])
 
+// El expediente abre en el historial: el odontograma está en su pestaña.
+check('el expediente abre en el historial',
+  await pagina.getByText('PT-2026-0001').first().waitFor({ timeout: 8000 }).then(() => true, () => false))
+await pagina.getByRole('tab', { name: 'Odontograma' }).click()
 // networkidle no basta en una SPA: hay que esperar a que React pinte.
 await pagina.waitForSelector('svg[role="group"]', { timeout: 15000 })
 const dientes = await pagina.locator('svg[role="group"]').count()

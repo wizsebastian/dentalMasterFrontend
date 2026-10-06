@@ -115,6 +115,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/catalogos/estados-cita": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Estados Cita
+         * @description Los seis estados de una cita, en el orden en que ocurren.
+         *
+         *     `ocupa_agenda` coincide con el filtro de las restricciones de exclusión: una
+         *     cita cancelada o a la que no se asistió libera al doctor y al sillón.
+         */
+        get: operations["estados_cita_api_v1_catalogos_estados_cita_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/catalogos/clinica": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Clinica
+         * @description La sede principal: membrete de los impresos y firma de los mensajes.
+         */
+        get: operations["clinica_api_v1_catalogos_clinica_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Actualizar Clinica
+         * @description Nombre, RNC, dirección y contacto de la clínica. Todo el sistema los usa:
+         *     membrete de impresos, recordatorios y variables de las plantillas.
+         */
+        patch: operations["actualizar_clinica_api_v1_catalogos_clinica_patch"];
+        trace?: never;
+    };
     "/api/v1/pacientes": {
         parameters: {
             query?: never;
@@ -325,6 +373,1551 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/citas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Listar
+         * @description Citas de un tramo de calendario, o todas las de un paciente.
+         *
+         *     No pagina: la interfaz pide una semana o un mes y lo pinta entero. Para que
+         *     eso sea cierto, sin paciente el tramo es obligatorio y está acotado.
+         */
+        get: operations["listar_api_v1_citas_get"];
+        put?: never;
+        /** Crear */
+        post: operations["crear_api_v1_citas_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/citas/{cita_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener */
+        get: operations["obtener_api_v1_citas__cita_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Actualizar
+         * @description Edita la cita. Mover el horario es reprogramar: conserva la cita y deja rastro.
+         */
+        patch: operations["actualizar_api_v1_citas__cita_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/citas/{cita_id}/estado": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cambiar Estado */
+        post: operations["cambiar_estado_api_v1_citas__cita_id__estado_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/citas/{cita_id}/recordatorio": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Marcar Recordatorio
+         * @description Anota que se envió el recordatorio. El mensaje lo abre la interfaz en WhatsApp.
+         */
+        post: operations["marcar_recordatorio_api_v1_citas__cita_id__recordatorio_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}/historial": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Historial Del Paciente
+         * @description Los planes con sus consultas y, aparte, las consultas sueltas. Lo más reciente primero.
+         */
+        get: operations["historial_del_paciente_api_v1_pacientes__paciente_id__historial_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}/consultas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Crear Consulta */
+        post: operations["crear_consulta_api_v1_pacientes__paciente_id__consultas_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/consultas/{consulta_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener Consulta */
+        get: operations["obtener_consulta_api_v1_consultas__consulta_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Borrar Consulta
+         * @description Sólo una consulta sin cobros: lo cobrado es historia contable.
+         */
+        delete: operations["borrar_consulta_api_v1_consultas__consulta_id__delete"];
+        options?: never;
+        head?: never;
+        /** Actualizar Consulta */
+        patch: operations["actualizar_consulta_api_v1_consultas__consulta_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}/planes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Crear Plan */
+        post: operations["crear_plan_api_v1_pacientes__paciente_id__planes_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/planes/{plan_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener Plan */
+        get: operations["obtener_plan_api_v1_planes__plan_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Borrar Plan
+         * @description Sólo un plan sin consultas: con ellas es historia clínica.
+         */
+        delete: operations["borrar_plan_api_v1_planes__plan_id__delete"];
+        options?: never;
+        head?: never;
+        /** Actualizar Plan */
+        patch: operations["actualizar_plan_api_v1_planes__plan_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/planes/{plan_id}/items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Crear Item */
+        post: operations["crear_item_api_v1_planes__plan_id__items_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/planes/{plan_id}/items/{item_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Borrar Item */
+        delete: operations["borrar_item_api_v1_planes__plan_id__items__item_id__delete"];
+        options?: never;
+        head?: never;
+        /** Actualizar Item */
+        patch: operations["actualizar_item_api_v1_planes__plan_id__items__item_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}/cuenta": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Estado De Cuenta */
+        get: operations["estado_de_cuenta_api_v1_pacientes__paciente_id__cuenta_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}/pagos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Registrar Pago
+         * @description Registra un pago y lo imputa: a la consulta indicada y luego a las más
+         *     antiguas con saldo. Lo que sobre queda como anticipo del paciente.
+         */
+        post: operations["registrar_pago_api_v1_pacientes__paciente_id__pagos_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/pagos/{pago_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Recibo
+         * @description El pago con lo que el recibo impreso necesita.
+         */
+        get: operations["recibo_api_v1_pagos__pago_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Actualizar Pago */
+        patch: operations["actualizar_pago_api_v1_pagos__pago_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/pagos/{pago_id}/anular": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Anular Pago */
+        post: operations["anular_pago_api_v1_pagos__pago_id__anular_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cuentas-por-cobrar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Cuentas Por Cobrar
+         * @description Pacientes con saldo, del que debe desde hace más tiempo al más reciente.
+         */
+        get: operations["cuentas_por_cobrar_api_v1_cuentas_por_cobrar_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/caja": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Caja
+         * @description Lo cobrado en un tramo de fechas, por método: el cierre de caja.
+         */
+        get: operations["caja_api_v1_caja_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/plantillas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listar Plantillas */
+        get: operations["listar_plantillas_api_v1_plantillas_get"];
+        put?: never;
+        /** Crear Plantilla */
+        post: operations["crear_plantilla_api_v1_plantillas_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/plantillas/{plantilla_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Actualizar Plantilla
+         * @description Cambiar una plantilla no toca lo ya emitido: cada documento guarda su texto final.
+         */
+        patch: operations["actualizar_plantilla_api_v1_plantillas__plantilla_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}/documentos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Documentos Del Paciente */
+        get: operations["documentos_del_paciente_api_v1_pacientes__paciente_id__documentos_get"];
+        put?: never;
+        /**
+         * Emitir
+         * @description Guarda el texto final. A partir de aquí el documento no cambia.
+         */
+        post: operations["emitir_api_v1_pacientes__paciente_id__documentos_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}/documentos/borrador": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Borrador
+         * @description La plantilla combinada con los datos del paciente. No guarda nada: es para revisar.
+         */
+        get: operations["borrador_api_v1_pacientes__paciente_id__documentos_borrador_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documentos/{documento_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener Documento */
+        get: operations["obtener_documento_api_v1_documentos__documento_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documentos/{documento_id}/anular": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Anular */
+        post: operations["anular_api_v1_documentos__documento_id__anular_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documentos/{documento_id}/enlace-firma": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Enlace De Firma
+         * @description Un enlace que sirve sólo para firmar este documento, y caduca.
+         *
+         *     Se abre en la tableta del consultorio o en el teléfono del paciente, sin
+         *     sesión: quien firma no entra a la aplicación.
+         */
+        post: operations["enlace_de_firma_api_v1_documentos__documento_id__enlace_firma_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/firma/{token}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Documento Para Firmar
+         * @description Sin sesión. Devuelve sólo el documento: nada más del expediente.
+         */
+        get: operations["documento_para_firmar_api_v1_firma__token__get"];
+        put?: never;
+        /** Firmar */
+        post: operations["firmar_api_v1_firma__token__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}/recetas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Recetar */
+        post: operations["recetar_api_v1_pacientes__paciente_id__recetas_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/categorias-gasto": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Categorias De Gasto */
+        get: operations["categorias_de_gasto_api_v1_categorias_gasto_get"];
+        put?: never;
+        /** Crear Categoria De Gasto */
+        post: operations["crear_categoria_de_gasto_api_v1_categorias_gasto_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/categorias-insumo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Categorias De Insumo */
+        get: operations["categorias_de_insumo_api_v1_categorias_insumo_get"];
+        put?: never;
+        /** Crear Categoria De Insumo */
+        post: operations["crear_categoria_de_insumo_api_v1_categorias_insumo_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/proveedores": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Proveedores */
+        get: operations["proveedores_api_v1_proveedores_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/gastos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listar Gastos */
+        get: operations["listar_gastos_api_v1_gastos_get"];
+        put?: never;
+        /** Registrar Gasto */
+        post: operations["registrar_gasto_api_v1_gastos_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/gastos/{gasto_id}/anular": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Anular Gasto
+         * @description Como el pago: no se borra. Lo que trajo al almacén sale con un asiento contrario.
+         */
+        post: operations["anular_gasto_api_v1_gastos__gasto_id__anular_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/insumos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Inventario
+         * @description Un solo catálogo de insumos, con su existencia calculada del kárdex.
+         */
+        get: operations["inventario_api_v1_insumos_get"];
+        put?: never;
+        /** Crear Insumo */
+        post: operations["crear_insumo_api_v1_insumos_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/insumos/{insumo_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Actualizar Insumo */
+        patch: operations["actualizar_insumo_api_v1_insumos__insumo_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/insumos/{insumo_id}/movimientos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Kardex */
+        get: operations["kardex_api_v1_insumos__insumo_id__movimientos_get"];
+        put?: never;
+        /**
+         * Mover Insumo
+         * @description Un asiento manual: una compra suelta, una merma o un conteo de estante.
+         */
+        post: operations["mover_insumo_api_v1_insumos__insumo_id__movimientos_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/servicios/{servicio_id}/insumos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Receta Del Servicio */
+        get: operations["receta_del_servicio_api_v1_servicios__servicio_id__insumos_get"];
+        /**
+         * Guardar Receta
+         * @description Reemplaza la receta. Es lo que da el costo del servicio y lo que se
+         *     descuenta del almacén cada vez que se ejecuta.
+         */
+        put: operations["guardar_receta_api_v1_servicios__servicio_id__insumos_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/costos-servicio": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Costos De Servicio
+         * @description Costo en insumos de cada servicio con receta, para ver su margen.
+         */
+        get: operations["costos_de_servicio_api_v1_costos_servicio_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/informes/resumen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Resumen
+         * @description Ingresos, gastos y neto del tramo, y quién lo produjo.
+         *
+         *     La comisión de cada doctor es sobre lo **cobrado** por sus consultas, no
+         *     sobre lo ejecutado: se le liquida lo que efectivamente entró.
+         */
+        get: operations["resumen_api_v1_informes_resumen_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/archivos/{archivo_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Descargar
+         * @description Los bytes. Exige sesión: la interfaz los pide con su token y los muestra
+         *     desde memoria, de modo que ninguna URL de un examen sirve fuera de ella.
+         */
+        get: operations["descargar_api_v1_archivos__archivo_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}/archivos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listar */
+        get: operations["listar_api_v1_pacientes__paciente_id__archivos_get"];
+        put?: never;
+        /** Subir */
+        post: operations["subir_api_v1_pacientes__paciente_id__archivos_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/archivos-clinicos/{documento_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Quitar */
+        delete: operations["quitar_api_v1_archivos_clinicos__documento_id__delete"];
+        options?: never;
+        head?: never;
+        /** Actualizar */
+        patch: operations["actualizar_api_v1_archivos_clinicos__documento_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/pagos/{pago_id}/comprobante": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Adjuntar A Pago
+         * @description El voucher o la captura de la transferencia. Sustituye al anterior.
+         */
+        put: operations["adjuntar_a_pago_api_v1_pagos__pago_id__comprobante_put"];
+        post?: never;
+        /** Quitar De Pago */
+        delete: operations["quitar_de_pago_api_v1_pagos__pago_id__comprobante_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/gastos/{gasto_id}/comprobante": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Adjuntar A Gasto
+         * @description La factura del proveedor, en foto o PDF. Sustituye a la anterior.
+         */
+        put: operations["adjuntar_a_gasto_api_v1_gastos__gasto_id__comprobante_put"];
+        post?: never;
+        /** Quitar De Gasto */
+        delete: operations["quitar_de_gasto_api_v1_gastos__gasto_id__comprobante_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sistemas-implante": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listar Sistemas */
+        get: operations["listar_sistemas_api_v1_sistemas_implante_get"];
+        put?: never;
+        /** Crear Sistema */
+        post: operations["crear_sistema_api_v1_sistemas_implante_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}/implantes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Implantes Del Paciente */
+        get: operations["implantes_del_paciente_api_v1_pacientes__paciente_id__implantes_get"];
+        put?: never;
+        /**
+         * Registrar Implante
+         * @description Registra el implante colocado. Con `procedimiento_id`, hereda de la línea
+         *     de consulta la pieza, el doctor y la fecha: sólo queda teclear el lote.
+         */
+        post: operations["registrar_implante_api_v1_pacientes__paciente_id__implantes_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/implantes/{implante_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Actualizar Implante */
+        patch: operations["actualizar_implante_api_v1_implantes__implante_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/implantes/{implante_id}/eventos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Registrar Evento */
+        post: operations["registrar_evento_api_v1_implantes__implante_id__eventos_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/implantes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Buscar Por Lote
+         * @description A quién se le colocó un implante de ese lote: la respuesta a un retiro
+         *     de producto del fabricante.
+         */
+        get: operations["buscar_por_lote_api_v1_implantes_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/secuencias-ncf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listar Secuencias */
+        get: operations["listar_secuencias_api_v1_secuencias_ncf_get"];
+        put?: never;
+        /**
+         * Crear Secuencia
+         * @description Carga un rango nuevo. El que estaba activo para ese tipo queda cerrado.
+         */
+        post: operations["crear_secuencia_api_v1_secuencias_ncf_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/secuencias-ncf/{secuencia_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Actualizar Secuencia */
+        patch: operations["actualizar_secuencia_api_v1_secuencias_ncf__secuencia_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}/facturas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Facturas Del Paciente
+         * @description Sus comprobantes y las líneas ejecutadas que aún no tienen ninguno.
+         */
+        get: operations["facturas_del_paciente_api_v1_pacientes__paciente_id__facturas_get"];
+        put?: never;
+        /**
+         * Emitir Factura
+         * @description Emite un comprobante con el siguiente NCF de la secuencia activa.
+         */
+        post: operations["emitir_factura_api_v1_pacientes__paciente_id__facturas_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/facturas/{factura_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener Factura */
+        get: operations["obtener_factura_api_v1_facturas__factura_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/facturas/{factura_id}/anular": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Anular Factura
+         * @description El número no se reutiliza: queda anulado, y sus líneas vuelven a ser facturables.
+         */
+        post: operations["anular_factura_api_v1_facturas__factura_id__anular_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/caja/dia": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Caja Del Dia */
+        get: operations["caja_del_dia_api_v1_caja_dia_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/caja/cierres": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listar Cierres */
+        get: operations["listar_cierres_api_v1_caja_cierres_get"];
+        put?: never;
+        /**
+         * Cerrar Caja
+         * @description Guarda la foto del día: lo cobrado por método y el efectivo contado.
+         */
+        post: operations["cerrar_caja_api_v1_caja_cierres_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/caja/cierres/{cierre_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Reabrir Caja
+         * @description Deshace un cierre equivocado. Sólo administración.
+         */
+        delete: operations["reabrir_caja_api_v1_caja_cierres__cierre_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}/seguros": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Seguros Del Paciente */
+        get: operations["seguros_del_paciente_api_v1_pacientes__paciente_id__seguros_get"];
+        put?: never;
+        /** Agregar Seguro */
+        post: operations["agregar_seguro_api_v1_pacientes__paciente_id__seguros_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/seguros/{seguro_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Actualizar Seguro */
+        put: operations["actualizar_seguro_api_v1_seguros__seguro_id__put"];
+        post?: never;
+        /** Quitar Seguro */
+        delete: operations["quitar_seguro_api_v1_seguros__seguro_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/pacientes/{paciente_id}/resumen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Resumen Del Paciente */
+        get: operations["resumen_del_paciente_api_v1_pacientes__paciente_id__resumen_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/informes/doctores/{doctor_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Reporte Del Doctor
+         * @description El reporte de un doctor en un tramo de fechas.
+         *
+         *     Lo ve quien lleva las cuentas, y cada doctor el suyo: nunca el de un colega.
+         */
+        get: operations["reporte_del_doctor_api_v1_informes_doctores__doctor_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/onboarding": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Estado
+         * @description Cómo va la configuración. El detalle es sólo de administración: el resto
+         *     sólo necesita saber si la clínica está lista.
+         */
+        get: operations["estado_api_v1_onboarding_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/onboarding/revisar-catalogo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Revisar Catalogo
+         * @description «Ya revisé mis servicios y precios»: el único paso sin dato observable.
+         */
+        post: operations["revisar_catalogo_api_v1_onboarding_revisar_catalogo_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/onboarding/cerrar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cerrar
+         * @description Termina la guía. Exige lo obligatorio, salvo «Omitir por ahora».
+         */
+        post: operations["cerrar_api_v1_onboarding_cerrar_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/onboarding/cierre": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Reabrir
+         * @description Vuelve a ofrecer la guía («Ver guía de primeros pasos»).
+         */
+        delete: operations["reabrir_api_v1_onboarding_cierre_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/listas-precio": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Listar Listas
+         * @description Las tarifas activas. La primera es siempre la particular.
+         */
+        get: operations["listar_listas_api_v1_listas_precio_get"];
+        put?: never;
+        /**
+         * Crear Lista
+         * @description Crea una tarifa copiando los precios de otra: ningún servicio queda sin precio.
+         */
+        post: operations["crear_lista_api_v1_listas_precio_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/aseguradoras": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Listar Aseguradoras
+         * @description Las ARS. «Particular» no es una aseguradora: es no tener ninguna.
+         */
+        get: operations["listar_aseguradoras_api_v1_aseguradoras_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/listas-precio/{lista_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Actualizar Lista */
+        patch: operations["actualizar_lista_api_v1_listas_precio__lista_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/categorias-servicio": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listar Categorias */
+        get: operations["listar_categorias_api_v1_categorias_servicio_get"];
+        put?: never;
+        /** Crear Categoria */
+        post: operations["crear_categoria_api_v1_categorias_servicio_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/categorias-servicio/{categoria_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Borrar Categoria */
+        delete: operations["borrar_categoria_api_v1_categorias_servicio__categoria_id__delete"];
+        options?: never;
+        head?: never;
+        /** Actualizar Categoria */
+        patch: operations["actualizar_categoria_api_v1_categorias_servicio__categoria_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/servicios": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Listar Servicios
+         * @description El catálogo completo, sin paginar: son decenas de filas y la interfaz
+         *     filtra sobre ellas mientras se escribe.
+         */
+        get: operations["listar_servicios_api_v1_servicios_get"];
+        put?: never;
+        /** Crear Servicio */
+        post: operations["crear_servicio_api_v1_servicios_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/servicios/{servicio_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener Servicio */
+        get: operations["obtener_servicio_api_v1_servicios__servicio_id__get"];
+        put?: never;
+        post?: never;
+        /** Borrar Servicio */
+        delete: operations["borrar_servicio_api_v1_servicios__servicio_id__delete"];
+        options?: never;
+        head?: never;
+        /** Actualizar Servicio */
+        patch: operations["actualizar_servicio_api_v1_servicios__servicio_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/catalogos/clinica/logo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Subir Logo
+         * @description El logo que llevan los impresos. Sustituye al anterior.
+         */
+        put: operations["subir_logo_api_v1_catalogos_clinica_logo_put"];
+        post?: never;
+        /** Quitar Logo */
+        delete: operations["quitar_logo_api_v1_catalogos_clinica_logo_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/especialidades": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listar Especialidades */
+        get: operations["listar_especialidades_api_v1_especialidades_get"];
+        put?: never;
+        /** Crear Especialidad */
+        post: operations["crear_especialidad_api_v1_especialidades_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/especialidades/{especialidad_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Borrar Especialidad */
+        delete: operations["borrar_especialidad_api_v1_especialidades__especialidad_id__delete"];
+        options?: never;
+        head?: never;
+        /** Actualizar Especialidad */
+        patch: operations["actualizar_especialidad_api_v1_especialidades__especialidad_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/unidades": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listar Unidades */
+        get: operations["listar_unidades_api_v1_unidades_get"];
+        put?: never;
+        /** Crear Unidad */
+        post: operations["crear_unidad_api_v1_unidades_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/unidades/{unidad_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Borrar Unidad */
+        delete: operations["borrar_unidad_api_v1_unidades__unidad_id__delete"];
+        options?: never;
+        head?: never;
+        /** Actualizar Unidad */
+        patch: operations["actualizar_unidad_api_v1_unidades__unidad_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/doctores": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listar Doctores */
+        get: operations["listar_doctores_api_v1_doctores_get"];
+        put?: never;
+        /** Crear Doctor */
+        post: operations["crear_doctor_api_v1_doctores_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/doctores/{doctor_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Actualizar Doctor */
+        patch: operations["actualizar_doctor_api_v1_doctores__doctor_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/usuarios": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listar */
+        get: operations["listar_api_v1_usuarios_get"];
+        put?: never;
+        /** Crear */
+        post: operations["crear_api_v1_usuarios_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/usuarios/{usuario_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Actualizar */
+        patch: operations["actualizar_api_v1_usuarios__usuario_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/usuarios/{usuario_id}/password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cambiar Password */
+        post: operations["cambiar_password_api_v1_usuarios__usuario_id__password_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -349,6 +1942,17 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AlergiaCatalogo */
+        AlergiaCatalogo: {
+            /** Id */
+            id: number;
+            /** Codigo */
+            codigo: string;
+            /** Nombre */
+            nombre: string;
+            /** Tipo */
+            tipo: string | null;
+        };
         /** AlergiaEscribir */
         AlergiaEscribir: {
             /** Alergia Id */
@@ -393,6 +1997,204 @@ export interface components {
          * @enum {string}
          */
         AmbitoCondicion: "superficie" | "diente" | "raiz" | "periodontal" | "protesico";
+        /** AplicacionLeer */
+        AplicacionLeer: {
+            /** Consulta Id */
+            consulta_id: number;
+            /** Monto */
+            monto: string;
+        };
+        /** ArchivoClinicoActualizar */
+        ArchivoClinicoActualizar: {
+            /** Tipo */
+            tipo?: ("foto" | "radiografia_periapical" | "panoramica" | "cbct" | "laboratorio" | "otro") | null;
+            /** Titulo */
+            titulo?: string | null;
+            /** Codigo Fdi */
+            codigo_fdi?: number | null;
+            /** Tomado En */
+            tomado_en?: string | null;
+        };
+        /** ArchivoClinicoLeer */
+        ArchivoClinicoLeer: {
+            /** Id */
+            id: number;
+            /** Paciente Id */
+            paciente_id: number;
+            /** Consulta Id */
+            consulta_id: number | null;
+            /** Tipo */
+            tipo: string;
+            /** Codigo Fdi */
+            codigo_fdi: number | null;
+            /** Titulo */
+            titulo: string | null;
+            archivo: components["schemas"]["ArchivoLeer"] | null;
+            /**
+             * Url
+             * @description Referencia externa, cuando no hay archivo en el almacén
+             */
+            url: string | null;
+            /** Tomado En */
+            tomado_en: string | null;
+            /**
+             * Creado En
+             * Format: date-time
+             */
+            creado_en: string;
+        };
+        /** ArchivoLeer */
+        ArchivoLeer: {
+            /** Id */
+            id: number;
+            /** Nombre Original */
+            nombre_original: string;
+            /** Mime */
+            mime: string;
+            /** Bytes */
+            bytes: number;
+            /**
+             * Creado En
+             * Format: date-time
+             */
+            creado_en: string;
+        };
+        /** AseguradoraLeer */
+        AseguradoraLeer: {
+            /** Id */
+            id: number;
+            /** Codigo */
+            codigo: string;
+            /** Nombre */
+            nombre: string;
+            /** Telefono */
+            telefono: string | null;
+        };
+        /** Body_adjuntar_a_gasto_api_v1_gastos__gasto_id__comprobante_put */
+        Body_adjuntar_a_gasto_api_v1_gastos__gasto_id__comprobante_put: {
+            /**
+             * Archivo
+             * Format: binary
+             */
+            archivo: string;
+        };
+        /** Body_adjuntar_a_pago_api_v1_pagos__pago_id__comprobante_put */
+        Body_adjuntar_a_pago_api_v1_pagos__pago_id__comprobante_put: {
+            /**
+             * Archivo
+             * Format: binary
+             */
+            archivo: string;
+        };
+        /** Body_subir_api_v1_pacientes__paciente_id__archivos_post */
+        Body_subir_api_v1_pacientes__paciente_id__archivos_post: {
+            /**
+             * Archivo
+             * Format: binary
+             */
+            archivo: string;
+            /**
+             * Tipo
+             * @default foto
+             * @enum {string}
+             */
+            tipo: "foto" | "radiografia_periapical" | "panoramica" | "cbct" | "laboratorio" | "otro";
+            /** Titulo */
+            titulo?: string | null;
+            /** Consulta Id */
+            consulta_id?: number | null;
+            /** Codigo Fdi */
+            codigo_fdi?: number | null;
+            /** Tomado En */
+            tomado_en?: string | null;
+        };
+        /** Body_subir_logo_api_v1_catalogos_clinica_logo_put */
+        Body_subir_logo_api_v1_catalogos_clinica_logo_put: {
+            /**
+             * Archivo
+             * Format: binary
+             */
+            archivo: string;
+        };
+        /**
+         * Borrador
+         * @description La plantilla ya combinada con los datos del paciente, lista para revisar.
+         */
+        Borrador: {
+            /** Plantilla Id */
+            plantilla_id: number;
+            /**
+             * Tipo
+             * @enum {string}
+             */
+            tipo: "constancia" | "licencia" | "postoperatorio" | "consentimiento" | "consentimiento_datos";
+            /** Titulo */
+            titulo: string;
+            /** Cuerpo */
+            cuerpo: string;
+            /** Requiere Firma */
+            requiere_firma: boolean;
+        };
+        /**
+         * Caja
+         * @description Lo cobrado en un tramo de fechas, para el cierre de caja.
+         */
+        Caja: {
+            /**
+             * Desde
+             * Format: date
+             */
+            desde: string;
+            /**
+             * Hasta
+             * Format: date
+             */
+            hasta: string;
+            /** Total */
+            total: string;
+            /** Anulados */
+            anulados: number;
+            /** Por Metodo */
+            por_metodo: components["schemas"]["TotalMetodo"][];
+            /** Pagos */
+            pagos: components["schemas"]["PagoConPaciente"][];
+        };
+        /**
+         * CajaDelDia
+         * @description La caja viva de un día y, si ya se cerró, la foto del cierre.
+         */
+        CajaDelDia: {
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            /** Cobrado */
+            cobrado: string;
+            /** Por Metodo */
+            por_metodo: {
+                [key: string]: string;
+            };
+            /** Efectivo Cobrado */
+            efectivo_cobrado: string;
+            /** Gastos Efectivo */
+            gastos_efectivo: string;
+            /** Efectivo Esperado */
+            efectivo_esperado: string;
+            cierre: components["schemas"]["CierreLeer"] | null;
+            /**
+             * Movido Tras Cierre
+             * @description Lo cobrado o anulado después de cerrar
+             * @default 0
+             */
+            movido_tras_cierre: string;
+        };
+        /** CambioEstado */
+        CambioEstado: {
+            estado: components["schemas"]["EstadoCita"];
+            /** Motivo */
+            motivo?: string | null;
+        };
         /**
          * Catalogos
          * @description Todo lo que el odontograma necesita para dibujarse, en una sola llamada.
@@ -404,6 +2206,380 @@ export interface components {
             superficies: components["schemas"]["SuperficieLeer"][];
             /** Condiciones */
             condiciones: components["schemas"]["CondicionDentalLeer"][];
+        };
+        /** CategoriaActualizar */
+        CategoriaActualizar: {
+            /** Nombre */
+            nombre?: string | null;
+            /** Orden */
+            orden?: number | null;
+        };
+        /** CategoriaCrear */
+        CategoriaCrear: {
+            /** Nombre */
+            nombre: string;
+            /** Codigo */
+            codigo?: string | null;
+            /** Orden */
+            orden?: number | null;
+        };
+        /** CategoriaLeer */
+        CategoriaLeer: {
+            /** Id */
+            id: number;
+            /** Codigo */
+            codigo: string;
+            /** Nombre */
+            nombre: string;
+            /** Orden */
+            orden: number | null;
+            /**
+             * Servicios
+             * @description Servicios que cuelgan de la categoría
+             * @default 0
+             */
+            servicios: number;
+        };
+        /** CerrarGuia */
+        CerrarGuia: {
+            /**
+             * Forzar
+             * @description Cerrar aunque falte lo obligatorio («Omitir por ahora»)
+             * @default false
+             */
+            forzar: boolean;
+        };
+        /** CierreCrear */
+        CierreCrear: {
+            /**
+             * Fecha
+             * @description Por defecto, hoy
+             */
+            fecha?: string | null;
+            /** Efectivo Contado */
+            efectivo_contado: number | string;
+            /** Notas */
+            notas?: string | null;
+        };
+        /** CierreLeer */
+        CierreLeer: {
+            /** Id */
+            id: number;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            /** Cobrado */
+            cobrado: string;
+            /** Efectivo Esperado */
+            efectivo_esperado: string;
+            /** Efectivo Contado */
+            efectivo_contado: string;
+            /** Diferencia */
+            diferencia: string;
+            /** Desglose */
+            desglose: {
+                [key: string]: string;
+            };
+            /** Notas */
+            notas: string | null;
+            /**
+             * Cerrado En
+             * Format: date-time
+             */
+            cerrado_en: string;
+            /** Cerrado Por Email */
+            cerrado_por_email?: string | null;
+        };
+        /**
+         * CitaActualizar
+         * @description PATCH. Cambiar `inicio` o `duracion_min` es reprogramar: deja rastro.
+         */
+        CitaActualizar: {
+            /** Inicio */
+            inicio?: string | null;
+            /**
+             * Duracion Min
+             * @description Por defecto, la del servicio; si no, 30
+             */
+            duracion_min?: number | null;
+            /** Doctor Id */
+            doctor_id?: number | null;
+            /** Unidad Id */
+            unidad_id?: number | null;
+            /** Servicio Id */
+            servicio_id?: number | null;
+            /** Motivo */
+            motivo?: string | null;
+            /** Notas */
+            notas?: string | null;
+            /** Sobrecupo */
+            sobrecupo?: boolean | null;
+            /** Sobrecupo Motivo */
+            sobrecupo_motivo?: string | null;
+            /**
+             * Motivo Cambio
+             * @description Por qué se reprograma
+             */
+            motivo_cambio?: string | null;
+        };
+        /** CitaCrear */
+        CitaCrear: {
+            /**
+             * Inicio
+             * Format: date-time
+             */
+            inicio: string;
+            /**
+             * Duracion Min
+             * @description Por defecto, la del servicio; si no, 30
+             */
+            duracion_min?: number | null;
+            /** Paciente Id */
+            paciente_id: number;
+            /** Doctor Id */
+            doctor_id: number;
+            /** Unidad Id */
+            unidad_id?: number | null;
+            /** Servicio Id */
+            servicio_id?: number | null;
+            /** Plan Id */
+            plan_id?: number | null;
+            /** Motivo */
+            motivo?: string | null;
+            /** Notas */
+            notas?: string | null;
+            /** @default agendada */
+            estado: components["schemas"]["EstadoCita"];
+            /**
+             * Sobrecupo
+             * @default false
+             */
+            sobrecupo: boolean;
+            /** Sobrecupo Motivo */
+            sobrecupo_motivo?: string | null;
+        };
+        /** CitaDetalle */
+        CitaDetalle: {
+            /** Id */
+            id: number;
+            /** Paciente Id */
+            paciente_id: number;
+            /** Paciente Nombre */
+            paciente_nombre: string;
+            /** Paciente Celular */
+            paciente_celular: string | null;
+            /** Doctor Id */
+            doctor_id: number;
+            /** Doctor Nombre */
+            doctor_nombre: string;
+            /** Unidad Id */
+            unidad_id: number | null;
+            /** Unidad Nombre */
+            unidad_nombre: string | null;
+            /** Servicio Id */
+            servicio_id: number | null;
+            /** Servicio Nombre */
+            servicio_nombre: string | null;
+            /** Plan Id */
+            plan_id: number | null;
+            /**
+             * Inicio
+             * Format: date-time
+             */
+            inicio: string;
+            /**
+             * Fin
+             * Format: date-time
+             */
+            fin: string;
+            /** Motivo */
+            motivo: string | null;
+            estado: components["schemas"]["EstadoCita"];
+            /** Notas */
+            notas: string | null;
+            /** Sobrecupo */
+            sobrecupo: boolean;
+            /** Sobrecupo Motivo */
+            sobrecupo_motivo: string | null;
+            /** Recordatorio Enviado En */
+            recordatorio_enviado_en: string | null;
+            /** Siguientes */
+            siguientes: components["schemas"]["EstadoCita"][];
+            /**
+             * Eventos
+             * @default []
+             */
+            eventos: components["schemas"]["CitaEventoLeer"][];
+        };
+        /** CitaEventoLeer */
+        CitaEventoLeer: {
+            /** Id */
+            id: number;
+            /** Tipo */
+            tipo: string;
+            /** Inicio Anterior */
+            inicio_anterior: string | null;
+            /** Inicio Nuevo */
+            inicio_nuevo: string | null;
+            estado_anterior: components["schemas"]["EstadoCita"] | null;
+            estado_nuevo: components["schemas"]["EstadoCita"] | null;
+            /** Motivo */
+            motivo: string | null;
+            /**
+             * Ocurrido En
+             * Format: date-time
+             */
+            ocurrido_en: string;
+        };
+        /** CitaLeer */
+        CitaLeer: {
+            /** Id */
+            id: number;
+            /** Paciente Id */
+            paciente_id: number;
+            /** Paciente Nombre */
+            paciente_nombre: string;
+            /** Paciente Celular */
+            paciente_celular: string | null;
+            /** Doctor Id */
+            doctor_id: number;
+            /** Doctor Nombre */
+            doctor_nombre: string;
+            /** Unidad Id */
+            unidad_id: number | null;
+            /** Unidad Nombre */
+            unidad_nombre: string | null;
+            /** Servicio Id */
+            servicio_id: number | null;
+            /** Servicio Nombre */
+            servicio_nombre: string | null;
+            /** Plan Id */
+            plan_id: number | null;
+            /**
+             * Inicio
+             * Format: date-time
+             */
+            inicio: string;
+            /**
+             * Fin
+             * Format: date-time
+             */
+            fin: string;
+            /** Motivo */
+            motivo: string | null;
+            estado: components["schemas"]["EstadoCita"];
+            /** Notas */
+            notas: string | null;
+            /** Sobrecupo */
+            sobrecupo: boolean;
+            /** Sobrecupo Motivo */
+            sobrecupo_motivo: string | null;
+            /** Recordatorio Enviado En */
+            recordatorio_enviado_en: string | null;
+            /** Siguientes */
+            siguientes: components["schemas"]["EstadoCita"][];
+        };
+        /** CitasDelDoctor */
+        CitasDelDoctor: {
+            /** Total */
+            total: number;
+            /** Atendidas */
+            atendidas: number;
+            /** No Asistio */
+            no_asistio: number;
+            /** Canceladas */
+            canceladas: number;
+        };
+        /**
+         * ClinicaActualizar
+         * @description PATCH de los datos que salen en cada impreso y en los mensajes.
+         */
+        ClinicaActualizar: {
+            /** Nombre */
+            nombre?: string | null;
+            /** Rnc */
+            rnc?: string | null;
+            /** Direccion */
+            direccion?: string | null;
+            /** Ciudad */
+            ciudad?: string | null;
+            /** Telefono */
+            telefono?: string | null;
+            /** Whatsapp */
+            whatsapp?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Web */
+            web?: string | null;
+        };
+        /**
+         * ClinicaLeer
+         * @description La sede principal: membrete de impresos y firma de mensajes.
+         */
+        ClinicaLeer: {
+            /** Id */
+            id: number;
+            /** Nombre */
+            nombre: string;
+            /** Direccion */
+            direccion: string | null;
+            /** Ciudad */
+            ciudad: string | null;
+            /** Telefono */
+            telefono: string | null;
+            /** Whatsapp */
+            whatsapp: string | null;
+            /** Email */
+            email: string | null;
+            /** Web */
+            web: string | null;
+            /** Rnc */
+            rnc: string | null;
+            /**
+             * Logo Archivo Id
+             * @description Archivo del logo; lo piden con sesión los impresos y el menú
+             */
+            logo_archivo_id?: number | null;
+        };
+        /**
+         * CobroDelDoctor
+         * @description Lo que entró en el tramo por una consulta suya: la base de su comisión.
+         */
+        CobroDelDoctor: {
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            /** Numero Recibo */
+            numero_recibo: number;
+            /** Pago Id */
+            pago_id: number;
+            /** Paciente Id */
+            paciente_id: number;
+            /** Paciente Nombre */
+            paciente_nombre: string;
+            /**
+             * Consulta Fecha
+             * Format: date
+             */
+            consulta_fecha: string;
+            /** Monto */
+            monto: string;
+        };
+        /**
+         * CompraEscribir
+         * @description Lo que el gasto trajo al almacén: una entrada de kárdex por renglón.
+         */
+        CompraEscribir: {
+            /** Insumo Id */
+            insumo_id: number;
+            /** Cantidad */
+            cantidad: number | string;
+            /** Costo Unit */
+            costo_unit: number | string;
         };
         /** CondicionDentalLeer */
         CondicionDentalLeer: {
@@ -457,6 +2633,191 @@ export interface components {
             /** Detalle */
             detalle?: string | null;
         };
+        /** CondicionMedicaCatalogo */
+        CondicionMedicaCatalogo: {
+            /** Id */
+            id: number;
+            /** Codigo */
+            codigo: string;
+            /** Nombre */
+            nombre: string;
+            /** Riesgo */
+            riesgo: string | null;
+            /** Alerta */
+            alerta: string | null;
+        };
+        /**
+         * ConsultaActualizar
+         * @description PATCH. Si viaja `lineas`, reemplaza las de la consulta: las que traen `id`
+         *     se conservan y actualizan, las demás se crean, y las que falten se quitan.
+         */
+        ConsultaActualizar: {
+            /** Motivo */
+            motivo?: string | null;
+            /** Diagnostico */
+            diagnostico?: string | null;
+            /**
+             * Plan
+             * @description Tratamiento realizado e indicaciones
+             */
+            plan?: string | null;
+            /** Notas */
+            notas?: string | null;
+            /** Subjetivo */
+            subjetivo?: string | null;
+            /** Objetivo */
+            objetivo?: string | null;
+            /** Presion Sistolica */
+            presion_sistolica?: number | null;
+            /** Presion Diastolica */
+            presion_diastolica?: number | null;
+            /** Pulso */
+            pulso?: number | null;
+            /** Temperatura */
+            temperatura?: number | string | null;
+            /** Doctor Id */
+            doctor_id?: number | null;
+            /** Fecha */
+            fecha?: string | null;
+            /** Plan Id */
+            plan_id?: number | null;
+            /** Unidad Id */
+            unidad_id?: number | null;
+            /** Lineas */
+            lineas?: components["schemas"]["LineaEscribir"][] | null;
+        };
+        /** ConsultaConSaldo */
+        ConsultaConSaldo: {
+            /** Consulta Id */
+            consulta_id: number;
+            /**
+             * Fecha
+             * Format: date-time
+             */
+            fecha: string;
+            /** Descripcion */
+            descripcion: string;
+            /** Total */
+            total: string;
+            /** Aplicado */
+            aplicado: string;
+            /** Saldo */
+            saldo: string;
+        };
+        /** ConsultaCrear */
+        ConsultaCrear: {
+            /** Motivo */
+            motivo?: string | null;
+            /** Diagnostico */
+            diagnostico?: string | null;
+            /**
+             * Plan
+             * @description Tratamiento realizado e indicaciones
+             */
+            plan?: string | null;
+            /** Notas */
+            notas?: string | null;
+            /** Subjetivo */
+            subjetivo?: string | null;
+            /** Objetivo */
+            objetivo?: string | null;
+            /** Presion Sistolica */
+            presion_sistolica?: number | null;
+            /** Presion Diastolica */
+            presion_diastolica?: number | null;
+            /** Pulso */
+            pulso?: number | null;
+            /** Temperatura */
+            temperatura?: number | string | null;
+            /** Doctor Id */
+            doctor_id: number;
+            /**
+             * Fecha
+             * @description Por defecto, ahora. Puede ser pasada
+             */
+            fecha?: string | null;
+            /**
+             * Plan Id
+             * @description Sin plan, la consulta queda suelta
+             */
+            plan_id?: number | null;
+            /** Unidad Id */
+            unidad_id?: number | null;
+            /** Cita Id */
+            cita_id?: number | null;
+            /**
+             * Lineas
+             * @default []
+             */
+            lineas: components["schemas"]["LineaEscribir"][];
+        };
+        /** ConsultaLeer */
+        ConsultaLeer: {
+            /** Motivo */
+            motivo?: string | null;
+            /** Diagnostico */
+            diagnostico?: string | null;
+            /**
+             * Plan
+             * @description Tratamiento realizado e indicaciones
+             */
+            plan?: string | null;
+            /** Notas */
+            notas?: string | null;
+            /** Subjetivo */
+            subjetivo?: string | null;
+            /** Objetivo */
+            objetivo?: string | null;
+            /** Presion Sistolica */
+            presion_sistolica?: number | null;
+            /** Presion Diastolica */
+            presion_diastolica?: number | null;
+            /** Pulso */
+            pulso?: number | null;
+            /** Temperatura */
+            temperatura?: string | null;
+            /** Id */
+            id: number;
+            /** Paciente Id */
+            paciente_id: number;
+            /** Doctor Id */
+            doctor_id: number;
+            /** Doctor Nombre */
+            doctor_nombre: string;
+            /** Plan Id */
+            plan_id: number | null;
+            /** Unidad Id */
+            unidad_id: number | null;
+            /** Unidad Nombre */
+            unidad_nombre: string | null;
+            /** Cita Id */
+            cita_id: number | null;
+            /**
+             * Fecha
+             * Format: date-time
+             */
+            fecha: string;
+            /**
+             * Lineas
+             * @default []
+             */
+            lineas: components["schemas"]["LineaLeer"][];
+            /**
+             * Total
+             * @default 0
+             */
+            total: string;
+            /**
+             * Aplicado
+             * @default 0
+             */
+            aplicado: string;
+            /**
+             * Saldo
+             * @default 0
+             */
+            saldo: string;
+        };
         /** ContactoLeer */
         ContactoLeer: {
             /** Nombre */
@@ -478,6 +2839,13 @@ export interface components {
             /** Id */
             id: number;
         };
+        /** CostoServicio */
+        CostoServicio: {
+            /** Servicio Id */
+            servicio_id: number;
+            /** Costo Insumos */
+            costo_insumos: string;
+        };
         /** Credenciales */
         Credenciales: {
             /**
@@ -487,6 +2855,49 @@ export interface components {
             email: string;
             /** Password */
             password: string;
+        };
+        /** CuentaPorCobrar */
+        CuentaPorCobrar: {
+            /** Paciente Id */
+            paciente_id: number;
+            /** Paciente Nombre */
+            paciente_nombre: string;
+            /** Paciente Codigo */
+            paciente_codigo: string;
+            /** Paciente Telefono */
+            paciente_telefono: string | null;
+            /**
+             * Consultas
+             * @description Consultas con saldo
+             */
+            consultas: number;
+            /** Cargos */
+            cargos: string;
+            /** Pagado */
+            pagado: string;
+            /** Balance */
+            balance: string;
+            /**
+             * Desde
+             * @description Fecha de la consulta con saldo más antigua
+             */
+            desde: string | null;
+            /**
+             * Dias
+             * @description Antigüedad de esa consulta
+             */
+            dias: number | null;
+        };
+        /** CuentasPorCobrar */
+        CuentasPorCobrar: {
+            /** Total */
+            total: string;
+            /** Pacientes */
+            pacientes: number;
+            /** Antiguedad */
+            antiguedad: components["schemas"]["TramoAntiguedad"][];
+            /** Items */
+            items: components["schemas"]["CuentaPorCobrar"][];
         };
         /**
          * Denticion
@@ -570,11 +2981,516 @@ export interface components {
              */
             centro_oclusal: string;
         };
+        /** DoctorActualizar */
+        DoctorActualizar: {
+            /** Documento */
+            documento?: string | null;
+            /** Nombres */
+            nombres?: string | null;
+            /** Apellidos */
+            apellidos?: string | null;
+            /** Licencia */
+            licencia?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Telefono */
+            telefono?: string | null;
+            /** Porcentaje Comision */
+            porcentaje_comision?: number | string | null;
+            /** Activo */
+            activo?: boolean | null;
+            /** Especialidad Ids */
+            especialidad_ids?: number[] | null;
+        };
+        /**
+         * DoctorCrear
+         * @description El tratamiento (Dr./Dra.) no forma parte del nombre: la interfaz lo antepone.
+         */
+        DoctorCrear: {
+            /** Documento */
+            documento: string;
+            /** Nombres */
+            nombres: string;
+            /** Apellidos */
+            apellidos: string;
+            /** Licencia */
+            licencia?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Telefono */
+            telefono?: string | null;
+            /**
+             * Porcentaje Comision
+             * @default 0
+             */
+            porcentaje_comision: number | string;
+            /**
+             * Especialidad Ids
+             * @description La primera es la especialidad principal
+             * @default []
+             */
+            especialidad_ids: number[];
+        };
+        /** DoctorEspecialidadLeer */
+        DoctorEspecialidadLeer: {
+            /** Especialidad Id */
+            especialidad_id: number;
+            /** Nombre */
+            nombre: string;
+            /** Principal */
+            principal: boolean;
+        };
+        /** DoctorLeer */
+        DoctorLeer: {
+            /** Id */
+            id: number;
+            /** Documento */
+            documento: string;
+            /** Nombres */
+            nombres: string;
+            /** Apellidos */
+            apellidos: string;
+            /** Nombre Completo */
+            nombre_completo: string;
+            /** Licencia */
+            licencia: string | null;
+            /** Email */
+            email: string | null;
+            /** Telefono */
+            telefono: string | null;
+            /** Porcentaje Comision */
+            porcentaje_comision: string | null;
+            /** Activo */
+            activo: boolean;
+            /**
+             * Especialidades
+             * @default []
+             */
+            especialidades: components["schemas"]["DoctorEspecialidadLeer"][];
+        };
+        /** DocumentoAnular */
+        DocumentoAnular: {
+            /** Motivo */
+            motivo: string;
+        };
+        /** DocumentoCrear */
+        DocumentoCrear: {
+            /**
+             * Tipo
+             * @enum {string}
+             */
+            tipo: "constancia" | "licencia" | "postoperatorio" | "consentimiento" | "consentimiento_datos";
+            /** Titulo */
+            titulo: string;
+            /** Cuerpo */
+            cuerpo: string;
+            /** Plantilla Id */
+            plantilla_id?: number | null;
+            /** Consulta Id */
+            consulta_id?: number | null;
+            /** Plan Id */
+            plan_id?: number | null;
+            /** Doctor Id */
+            doctor_id?: number | null;
+            /**
+             * Requiere Firma
+             * @default false
+             */
+            requiere_firma: boolean;
+        };
+        /** DocumentoLeer */
+        DocumentoLeer: {
+            /** Id */
+            id: number;
+            /** Paciente Id */
+            paciente_id: number;
+            /**
+             * Tipo
+             * @enum {string}
+             */
+            tipo: "constancia" | "licencia" | "postoperatorio" | "consentimiento" | "consentimiento_datos";
+            /** Titulo */
+            titulo: string;
+            /** Cuerpo */
+            cuerpo: string;
+            /** Consulta Id */
+            consulta_id: number | null;
+            /** Plan Id */
+            plan_id: number | null;
+            /** Doctor Id */
+            doctor_id: number | null;
+            /** Requiere Firma */
+            requiere_firma: boolean;
+            /** Sha256 */
+            sha256: string;
+            /**
+             * Emitido En
+             * Format: date-time
+             */
+            emitido_en: string;
+            /** Anulado En */
+            anulado_en: string | null;
+            /** Motivo Anulacion */
+            motivo_anulacion: string | null;
+            /**
+             * Firmas
+             * @default []
+             */
+            firmas: components["schemas"]["FirmaLeer"][];
+        };
+        /**
+         * DocumentoParaFirmar
+         * @description Lo que ve quien firma, sin sesión: el documento y nada más del expediente.
+         */
+        DocumentoParaFirmar: {
+            /** Titulo */
+            titulo: string;
+            /** Cuerpo */
+            cuerpo: string;
+            /** Paciente Nombre */
+            paciente_nombre: string;
+            /** Clinica Nombre */
+            clinica_nombre: string | null;
+            /** Ya Firmado */
+            ya_firmado: boolean;
+        };
+        /** DocumentosDelPaciente */
+        DocumentosDelPaciente: {
+            /** Documentos */
+            documentos: components["schemas"]["DocumentoLeer"][];
+            /** Recetas */
+            recetas: components["schemas"]["RecetaLeer"][];
+            /**
+             * Datos Personales Firmados
+             * @description Hay un consentimiento de datos personales vigente y firmado
+             */
+            datos_personales_firmados: boolean;
+        };
+        /** Emisor */
+        Emisor: {
+            /** Nombre */
+            nombre: string;
+            /** Rnc */
+            rnc: string | null;
+            /** Direccion */
+            direccion: string | null;
+            /** Ciudad */
+            ciudad: string | null;
+            /** Telefono */
+            telefono: string | null;
+        };
+        /** EnlaceFirma */
+        EnlaceFirma: {
+            /** Token */
+            token: string;
+            /**
+             * Minutos
+             * @description Cuánto dura el enlace
+             */
+            minutos: number;
+        };
+        /** EspecialidadActualizar */
+        EspecialidadActualizar: {
+            /** Nombre */
+            nombre?: string | null;
+            /** Descripcion */
+            descripcion?: string | null;
+            /** Activo */
+            activo?: boolean | null;
+        };
+        /** EspecialidadCrear */
+        EspecialidadCrear: {
+            /** Nombre */
+            nombre: string;
+            /** Descripcion */
+            descripcion?: string | null;
+            /** Codigo */
+            codigo?: string | null;
+        };
+        /** EspecialidadLeer */
+        EspecialidadLeer: {
+            /** Id */
+            id: number;
+            /** Codigo */
+            codigo: string;
+            /** Nombre */
+            nombre: string;
+            /** Descripcion */
+            descripcion: string | null;
+            /** Activo */
+            activo: boolean;
+            /**
+             * Planes
+             * @description Planes de tratamiento abiertos con ella
+             * @default 0
+             */
+            planes: number;
+            /**
+             * Doctores
+             * @description Doctores que la ejercen
+             * @default 0
+             */
+            doctores: number;
+        };
+        /**
+         * EstadoCita
+         * @enum {string}
+         */
+        EstadoCita: "agendada" | "confirmada" | "en_sala" | "atendida" | "cancelada" | "no_asistio";
+        /**
+         * EstadoCitaLeer
+         * @description Un estado de la agenda, con el color de su insignia.
+         *
+         *     El color viaja desde aquí para que ninguna pantalla lo escriba a mano, igual
+         *     que los de `condicion_dental`.
+         */
+        EstadoCitaLeer: {
+            valor: components["schemas"]["EstadoCita"];
+            /** Etiqueta */
+            etiqueta: string;
+            /** Color Hex */
+            color_hex: string;
+            /**
+             * Ocupa Agenda
+             * @description Falso en los estados que liberan el hueco
+             * @default true
+             */
+            ocupa_agenda: boolean;
+        };
+        /**
+         * EstadoDeCuenta
+         * @description Lo que el paciente debe y lo que ha pagado. `balance` negativo es crédito a favor.
+         */
+        EstadoDeCuenta: {
+            /** Paciente Id */
+            paciente_id: number;
+            /** Cargos */
+            cargos: string;
+            /** Pagado */
+            pagado: string;
+            /** Credito Sin Aplicar */
+            credito_sin_aplicar: string;
+            /** Balance */
+            balance: string;
+            /** Pagos */
+            pagos: components["schemas"]["PagoLeer"][];
+            /** Pendientes */
+            pendientes: components["schemas"]["ConsultaConSaldo"][];
+        };
+        /**
+         * EstadoFactura
+         * @description La factura es el comprobante fiscal: no recibe pagos, así que no tiene
+         *     estados de cobro. Lo cobrado vive en `pago` y `pago_aplicacion`.
+         * @enum {string}
+         */
+        EstadoFactura: "borrador" | "emitida" | "anulada";
         /**
          * EstadoHallazgo
          * @enum {string}
          */
         EstadoHallazgo: "existente" | "planificado" | "en_proceso" | "completado" | "anulado";
+        /**
+         * EstadoImplante
+         * @enum {string}
+         */
+        EstadoImplante: "planificado" | "colocado" | "oseointegrado" | "cargado" | "fallido" | "explantado";
+        /**
+         * EstadoPlan
+         * @enum {string}
+         */
+        EstadoPlan: "borrador" | "presentado" | "aceptado" | "rechazado" | "en_ejecucion" | "finalizado";
+        /**
+         * EstadoProcedimiento
+         * @enum {string}
+         */
+        EstadoProcedimiento: "pendiente" | "en_proceso" | "completado" | "anulado";
+        /**
+         * EventoCrear
+         * @description Un hito del seguimiento. Algunos mueven el estado del implante solos:
+         *     «carga» lo deja cargado y fecha la carga; «retiro», explantado.
+         */
+        EventoCrear: {
+            /**
+             * Tipo
+             * @enum {string}
+             */
+            tipo: "colocacion" | "segunda_fase" | "control" | "carga" | "complicacion" | "retiro";
+            /**
+             * Fecha
+             * @description Por defecto, hoy
+             */
+            fecha?: string | null;
+            /** Doctor Id */
+            doctor_id?: number | null;
+            /** Isq */
+            isq?: number | null;
+            /** Hallazgos */
+            hallazgos?: string | null;
+            /** Notas */
+            notas?: string | null;
+            /** @description Estado en que queda el implante tras el evento */
+            estado?: components["schemas"]["EstadoImplante"] | null;
+        };
+        /** EventoLeer */
+        EventoLeer: {
+            /** Id */
+            id: number;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            /** Tipo */
+            tipo: string;
+            /** Doctor Id */
+            doctor_id: number | null;
+            /** Isq */
+            isq: number | null;
+            /** Hallazgos */
+            hallazgos: string | null;
+            /** Notas */
+            notas: string | null;
+        };
+        /** FacturaAnular */
+        FacturaAnular: {
+            /** Motivo */
+            motivo: string;
+        };
+        /** FacturaCrear */
+        FacturaCrear: {
+            /**
+             * Tipo Ncf
+             * @default B02
+             * @enum {string}
+             */
+            tipo_ncf: "B01" | "B02" | "B14" | "B15";
+            /** Procedimiento Ids */
+            procedimiento_ids: number[];
+            /** Rnc Cliente */
+            rnc_cliente?: string | null;
+            /** Razon Social */
+            razon_social?: string | null;
+        };
+        /**
+         * FacturaImprimible
+         * @description La factura con lo que hace falta para imprimirla.
+         */
+        FacturaImprimible: {
+            /** Id */
+            id: number;
+            /** Paciente Id */
+            paciente_id: number;
+            /** Numero */
+            numero: string;
+            /** Tipo Ncf */
+            tipo_ncf: string | null;
+            /** Ncf Vence */
+            ncf_vence: string | null;
+            /** Rnc Cliente */
+            rnc_cliente: string | null;
+            /** Razon Social */
+            razon_social: string | null;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            /** Subtotal */
+            subtotal: string;
+            /** Descuento */
+            descuento: string;
+            /** Impuesto */
+            impuesto: string;
+            /** Total */
+            total: string;
+            estado: components["schemas"]["EstadoFactura"];
+            /** Anulada En */
+            anulada_en: string | null;
+            /** Motivo Anulacion */
+            motivo_anulacion: string | null;
+            /**
+             * Items
+             * @default []
+             */
+            items: components["schemas"]["FacturaItemLeer"][];
+            /** Tipo Etiqueta */
+            tipo_etiqueta: string;
+            emisor: components["schemas"]["Emisor"];
+            /** Paciente Nombre */
+            paciente_nombre: string;
+            /** Paciente Codigo */
+            paciente_codigo: string;
+            /** Paciente Documento */
+            paciente_documento: string | null;
+            /** Paciente Direccion */
+            paciente_direccion: string | null;
+        };
+        /** FacturaItemLeer */
+        FacturaItemLeer: {
+            /** Id */
+            id: number;
+            /** Procedimiento Id */
+            procedimiento_id: number | null;
+            /** Descripcion */
+            descripcion: string;
+            /** Cantidad */
+            cantidad: number;
+            /** Precio Unit */
+            precio_unit: string;
+            /** Descuento Pct */
+            descuento_pct: string;
+            /** Tasa Impuesto */
+            tasa_impuesto: string;
+            /** Total */
+            total: string;
+        };
+        /** FacturaLeer */
+        FacturaLeer: {
+            /** Id */
+            id: number;
+            /** Paciente Id */
+            paciente_id: number;
+            /** Numero */
+            numero: string;
+            /** Tipo Ncf */
+            tipo_ncf: string | null;
+            /** Ncf Vence */
+            ncf_vence: string | null;
+            /** Rnc Cliente */
+            rnc_cliente: string | null;
+            /** Razon Social */
+            razon_social: string | null;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            /** Subtotal */
+            subtotal: string;
+            /** Descuento */
+            descuento: string;
+            /** Impuesto */
+            impuesto: string;
+            /** Total */
+            total: string;
+            estado: components["schemas"]["EstadoFactura"];
+            /** Anulada En */
+            anulada_en: string | null;
+            /** Motivo Anulacion */
+            motivo_anulacion: string | null;
+            /**
+             * Items
+             * @default []
+             */
+            items: components["schemas"]["FacturaItemLeer"][];
+        };
+        /** FacturasDelPaciente */
+        FacturasDelPaciente: {
+            /** Facturas */
+            facturas: components["schemas"]["FacturaLeer"][];
+            /** Facturables */
+            facturables: components["schemas"]["LineaFacturable"][];
+        };
         /**
          * FichaGuardar
          * @description PUT completo de la ficha, colecciones incluidas.
@@ -773,6 +3689,214 @@ export interface components {
              */
             medicamentos: components["schemas"]["MedicamentoLeer"][];
         };
+        /** FilaDoctor */
+        FilaDoctor: {
+            /** Doctor Id */
+            doctor_id: number;
+            /** Doctor Nombre */
+            doctor_nombre: string;
+            /**
+             * Produccion
+             * @description Lo ejecutado en el tramo
+             */
+            produccion: string;
+            /**
+             * Cobrado
+             * @description Lo cobrado en el tramo por sus consultas
+             */
+            cobrado: string;
+            /** Comision Pct */
+            comision_pct: string;
+            /**
+             * Comision
+             * @description Cobrado por su porcentaje
+             */
+            comision: string;
+            /**
+             * Pagado
+             * @description Gastos de tipo doctor ya registrados a su nombre
+             */
+            pagado: string;
+        };
+        /** FilaUnidad */
+        FilaUnidad: {
+            /** Unidad */
+            unidad: string;
+            /** Consultas */
+            consultas: number;
+            /** Produccion */
+            produccion: string;
+        };
+        /** FirmaCrear */
+        FirmaCrear: {
+            /** Firmante Nombre */
+            firmante_nombre: string;
+            /**
+             * Firmante Rol
+             * @default paciente
+             * @enum {string}
+             */
+            firmante_rol: "paciente" | "tutor" | "doctor" | "testigo";
+            /** Firmante Documento */
+            firmante_documento?: string | null;
+            /** Trazo */
+            trazo: [
+                number,
+                number
+            ][][];
+        };
+        /** FirmaLeer */
+        FirmaLeer: {
+            /** Id */
+            id: number;
+            /** Firmante Nombre */
+            firmante_nombre: string;
+            /** Firmante Rol */
+            firmante_rol: string;
+            /** Firmante Documento */
+            firmante_documento: string | null;
+            /** Trazo */
+            trazo: unknown[];
+            /**
+             * Firmado En
+             * Format: date-time
+             */
+            firmado_en: string;
+        };
+        /** GastoAnular */
+        GastoAnular: {
+            /** Motivo */
+            motivo: string;
+        };
+        /** GastoCrear */
+        GastoCrear: {
+            /**
+             * Fecha
+             * @description Por defecto, hoy
+             */
+            fecha?: string | null;
+            /**
+             * Monto
+             * @description ITBIS incluido
+             */
+            monto: number | string;
+            /**
+             * Itbis
+             * @default 0
+             */
+            itbis: number | string;
+            /** Categoria Id */
+            categoria_id: number;
+            /** Descripcion */
+            descripcion: string;
+            /**
+             * Tipo
+             * @default consultorio
+             * @enum {string}
+             */
+            tipo: "consultorio" | "doctor" | "personal";
+            /**
+             * Doctor Id
+             * @description Obligatorio si el tipo es doctor
+             */
+            doctor_id?: number | null;
+            /** Paciente Id */
+            paciente_id?: number | null;
+            /**
+             * Metodo
+             * @default efectivo
+             * @enum {string}
+             */
+            metodo: "efectivo" | "tarjeta" | "transferencia" | "cheque" | "seguro" | "otro";
+            /**
+             * Proveedor
+             * @description Nombre; se crea si no existe
+             */
+            proveedor?: string | null;
+            /** Proveedor Rnc */
+            proveedor_rnc?: string | null;
+            /** Tipo Ncf */
+            tipo_ncf?: string | null;
+            /** Ncf */
+            ncf?: string | null;
+            /** Notas */
+            notas?: string | null;
+            /**
+             * Compras
+             * @default []
+             */
+            compras: components["schemas"]["CompraEscribir"][];
+        };
+        /** GastoLeer */
+        GastoLeer: {
+            /** Id */
+            id: number;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            /** Monto */
+            monto: string;
+            /** Itbis */
+            itbis: string;
+            /** Categoria Id */
+            categoria_id: number;
+            /** Categoria Nombre */
+            categoria_nombre: string;
+            /** Descripcion */
+            descripcion: string;
+            /**
+             * Tipo
+             * @enum {string}
+             */
+            tipo: "consultorio" | "doctor" | "personal";
+            /** Doctor Id */
+            doctor_id: number | null;
+            /** Doctor Nombre */
+            doctor_nombre: string | null;
+            /** Paciente Id */
+            paciente_id: number | null;
+            /** Metodo */
+            metodo: string;
+            /** Proveedor Nombre */
+            proveedor_nombre: string | null;
+            /** Tipo Ncf */
+            tipo_ncf: string | null;
+            /** Ncf */
+            ncf: string | null;
+            /** Comprobante Id */
+            comprobante_id?: number | null;
+            /** Notas */
+            notas: string | null;
+            /** Anulado En */
+            anulado_en: string | null;
+            /** Motivo Anulacion */
+            motivo_anulacion: string | null;
+        };
+        /** Gastos */
+        Gastos: {
+            /**
+             * Desde
+             * Format: date
+             */
+            desde: string;
+            /**
+             * Hasta
+             * Format: date
+             */
+            hasta: string;
+            /** Total */
+            total: string;
+            /** Itbis */
+            itbis: string;
+            /** Por Tipo */
+            por_tipo: components["schemas"]["TotalPorNombre"][];
+            /** Por Categoria */
+            por_categoria: components["schemas"]["TotalPorNombre"][];
+            /** Items */
+            items: components["schemas"]["GastoLeer"][];
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -828,6 +3952,624 @@ export interface components {
             /** Notas */
             notas: string | null;
         };
+        /**
+         * Historial
+         * @description El historial del paciente: sus planes con sus consultas, y las consultas sueltas.
+         */
+        Historial: {
+            /** Planes */
+            planes: components["schemas"]["PlanConConsultas"][];
+            /** Sueltas */
+            sueltas: components["schemas"]["ConsultaLeer"][];
+        };
+        /** ImplanteActualizar */
+        ImplanteActualizar: {
+            /** Referencia */
+            referencia?: string | null;
+            /** Serie */
+            serie?: string | null;
+            /** Diametro Mm */
+            diametro_mm?: number | string | null;
+            /** Longitud Mm */
+            longitud_mm?: number | string | null;
+            /** Plataforma */
+            plataforma?: string | null;
+            /** Torque Ncm */
+            torque_ncm?: number | null;
+            /** Isq */
+            isq?: number | null;
+            /** Injerto Oseo */
+            injerto_oseo?: boolean | null;
+            /** Material Injerto */
+            material_injerto?: string | null;
+            /** Membrana */
+            membrana?: boolean | null;
+            /** Garantia Hasta */
+            garantia_hasta?: string | null;
+            /** Notas */
+            notas?: string | null;
+            /** Sistema Implante Id */
+            sistema_implante_id?: number | null;
+            /** Lote */
+            lote?: string | null;
+            /** Fecha Colocacion */
+            fecha_colocacion?: string | null;
+            /** Fecha Carga */
+            fecha_carga?: string | null;
+            estado?: components["schemas"]["EstadoImplante"] | null;
+        };
+        /**
+         * ImplanteConPaciente
+         * @description Para la búsqueda por lote: a quién hay que llamar ante un retiro.
+         */
+        ImplanteConPaciente: {
+            /** Referencia */
+            referencia?: string | null;
+            /** Serie */
+            serie?: string | null;
+            /** Diametro Mm */
+            diametro_mm?: string | null;
+            /** Longitud Mm */
+            longitud_mm?: string | null;
+            /** Plataforma */
+            plataforma?: string | null;
+            /** Torque Ncm */
+            torque_ncm?: number | null;
+            /** Isq */
+            isq?: number | null;
+            /** Injerto Oseo */
+            injerto_oseo: boolean | null;
+            /** Material Injerto */
+            material_injerto?: string | null;
+            /** Membrana */
+            membrana: boolean | null;
+            /** Garantia Hasta */
+            garantia_hasta?: string | null;
+            /** Notas */
+            notas?: string | null;
+            /** Id */
+            id: number;
+            /** Paciente Id */
+            paciente_id: number;
+            /** Doctor Id */
+            doctor_id: number;
+            /** Doctor Nombre */
+            doctor_nombre: string;
+            /** Procedimiento Id */
+            procedimiento_id: number | null;
+            /** Sistema Implante Id */
+            sistema_implante_id: number;
+            /** Sistema Nombre */
+            sistema_nombre: string;
+            /** Codigo Fdi */
+            codigo_fdi: number;
+            /** Lote */
+            lote: string;
+            /** Fecha Colocacion */
+            fecha_colocacion: string | null;
+            /** Fecha Carga */
+            fecha_carga: string | null;
+            estado: components["schemas"]["EstadoImplante"];
+            /**
+             * Eventos
+             * @default []
+             */
+            eventos: components["schemas"]["EventoLeer"][];
+            /** Paciente Codigo */
+            paciente_codigo: string;
+            /** Paciente Nombre */
+            paciente_nombre: string;
+            /** Paciente Telefono */
+            paciente_telefono: string | null;
+        };
+        /** ImplanteCrear */
+        ImplanteCrear: {
+            /** Referencia */
+            referencia?: string | null;
+            /** Serie */
+            serie?: string | null;
+            /** Diametro Mm */
+            diametro_mm?: number | string | null;
+            /** Longitud Mm */
+            longitud_mm?: number | string | null;
+            /** Plataforma */
+            plataforma?: string | null;
+            /** Torque Ncm */
+            torque_ncm?: number | null;
+            /** Isq */
+            isq?: number | null;
+            /**
+             * Injerto Oseo
+             * @default false
+             */
+            injerto_oseo: boolean;
+            /** Material Injerto */
+            material_injerto?: string | null;
+            /**
+             * Membrana
+             * @default false
+             */
+            membrana: boolean;
+            /** Garantia Hasta */
+            garantia_hasta?: string | null;
+            /** Notas */
+            notas?: string | null;
+            /** Sistema Implante Id */
+            sistema_implante_id: number;
+            /** Lote */
+            lote: string;
+            /**
+             * Procedimiento Id
+             * @description La línea de consulta en la que se colocó
+             */
+            procedimiento_id?: number | null;
+            /**
+             * Codigo Fdi
+             * @description Por defecto, la pieza de la línea
+             */
+            codigo_fdi?: number | null;
+            /**
+             * Doctor Id
+             * @description Por defecto, el de la línea
+             */
+            doctor_id?: number | null;
+            /**
+             * Fecha Colocacion
+             * @description Por defecto, la de la línea
+             */
+            fecha_colocacion?: string | null;
+            /** @default colocado */
+            estado: components["schemas"]["EstadoImplante"];
+        };
+        /** ImplanteLeer */
+        ImplanteLeer: {
+            /** Referencia */
+            referencia?: string | null;
+            /** Serie */
+            serie?: string | null;
+            /** Diametro Mm */
+            diametro_mm?: string | null;
+            /** Longitud Mm */
+            longitud_mm?: string | null;
+            /** Plataforma */
+            plataforma?: string | null;
+            /** Torque Ncm */
+            torque_ncm?: number | null;
+            /** Isq */
+            isq?: number | null;
+            /** Injerto Oseo */
+            injerto_oseo: boolean | null;
+            /** Material Injerto */
+            material_injerto?: string | null;
+            /** Membrana */
+            membrana: boolean | null;
+            /** Garantia Hasta */
+            garantia_hasta?: string | null;
+            /** Notas */
+            notas?: string | null;
+            /** Id */
+            id: number;
+            /** Paciente Id */
+            paciente_id: number;
+            /** Doctor Id */
+            doctor_id: number;
+            /** Doctor Nombre */
+            doctor_nombre: string;
+            /** Procedimiento Id */
+            procedimiento_id: number | null;
+            /** Sistema Implante Id */
+            sistema_implante_id: number;
+            /** Sistema Nombre */
+            sistema_nombre: string;
+            /** Codigo Fdi */
+            codigo_fdi: number;
+            /** Lote */
+            lote: string;
+            /** Fecha Colocacion */
+            fecha_colocacion: string | null;
+            /** Fecha Carga */
+            fecha_carga: string | null;
+            estado: components["schemas"]["EstadoImplante"];
+            /**
+             * Eventos
+             * @default []
+             */
+            eventos: components["schemas"]["EventoLeer"][];
+        };
+        /**
+         * InsumoActualizar
+         * @description La existencia no se edita: se mueve con un asiento de kárdex.
+         */
+        InsumoActualizar: {
+            /** Nombre */
+            nombre?: string | null;
+            /** Categoria Id */
+            categoria_id?: number | null;
+            /** Marca */
+            marca?: string | null;
+            /** Modelo */
+            modelo?: string | null;
+            /** Unidad */
+            unidad?: string | null;
+            /** Controla Stock */
+            controla_stock?: boolean | null;
+            /** Stock Minimo */
+            stock_minimo?: number | string | null;
+            /** Costo */
+            costo?: number | string | null;
+            /** Notas */
+            notas?: string | null;
+            /** Activo */
+            activo?: boolean | null;
+        };
+        /** InsumoCrear */
+        InsumoCrear: {
+            /** Nombre */
+            nombre: string;
+            /** Categoria Id */
+            categoria_id?: number | null;
+            /** Marca */
+            marca?: string | null;
+            /** Modelo */
+            modelo?: string | null;
+            /**
+             * Unidad
+             * @default unidad
+             */
+            unidad: string;
+            /**
+             * Controla Stock
+             * @default true
+             */
+            controla_stock: boolean;
+            /**
+             * Stock Minimo
+             * @default 0
+             */
+            stock_minimo: number | string;
+            /**
+             * Costo
+             * @default 0
+             */
+            costo: number | string;
+            /** Notas */
+            notas?: string | null;
+            /**
+             * Existencia Inicial
+             * @default 0
+             */
+            existencia_inicial: number | string;
+        };
+        /** InsumoLeer */
+        InsumoLeer: {
+            /** Nombre */
+            nombre: string;
+            /** Categoria Id */
+            categoria_id?: number | null;
+            /** Marca */
+            marca?: string | null;
+            /** Modelo */
+            modelo?: string | null;
+            /**
+             * Unidad
+             * @default unidad
+             */
+            unidad: string;
+            /**
+             * Controla Stock
+             * @default true
+             */
+            controla_stock: boolean;
+            /**
+             * Stock Minimo
+             * @default 0
+             */
+            stock_minimo: string;
+            /**
+             * Costo
+             * @default 0
+             */
+            costo: string;
+            /** Notas */
+            notas?: string | null;
+            /** Id */
+            id: number;
+            /** Categoria Nombre */
+            categoria_nombre: string | null;
+            /** Activo */
+            activo: boolean;
+            /**
+             * Existencia
+             * @default 0
+             */
+            existencia: string;
+            /**
+             * Valor
+             * @default 0
+             */
+            valor: string;
+            /**
+             * Bajo Minimo
+             * @default false
+             */
+            bajo_minimo: boolean;
+        };
+        /** Inventario */
+        Inventario: {
+            /** Insumos */
+            insumos: number;
+            /** Bajo Minimo */
+            bajo_minimo: number;
+            /** Valor */
+            valor: string;
+            /** Items */
+            items: components["schemas"]["InsumoLeer"][];
+        };
+        /** ItemActualizar */
+        ItemActualizar: {
+            /** Codigo Fdi */
+            codigo_fdi?: number | null;
+            /** Superficies */
+            superficies?: string | null;
+            /** Cantidad */
+            cantidad?: number | null;
+            /** Precio Unit */
+            precio_unit?: number | string | null;
+            /** Descuento Pct */
+            descuento_pct?: number | string | null;
+            /** Fase */
+            fase?: number | null;
+            /** Prioridad */
+            prioridad?: number | null;
+            /** Aprobado */
+            aprobado?: boolean | null;
+        };
+        /** ItemEscribir */
+        ItemEscribir: {
+            /** Servicio Id */
+            servicio_id: number;
+            /** Codigo Fdi */
+            codigo_fdi?: number | null;
+            /** Superficies */
+            superficies?: string | null;
+            /**
+             * Cantidad
+             * @default 1
+             */
+            cantidad: number;
+            /** Precio Unit */
+            precio_unit?: number | string | null;
+            /**
+             * Descuento Pct
+             * @default 0
+             */
+            descuento_pct: number | string;
+            /**
+             * Fase
+             * @default 1
+             */
+            fase: number;
+            /**
+             * Prioridad
+             * @default 3
+             */
+            prioridad: number;
+            /**
+             * Aprobado
+             * @default false
+             */
+            aprobado: boolean;
+        };
+        /** ItemLeer */
+        ItemLeer: {
+            /** Id */
+            id: number;
+            /** Servicio Id */
+            servicio_id: number;
+            /** Servicio Codigo */
+            servicio_codigo: string;
+            /** Servicio Nombre */
+            servicio_nombre: string;
+            /** Codigo Fdi */
+            codigo_fdi: number | null;
+            /** Superficies */
+            superficies: string | null;
+            /** Cantidad */
+            cantidad: number;
+            /** Precio Unit */
+            precio_unit: string;
+            /** Descuento Pct */
+            descuento_pct: string;
+            /** Fase */
+            fase: number;
+            /** Prioridad */
+            prioridad: number;
+            /** Aprobado */
+            aprobado: boolean;
+            /** Total */
+            total: string;
+            /**
+             * Ejecutado
+             * @description Ya hay una línea de consulta que lo cumple
+             * @default false
+             */
+            ejecutado: boolean;
+        };
+        /**
+         * LineaEscribir
+         * @description Un servicio ejecutado. Sin `precio`, se toma el de la tarifa.
+         */
+        LineaEscribir: {
+            /**
+             * Id
+             * @description Al editar: la línea que se conserva
+             */
+            id?: number | null;
+            /** Servicio Id */
+            servicio_id: number;
+            /** Codigo Fdi */
+            codigo_fdi?: number | null;
+            /** Superficies */
+            superficies?: string | null;
+            /**
+             * Cantidad
+             * @default 1
+             */
+            cantidad: number;
+            /** Precio */
+            precio?: number | string | null;
+            /**
+             * Descuento Pct
+             * @default 0
+             */
+            descuento_pct: number | string;
+            /** Plan Item Id */
+            plan_item_id?: number | null;
+            /** Notas */
+            notas?: string | null;
+        };
+        /**
+         * LineaFacturable
+         * @description Una línea ejecutada que todavía no está en ningún comprobante.
+         */
+        LineaFacturable: {
+            /** Procedimiento Id */
+            procedimiento_id: number;
+            /** Consulta Id */
+            consulta_id: number;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            /** Descripcion */
+            descripcion: string;
+            /** Cantidad */
+            cantidad: number;
+            /** Precio */
+            precio: string;
+            /** Descuento Pct */
+            descuento_pct: string;
+            /** Total */
+            total: string;
+        };
+        /** LineaLeer */
+        LineaLeer: {
+            /** Id */
+            id: number;
+            /** Servicio Id */
+            servicio_id: number;
+            /** Servicio Codigo */
+            servicio_codigo: string;
+            /** Servicio Nombre */
+            servicio_nombre: string;
+            /** Codigo Fdi */
+            codigo_fdi: number | null;
+            /** Superficies */
+            superficies: string | null;
+            /** Cantidad */
+            cantidad: number;
+            /** Precio */
+            precio: string;
+            /** Descuento Pct */
+            descuento_pct: string;
+            /** Total */
+            total: string;
+            /** Plan Item Id */
+            plan_item_id: number | null;
+            estado: components["schemas"]["EstadoProcedimiento"];
+            /** Notas */
+            notas: string | null;
+            /**
+             * Es Implante
+             * @default false
+             */
+            es_implante: boolean;
+            /**
+             * Implante Id
+             * @description Implante ya registrado para esta línea, con su lote
+             */
+            implante_id?: number | null;
+        };
+        /**
+         * LineaRealizada
+         * @description Una línea ejecutada por el doctor en el tramo.
+         */
+        LineaRealizada: {
+            /** Procedimiento Id */
+            procedimiento_id: number;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            /** Paciente Id */
+            paciente_id: number;
+            /** Paciente Nombre */
+            paciente_nombre: string;
+            /** Servicio Nombre */
+            servicio_nombre: string;
+            /** Codigo Fdi */
+            codigo_fdi: number | null;
+            /** Superficies */
+            superficies: string | null;
+            /** Cantidad */
+            cantidad: number;
+            /** Total */
+            total: string;
+        };
+        /** ListaPrecioActualizar */
+        ListaPrecioActualizar: {
+            /** Nombre */
+            nombre?: string | null;
+            /** Activo */
+            activo?: boolean | null;
+        };
+        /**
+         * ListaPrecioCrear
+         * @description Una tarifa nueva nace copiando los precios de otra, con un ajuste.
+         */
+        ListaPrecioCrear: {
+            /** Nombre */
+            nombre: string;
+            /**
+             * Aseguradora Id
+             * @description Vacío: otra tarifa particular
+             */
+            aseguradora_id?: number | null;
+            /**
+             * Copiar De
+             * @description Por defecto, la particular
+             */
+            copiar_de?: number | null;
+            /**
+             * Ajuste Pct
+             * @description −10 la deja un 10 % por debajo
+             * @default 0
+             */
+            ajuste_pct: number | string;
+            /**
+             * Cobertura Pct
+             * @description Lo que cubre el seguro, por defecto
+             * @default 0
+             */
+            cobertura_pct: number | string;
+        };
+        /** ListaPrecioLeer */
+        ListaPrecioLeer: {
+            /** Id */
+            id: number;
+            /** Codigo */
+            codigo: string;
+            /** Nombre */
+            nombre: string;
+            /** Moneda */
+            moneda: string;
+            /** Aseguradora Id */
+            aseguradora_id: number | null;
+            /** Activo */
+            activo: boolean;
+        };
         /** MedicamentoEscribir */
         MedicamentoEscribir: {
             /** Nombre */
@@ -864,17 +4606,71 @@ export interface components {
             activo: boolean;
         };
         /**
+         * MovimientoCrear
+         * @description Un asiento manual. En «conteo», `cantidad` es lo que hay en el estante: el
+         *     sistema calcula la diferencia.
+         */
+        MovimientoCrear: {
+            /**
+             * Motivo
+             * @enum {string}
+             */
+            motivo: "compra" | "merma" | "conteo" | "devolucion" | "inicial";
+            /** Cantidad */
+            cantidad: number | string;
+            /** Costo Unit */
+            costo_unit?: number | string | null;
+            /** Nota */
+            nota?: string | null;
+        };
+        /** MovimientoLeer */
+        MovimientoLeer: {
+            /** Id */
+            id: number;
+            /** Insumo Id */
+            insumo_id: number;
+            /** Cantidad */
+            cantidad: string;
+            /** Motivo */
+            motivo: string;
+            /** Costo Unit */
+            costo_unit: string | null;
+            /** Gasto Id */
+            gasto_id: number | null;
+            /** Procedimiento Id */
+            procedimiento_id: number | null;
+            /** Nota */
+            nota: string | null;
+            /**
+             * Ocurrido En
+             * Format: date-time
+             */
+            ocurrido_en: string;
+        };
+        /** NombreCrear */
+        NombreCrear: {
+            /** Nombre */
+            nombre: string;
+        };
+        /** NombreLeer */
+        NombreLeer: {
+            /** Id */
+            id: number;
+            /** Nombre */
+            nombre: string;
+        };
+        /**
          * OdontogramaCrear
          * @description Crea la versión N+1 del odontograma de un paciente.
          */
         OdontogramaCrear: {
-            /** @default permanente */
-            denticion: components["schemas"]["Denticion"];
+            /** @description Por defecto, la de la versión vigente (permanente si es la primera) */
+            denticion?: components["schemas"]["Denticion"] | null;
             /** Observaciones */
             observaciones?: string | null;
             /**
              * Copiar Hallazgos
-             * @description Arrastra los hallazgos 'existente' y 'completado' de la versión anterior. Lo planificado no se copia: pertenece al plan que lo originó.
+             * @description Arrastra los hallazgos 'existente' y 'completado' de la versión anterior, y lo planificado por un ítem de un plan. Lo propuesto a mano no se copia.
              * @default true
              */
             copiar_hallazgos: boolean;
@@ -933,6 +4729,40 @@ export interface components {
             observaciones: string | null;
         };
         /**
+         * OnboardingLeer
+         * @description Cómo va la configuración de la clínica.
+         *
+         *     Quien no es administración recibe sólo `listo` y `cerrado` (`pasos` vacío):
+         *     le basta para saber si la clínica está lista, sin enseñarle conteos internos.
+         */
+        OnboardingLeer: {
+            /**
+             * Pasos
+             * @default []
+             */
+            pasos: components["schemas"]["PasoLeer"][];
+            /**
+             * Hechos
+             * @default 0
+             */
+            hechos: number;
+            /**
+             * Total
+             * @default 0
+             */
+            total: number;
+            /**
+             * Listo
+             * @description Lo mínimo para trabajar está hecho
+             */
+            listo: boolean;
+            /**
+             * Cerrado
+             * @description La guía se terminó u omitió y ya no se ofrece
+             */
+            cerrado: boolean;
+        };
+        /**
          * PacienteActualizar
          * @description Todos los campos opcionales: es un PATCH.
          */
@@ -966,6 +4796,8 @@ export interface components {
             referido_por?: string | null;
             /** Sede Id */
             sede_id?: number | null;
+            /** Doctor Tratante Id */
+            doctor_tratante_id?: number | null;
             /** Notas */
             notas?: string | null;
             /** Activo */
@@ -980,12 +4812,9 @@ export interface components {
             nombres: string;
             /** Apellidos */
             apellidos: string;
-            /**
-             * Fecha Nacimiento
-             * Format: date
-             */
-            fecha_nacimiento: string;
-            sexo: components["schemas"]["Sexo"];
+            /** Fecha Nacimiento */
+            fecha_nacimiento?: string | null;
+            sexo?: components["schemas"]["Sexo"] | null;
             /** Documento */
             documento?: string | null;
             /** Telefono */
@@ -1008,6 +4837,8 @@ export interface components {
             referido_por?: string | null;
             /** Sede Id */
             sede_id?: number | null;
+            /** Doctor Tratante Id */
+            doctor_tratante_id?: number | null;
             /** Notas */
             notas?: string | null;
         };
@@ -1023,20 +4854,21 @@ export interface components {
             nombres: string;
             /** Apellidos */
             apellidos: string;
-            /**
-             * Fecha Nacimiento
-             * Format: date
-             */
-            fecha_nacimiento: string;
+            /** Fecha Nacimiento */
+            fecha_nacimiento: string | null;
             /** Edad */
-            edad: number;
-            sexo: components["schemas"]["Sexo"];
-            /** Celular */
-            celular: string | null;
-            /** Activo */
-            activo: boolean;
+            edad: number | null;
+            sexo: components["schemas"]["Sexo"] | null;
             /** Telefono */
             telefono: string | null;
+            /** Celular */
+            celular: string | null;
+            /** Doctor Tratante Id */
+            doctor_tratante_id: number | null;
+            /** Doctor Tratante Nombre */
+            doctor_tratante_nombre: string | null;
+            /** Activo */
+            activo: boolean;
             /** Email */
             email: string | null;
             /** Direccion */
@@ -1076,16 +4908,19 @@ export interface components {
             nombres: string;
             /** Apellidos */
             apellidos: string;
-            /**
-             * Fecha Nacimiento
-             * Format: date
-             */
-            fecha_nacimiento: string;
+            /** Fecha Nacimiento */
+            fecha_nacimiento: string | null;
             /** Edad */
-            edad: number;
-            sexo: components["schemas"]["Sexo"];
+            edad: number | null;
+            sexo: components["schemas"]["Sexo"] | null;
+            /** Telefono */
+            telefono: string | null;
             /** Celular */
             celular: string | null;
+            /** Doctor Tratante Id */
+            doctor_tratante_id: number | null;
+            /** Doctor Tratante Nombre */
+            doctor_tratante_nombre: string | null;
             /** Activo */
             activo: boolean;
         };
@@ -1103,21 +4938,1069 @@ export interface components {
             /** Offset */
             offset: number;
         };
+        /**
+         * PagoActualizar
+         * @description Con el recibo emitido sólo se corrige lo que no cambia el dinero.
+         */
+        PagoActualizar: {
+            /** Concepto */
+            concepto?: string | null;
+            /** Referencia */
+            referencia?: string | null;
+            /** Metodo */
+            metodo?: ("efectivo" | "tarjeta" | "transferencia" | "cheque" | "seguro" | "otro") | null;
+        };
+        /**
+         * PagoAlDoctor
+         * @description Un gasto de tipo doctor registrado a su nombre.
+         */
+        PagoAlDoctor: {
+            /** Gasto Id */
+            gasto_id: number;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            /** Descripcion */
+            descripcion: string;
+            /** Metodo */
+            metodo: string;
+            /** Monto */
+            monto: string;
+        };
+        /** PagoAnular */
+        PagoAnular: {
+            /** Motivo */
+            motivo: string;
+        };
+        /**
+         * PagoConPaciente
+         * @description Para listados de caja y para el recibo.
+         */
+        PagoConPaciente: {
+            /** Id */
+            id: number;
+            /** Paciente Id */
+            paciente_id: number;
+            /** Numero Recibo */
+            numero_recibo: number;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            /** Metodo */
+            metodo: string;
+            /** Monto */
+            monto: string;
+            /** Concepto */
+            concepto: string | null;
+            /** Referencia */
+            referencia: string | null;
+            /** Comprobante Id */
+            comprobante_id?: number | null;
+            /**
+             * Registrado En
+             * Format: date-time
+             */
+            registrado_en: string;
+            /** Anulado En */
+            anulado_en: string | null;
+            /** Motivo Anulacion */
+            motivo_anulacion: string | null;
+            /**
+             * Aplicaciones
+             * @default []
+             */
+            aplicaciones: components["schemas"]["AplicacionLeer"][];
+            /**
+             * Sin Aplicar
+             * @description Lo que quedó como anticipo
+             * @default 0
+             */
+            sin_aplicar: string;
+            /** Paciente Nombre */
+            paciente_nombre: string;
+            /** Paciente Documento */
+            paciente_documento: string | null;
+            /** Paciente Telefono */
+            paciente_telefono: string | null;
+            /** Recibido Por Email */
+            recibido_por_email: string | null;
+        };
+        /** PagoCrear */
+        PagoCrear: {
+            /** Monto */
+            monto: number | string;
+            /**
+             * Metodo
+             * @default efectivo
+             * @enum {string}
+             */
+            metodo: "efectivo" | "tarjeta" | "transferencia" | "cheque" | "seguro" | "otro";
+            /**
+             * Fecha
+             * @description Por defecto, hoy
+             */
+            fecha?: string | null;
+            /** Concepto */
+            concepto?: string | null;
+            /**
+             * Referencia
+             * @description Autorización, n.º de transferencia…
+             */
+            referencia?: string | null;
+            /**
+             * Consulta Id
+             * @description A qué consulta va primero. Sin ella, a las más antiguas con saldo
+             */
+            consulta_id?: number | null;
+        };
+        /** PagoLeer */
+        PagoLeer: {
+            /** Id */
+            id: number;
+            /** Paciente Id */
+            paciente_id: number;
+            /** Numero Recibo */
+            numero_recibo: number;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            /** Metodo */
+            metodo: string;
+            /** Monto */
+            monto: string;
+            /** Concepto */
+            concepto: string | null;
+            /** Referencia */
+            referencia: string | null;
+            /** Comprobante Id */
+            comprobante_id?: number | null;
+            /**
+             * Registrado En
+             * Format: date-time
+             */
+            registrado_en: string;
+            /** Anulado En */
+            anulado_en: string | null;
+            /** Motivo Anulacion */
+            motivo_anulacion: string | null;
+            /**
+             * Aplicaciones
+             * @default []
+             */
+            aplicaciones: components["schemas"]["AplicacionLeer"][];
+            /**
+             * Sin Aplicar
+             * @description Lo que quedó como anticipo
+             * @default 0
+             */
+            sin_aplicar: string;
+        };
+        /** PasoLeer */
+        PasoLeer: {
+            /** Id */
+            id: string;
+            /** Titulo */
+            titulo: string;
+            /** Obligatorio */
+            obligatorio: boolean;
+            /** Hecho */
+            hecho: boolean;
+        };
+        /** PasswordNueva */
+        PasswordNueva: {
+            /** Password */
+            password: string;
+        };
+        /** PlanActualizar */
+        PlanActualizar: {
+            /** Doctor Id */
+            doctor_id?: number | null;
+            /** Titulo */
+            titulo?: string | null;
+            /** Especialidad Id */
+            especialidad_id?: number | null;
+            /** Descuento Pct */
+            descuento_pct?: number | string | null;
+            /** Notas */
+            notas?: string | null;
+            estado?: components["schemas"]["EstadoPlan"] | null;
+        };
+        /** PlanConConsultas */
+        PlanConConsultas: {
+            /** Id */
+            id: number;
+            /** Codigo */
+            codigo: string;
+            /** Paciente Id */
+            paciente_id: number;
+            /** Doctor Id */
+            doctor_id: number;
+            /** Doctor Nombre */
+            doctor_nombre: string;
+            /** Especialidad Id */
+            especialidad_id: number | null;
+            /** Especialidad Nombre */
+            especialidad_nombre: string | null;
+            /** Lista Precio Id */
+            lista_precio_id: number;
+            /** Titulo */
+            titulo: string | null;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            estado: components["schemas"]["EstadoPlan"];
+            /** Siguientes */
+            siguientes: components["schemas"]["EstadoPlan"][];
+            /** Descuento Pct */
+            descuento_pct: string;
+            /** Notas */
+            notas: string | null;
+            /** Cerrado En */
+            cerrado_en: string | null;
+            /**
+             * Items
+             * @default []
+             */
+            items: components["schemas"]["ItemLeer"][];
+            /**
+             * Cotizado
+             * @description Suma de los ítems, sin el descuento del plan
+             * @default 0
+             */
+            cotizado: string;
+            /**
+             * Total
+             * @description Cotizado menos el descuento del plan
+             * @default 0
+             */
+            total: string;
+            /**
+             * Ejecutado
+             * @description Lo ya hecho en las consultas del plan
+             * @default 0
+             */
+            ejecutado: string;
+            /**
+             * Lista Precio Nombre
+             * @default
+             */
+            lista_precio_nombre: string;
+            /**
+             * Aseguradora Nombre
+             * @description Si el plan se cotizó con la tarifa de una ARS
+             */
+            aseguradora_nombre?: string | null;
+            /**
+             * Cobertura Estimada
+             * @description Lo que cubriría el seguro según la tarifa; el resto es copago
+             * @default 0
+             */
+            cobertura_estimada: string;
+            /**
+             * Consultas
+             * @default []
+             */
+            consultas: components["schemas"]["ConsultaLeer"][];
+        };
+        /** PlanCrear */
+        PlanCrear: {
+            /** Doctor Id */
+            doctor_id: number;
+            /** Titulo */
+            titulo?: string | null;
+            /** Especialidad Id */
+            especialidad_id?: number | null;
+            /**
+             * Lista Precio Id
+             * @description Por defecto, la particular
+             */
+            lista_precio_id?: number | null;
+            /**
+             * Descuento Pct
+             * @default 0
+             */
+            descuento_pct: number | string;
+            /** Notas */
+            notas?: string | null;
+        };
+        /** PlanLeer */
+        PlanLeer: {
+            /** Id */
+            id: number;
+            /** Codigo */
+            codigo: string;
+            /** Paciente Id */
+            paciente_id: number;
+            /** Doctor Id */
+            doctor_id: number;
+            /** Doctor Nombre */
+            doctor_nombre: string;
+            /** Especialidad Id */
+            especialidad_id: number | null;
+            /** Especialidad Nombre */
+            especialidad_nombre: string | null;
+            /** Lista Precio Id */
+            lista_precio_id: number;
+            /** Titulo */
+            titulo: string | null;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            estado: components["schemas"]["EstadoPlan"];
+            /** Siguientes */
+            siguientes: components["schemas"]["EstadoPlan"][];
+            /** Descuento Pct */
+            descuento_pct: string;
+            /** Notas */
+            notas: string | null;
+            /** Cerrado En */
+            cerrado_en: string | null;
+            /**
+             * Items
+             * @default []
+             */
+            items: components["schemas"]["ItemLeer"][];
+            /**
+             * Cotizado
+             * @description Suma de los ítems, sin el descuento del plan
+             * @default 0
+             */
+            cotizado: string;
+            /**
+             * Total
+             * @description Cotizado menos el descuento del plan
+             * @default 0
+             */
+            total: string;
+            /**
+             * Ejecutado
+             * @description Lo ya hecho en las consultas del plan
+             * @default 0
+             */
+            ejecutado: string;
+            /**
+             * Lista Precio Nombre
+             * @default
+             */
+            lista_precio_nombre: string;
+            /**
+             * Aseguradora Nombre
+             * @description Si el plan se cotizó con la tarifa de una ARS
+             */
+            aseguradora_nombre?: string | null;
+            /**
+             * Cobertura Estimada
+             * @description Lo que cubriría el seguro según la tarifa; el resto es copago
+             * @default 0
+             */
+            cobertura_estimada: string;
+        };
+        /** PlantillaActualizar */
+        PlantillaActualizar: {
+            /** Titulo */
+            titulo?: string | null;
+            /** Cuerpo */
+            cuerpo?: string | null;
+            /** Requiere Firma */
+            requiere_firma?: boolean | null;
+            /** Activo */
+            activo?: boolean | null;
+        };
+        /** PlantillaEscribir */
+        PlantillaEscribir: {
+            /**
+             * Tipo
+             * @enum {string}
+             */
+            tipo: "constancia" | "licencia" | "postoperatorio" | "consentimiento" | "consentimiento_datos";
+            /** Titulo */
+            titulo: string;
+            /** Cuerpo */
+            cuerpo: string;
+            /**
+             * Requiere Firma
+             * @default false
+             */
+            requiere_firma: boolean;
+        };
+        /** PlantillaLeer */
+        PlantillaLeer: {
+            /** Id */
+            id: number;
+            /** Codigo */
+            codigo: string;
+            /**
+             * Tipo
+             * @enum {string}
+             */
+            tipo: "constancia" | "licencia" | "postoperatorio" | "consentimiento" | "consentimiento_datos";
+            /** Titulo */
+            titulo: string;
+            /** Cuerpo */
+            cuerpo: string;
+            /** Requiere Firma */
+            requiere_firma: boolean;
+            /** Activo */
+            activo: boolean;
+        };
+        /** PrecioEscribir */
+        PrecioEscribir: {
+            /** Lista Precio Id */
+            lista_precio_id: number;
+            /** Precio */
+            precio: number | string;
+            /** Costo */
+            costo?: number | string | null;
+            /**
+             * Cobertura Pct
+             * @description Porcentaje que cubre el seguro en esta tarifa
+             */
+            cobertura_pct?: number | string | null;
+        };
+        /** PrecioLeer */
+        PrecioLeer: {
+            /** Lista Precio Id */
+            lista_precio_id: number;
+            /** Precio */
+            precio: string;
+            /** Costo */
+            costo: string | null;
+            /** Cobertura Pct */
+            cobertura_pct?: string | null;
+        };
+        /** ProveedorLeer */
+        ProveedorLeer: {
+            /** Id */
+            id: number;
+            /** Nombre */
+            nombre: string;
+            /** Rnc */
+            rnc: string | null;
+            /** Telefono */
+            telefono: string | null;
+        };
+        /** RecetaCrear */
+        RecetaCrear: {
+            /** Doctor Id */
+            doctor_id: number;
+            /** Consulta Id */
+            consulta_id?: number | null;
+            /** Indicaciones */
+            indicaciones?: string | null;
+            /** Items */
+            items: components["schemas"]["RecetaItem"][];
+            /**
+             * Confirmar Alergias
+             * @description Recetar aunque algún medicamento choque con una alergia
+             * @default false
+             */
+            confirmar_alergias: boolean;
+        };
+        /** RecetaInsumo */
+        RecetaInsumo: {
+            /** Insumo Id */
+            insumo_id: number;
+            /** Cantidad */
+            cantidad: number | string;
+        };
+        /** RecetaInsumoLeer */
+        RecetaInsumoLeer: {
+            /** Insumo Id */
+            insumo_id: number;
+            /** Nombre */
+            nombre: string;
+            /** Unidad */
+            unidad: string;
+            /** Cantidad */
+            cantidad: string;
+            /**
+             * Costo
+             * @description Cantidad por el costo del insumo
+             */
+            costo: string;
+        };
+        /** RecetaItem */
+        RecetaItem: {
+            /** Medicamento */
+            medicamento: string;
+            /** Presentacion */
+            presentacion?: string | null;
+            /** Dosis */
+            dosis: string;
+            /** Frecuencia */
+            frecuencia: string;
+            /** Duracion */
+            duracion?: string | null;
+        };
+        /** RecetaLeer */
+        RecetaLeer: {
+            /** Id */
+            id: number;
+            /** Paciente Id */
+            paciente_id: number;
+            /** Doctor Id */
+            doctor_id: number;
+            /** Doctor Nombre */
+            doctor_nombre: string;
+            /** Consulta Id */
+            consulta_id: number | null;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            /** Indicaciones */
+            indicaciones: string | null;
+            /**
+             * Items
+             * @default []
+             */
+            items: components["schemas"]["RecetaItem"][];
+        };
+        /** Recibo */
+        Recibo: {
+            /** Id */
+            id: number;
+            /** Paciente Id */
+            paciente_id: number;
+            /** Numero Recibo */
+            numero_recibo: number;
+            /**
+             * Fecha
+             * Format: date
+             */
+            fecha: string;
+            /** Metodo */
+            metodo: string;
+            /** Monto */
+            monto: string;
+            /** Concepto */
+            concepto: string | null;
+            /** Referencia */
+            referencia: string | null;
+            /** Comprobante Id */
+            comprobante_id?: number | null;
+            /**
+             * Registrado En
+             * Format: date-time
+             */
+            registrado_en: string;
+            /** Anulado En */
+            anulado_en: string | null;
+            /** Motivo Anulacion */
+            motivo_anulacion: string | null;
+            /**
+             * Aplicaciones
+             * @default []
+             */
+            aplicaciones: components["schemas"]["AplicacionLeer"][];
+            /**
+             * Sin Aplicar
+             * @description Lo que quedó como anticipo
+             * @default 0
+             */
+            sin_aplicar: string;
+            /** Paciente Nombre */
+            paciente_nombre: string;
+            /** Paciente Documento */
+            paciente_documento: string | null;
+            /** Paciente Telefono */
+            paciente_telefono: string | null;
+            /** Recibido Por Email */
+            recibido_por_email: string | null;
+            /**
+             * Balance Despues
+             * @description Balance del paciente hoy, tras este pago
+             */
+            balance_despues: string;
+        };
         /** Refresco */
         Refresco: {
             /** Refresh Token */
             refresh_token: string;
         };
         /**
+         * ReporteDoctor
+         * @description Lo que hizo un doctor en un tramo, lo que se cobró por ello y lo que se le debe.
+         *
+         *     Las cifras coinciden con su fila de `GET /informes/resumen`: salen de las
+         *     mismas definiciones. La comisión es sobre lo **cobrado**, no sobre lo producido.
+         */
+        ReporteDoctor: {
+            /** Doctor Id */
+            doctor_id: number;
+            /** Doctor Nombre */
+            doctor_nombre: string;
+            /** Especialidades */
+            especialidades: string[];
+            /**
+             * Desde
+             * Format: date
+             */
+            desde: string;
+            /**
+             * Hasta
+             * Format: date
+             */
+            hasta: string;
+            /**
+             * Produccion
+             * @description Lo ejecutado en el tramo, cobrado o no
+             */
+            produccion: string;
+            /**
+             * Cobrado
+             * @description Lo cobrado en el tramo por sus consultas
+             */
+            cobrado: string;
+            /** Comision Pct */
+            comision_pct: string;
+            /** Comision */
+            comision: string;
+            /**
+             * Pagado
+             * @description Ya pagado al doctor en el tramo
+             */
+            pagado: string;
+            /**
+             * Por Liquidar
+             * @description Comisión menos lo ya pagado
+             */
+            por_liquidar: string;
+            /**
+             * Por Cobrar
+             * @description Saldo pendiente, hoy, de todas sus consultas
+             */
+            por_cobrar: string;
+            /** Consultas */
+            consultas: number;
+            /**
+             * Pacientes
+             * @description Pacientes distintos atendidos en el tramo
+             */
+            pacientes: number;
+            citas: components["schemas"]["CitasDelDoctor"];
+            /** Servicios */
+            servicios: components["schemas"]["ServicioRealizado"][];
+            /** Lineas */
+            lineas: components["schemas"]["LineaRealizada"][];
+            /** Cobros */
+            cobros: components["schemas"]["CobroDelDoctor"][];
+            /** Pagos */
+            pagos: components["schemas"]["PagoAlDoctor"][];
+        };
+        /**
+         * Resumen
+         * @description Lo que entró, lo que salió y quién lo produjo, en un tramo de fechas.
+         */
+        Resumen: {
+            /**
+             * Desde
+             * Format: date
+             */
+            desde: string;
+            /**
+             * Hasta
+             * Format: date
+             */
+            hasta: string;
+            /** Ingresos */
+            ingresos: string;
+            /** Gastos */
+            gastos: string;
+            /** Neto */
+            neto: string;
+            /** Produccion */
+            produccion: string;
+            /**
+             * Por Cobrar
+             * @description Saldo de todos los pacientes, hoy
+             */
+            por_cobrar: string;
+            /** Doctores */
+            doctores: components["schemas"]["FilaDoctor"][];
+            /** Unidades */
+            unidades: components["schemas"]["FilaUnidad"][];
+        };
+        /** ResumenCita */
+        ResumenCita: {
+            /** Id */
+            id: number;
+            /**
+             * Inicio
+             * Format: date-time
+             */
+            inicio: string;
+            /** Doctor Nombre */
+            doctor_nombre: string;
+            /** Servicio Nombre */
+            servicio_nombre: string | null;
+            estado: components["schemas"]["EstadoCita"];
+        };
+        /**
+         * ResumenClinico
+         * @description El paciente de un vistazo. Todo se calcula: nada de esto se redacta.
+         */
+        ResumenClinico: {
+            /** Paciente Id */
+            paciente_id: number;
+            /** Primera Visita */
+            primera_visita: string | null;
+            /** Consultas */
+            consultas: number;
+            /**
+             * Ausencias
+             * @description Citas a las que no asistió
+             */
+            ausencias: number;
+            ultima_consulta: components["schemas"]["ResumenConsulta"] | null;
+            proxima_cita: components["schemas"]["ResumenCita"] | null;
+            /** Planes */
+            planes: components["schemas"]["ResumenPlan"][];
+            /** Implantes */
+            implantes: components["schemas"]["ResumenImplante"][];
+            seguro: components["schemas"]["SeguroLeer"] | null;
+            /** Balance */
+            balance: string;
+            /** Credito Sin Aplicar */
+            credito_sin_aplicar: string;
+            /**
+             * Por Firmar
+             * @description Documentos emitidos que esperan firma
+             */
+            por_firmar: number;
+            /** Archivos */
+            archivos: number;
+        };
+        /** ResumenConsulta */
+        ResumenConsulta: {
+            /** Id */
+            id: number;
+            /**
+             * Fecha
+             * Format: date-time
+             */
+            fecha: string;
+            /** Doctor Nombre */
+            doctor_nombre: string;
+            /** Motivo */
+            motivo: string | null;
+            /** Diagnostico */
+            diagnostico: string | null;
+            /** Servicios */
+            servicios: string[];
+        };
+        /** ResumenImplante */
+        ResumenImplante: {
+            /** Id */
+            id: number;
+            /** Codigo Fdi */
+            codigo_fdi: number;
+            /** Sistema Nombre */
+            sistema_nombre: string;
+            /** Lote */
+            lote: string;
+            estado: components["schemas"]["EstadoImplante"];
+            /** Fecha Colocacion */
+            fecha_colocacion: string | null;
+        };
+        /** ResumenPlan */
+        ResumenPlan: {
+            /** Id */
+            id: number;
+            /** Codigo */
+            codigo: string;
+            /** Titulo */
+            titulo: string | null;
+            estado: components["schemas"]["EstadoPlan"];
+            /** Items */
+            items: number;
+            /** Hechos */
+            hechos: number;
+            /** Total */
+            total: string;
+            /**
+             * Pendiente
+             * @description Lo cotizado que aún no se ha ejecutado
+             */
+            pendiente: string;
+            /**
+             * Siguiente
+             * @description El próximo paso, según fase y prioridad
+             */
+            siguiente: string | null;
+        };
+        /**
          * RolUsuario
          * @enum {string}
          */
         RolUsuario: "admin" | "doctor" | "asistente" | "recepcion" | "facturacion";
+        /** SecuenciaActualizar */
+        SecuenciaActualizar: {
+            /** Vence */
+            vence?: string | null;
+            /** Activo */
+            activo?: boolean | null;
+        };
+        /**
+         * SecuenciaCrear
+         * @description Un rango nuevo autorizado por la DGII. Sustituye al activo de su tipo.
+         */
+        SecuenciaCrear: {
+            /**
+             * Tipo
+             * @enum {string}
+             */
+            tipo: "B01" | "B02" | "B14" | "B15";
+            /** Desde */
+            desde: number;
+            /** Hasta */
+            hasta: number;
+            /** Vence */
+            vence?: string | null;
+        };
+        /** SecuenciaLeer */
+        SecuenciaLeer: {
+            /** Id */
+            id: number;
+            /** Tipo */
+            tipo: string;
+            /** Desde */
+            desde: number;
+            /** Hasta */
+            hasta: number;
+            /** Siguiente */
+            siguiente: number;
+            /** Disponibles */
+            disponibles: number;
+            /** Vence */
+            vence: string | null;
+            /** Activo */
+            activo: boolean;
+        };
+        /** SeguroEscribir */
+        SeguroEscribir: {
+            /** Aseguradora Id */
+            aseguradora_id: number;
+            /** Poliza */
+            poliza: string;
+            /** Plan */
+            plan?: string | null;
+            /** Titular */
+            titular?: string | null;
+            /** Vigente Desde */
+            vigente_desde?: string | null;
+            /** Vigente Hasta */
+            vigente_hasta?: string | null;
+            /**
+             * Principal
+             * @default true
+             */
+            principal: boolean;
+        };
+        /** SeguroLeer */
+        SeguroLeer: {
+            /** Id */
+            id: number;
+            /** Aseguradora Id */
+            aseguradora_id: number;
+            /** Aseguradora Nombre */
+            aseguradora_nombre: string;
+            /** Poliza */
+            poliza: string;
+            /** Plan */
+            plan: string | null;
+            /** Titular */
+            titular: string | null;
+            /** Vigente Desde */
+            vigente_desde: string | null;
+            /** Vigente Hasta */
+            vigente_hasta: string | null;
+            /** Principal */
+            principal: boolean;
+            /**
+             * Vigente
+             * @default true
+             */
+            vigente: boolean;
+        };
+        /**
+         * ServicioActualizar
+         * @description PATCH. `precios` reemplaza el precio de las listas que nombre; las que no
+         *     nombre se quedan como están.
+         */
+        ServicioActualizar: {
+            /** Categoria Id */
+            categoria_id?: number | null;
+            /** Nombre */
+            nombre?: string | null;
+            /** Descripcion */
+            descripcion?: string | null;
+            /** Requiere Diente */
+            requiere_diente?: boolean | null;
+            /** Requiere Superficie */
+            requiere_superficie?: boolean | null;
+            /** Es Implante */
+            es_implante?: boolean | null;
+            /** Duracion Min */
+            duracion_min?: number | null;
+            /** Sesiones */
+            sesiones?: number | null;
+            /** Condicion Resultante Id */
+            condicion_resultante_id?: number | null;
+            /** Activo */
+            activo?: boolean | null;
+            /** Precios */
+            precios?: components["schemas"]["PrecioEscribir"][] | null;
+        };
+        /**
+         * ServicioCrear
+         * @description El `codigo` lo genera el servidor a partir de la categoría.
+         */
+        ServicioCrear: {
+            /** Categoria Id */
+            categoria_id: number;
+            /** Nombre */
+            nombre: string;
+            /** Descripcion */
+            descripcion?: string | null;
+            /**
+             * Requiere Diente
+             * @default false
+             */
+            requiere_diente: boolean;
+            /**
+             * Requiere Superficie
+             * @default false
+             */
+            requiere_superficie: boolean;
+            /**
+             * Es Implante
+             * @default false
+             */
+            es_implante: boolean;
+            /**
+             * Duracion Min
+             * @default 30
+             */
+            duracion_min: number;
+            /**
+             * Sesiones
+             * @default 1
+             */
+            sesiones: number;
+            /** Condicion Resultante Id */
+            condicion_resultante_id?: number | null;
+            /** Precios */
+            precios: components["schemas"]["PrecioEscribir"][];
+        };
+        /** ServicioLeer */
+        ServicioLeer: {
+            /** Categoria Id */
+            categoria_id: number;
+            /** Nombre */
+            nombre: string;
+            /** Descripcion */
+            descripcion?: string | null;
+            /**
+             * Requiere Diente
+             * @default false
+             */
+            requiere_diente: boolean;
+            /**
+             * Requiere Superficie
+             * @default false
+             */
+            requiere_superficie: boolean;
+            /**
+             * Es Implante
+             * @default false
+             */
+            es_implante: boolean;
+            /**
+             * Duracion Min
+             * @default 30
+             */
+            duracion_min: number;
+            /**
+             * Sesiones
+             * @default 1
+             */
+            sesiones: number;
+            /** Condicion Resultante Id */
+            condicion_resultante_id?: number | null;
+            /** Id */
+            id: number;
+            /** Codigo */
+            codigo: string;
+            /** Categoria Nombre */
+            categoria_nombre: string;
+            /** Activo */
+            activo: boolean;
+            /**
+             * Precios
+             * @default []
+             */
+            precios: components["schemas"]["PrecioLeer"][];
+            /**
+             * En Uso
+             * @description Aparece en citas, planes o procedimientos
+             * @default false
+             */
+            en_uso: boolean;
+        };
+        /** ServicioRealizado */
+        ServicioRealizado: {
+            /** Servicio Codigo */
+            servicio_codigo: string;
+            /** Servicio Nombre */
+            servicio_nombre: string;
+            /** Cantidad */
+            cantidad: number;
+            /** Produccion */
+            produccion: string;
+        };
         /**
          * Sexo
          * @enum {string}
          */
         Sexo: "M" | "F" | "O";
+        /** SistemaCrear */
+        SistemaCrear: {
+            /** Marca */
+            marca: string;
+            /** Linea */
+            linea: string;
+            /** Conexion */
+            conexion?: string | null;
+            /** Proveedor */
+            proveedor?: string | null;
+        };
+        /** SistemaLeer */
+        SistemaLeer: {
+            /** Id */
+            id: number;
+            /** Marca */
+            marca: string;
+            /** Linea */
+            linea: string;
+            /** Conexion */
+            conexion: string | null;
+            /** Proveedor */
+            proveedor: string | null;
+            /** Activo */
+            activo: boolean;
+        };
         /** SuperficieLeer */
         SuperficieLeer: {
             /** Codigo */
@@ -1139,6 +6022,79 @@ export interface components {
              */
             token_type: string;
         };
+        /** TotalMetodo */
+        TotalMetodo: {
+            /** Metodo */
+            metodo: string;
+            /** Pagos */
+            pagos: number;
+            /** Monto */
+            monto: string;
+        };
+        /** TotalPorNombre */
+        TotalPorNombre: {
+            /** Nombre */
+            nombre: string;
+            /** Gastos */
+            gastos: number;
+            /** Monto */
+            monto: string;
+        };
+        /** TramoAntiguedad */
+        TramoAntiguedad: {
+            /** Etiqueta */
+            etiqueta: string;
+            /** Pacientes */
+            pacientes: number;
+            /** Balance */
+            balance: string;
+        };
+        /** UnidadActualizar */
+        UnidadActualizar: {
+            /** Nombre */
+            nombre?: string | null;
+            /** Alquilada */
+            alquilada?: boolean | null;
+            /** Orden */
+            orden?: number | null;
+            /** Activo */
+            activo?: boolean | null;
+        };
+        /** UnidadCrear */
+        UnidadCrear: {
+            /** Nombre */
+            nombre: string;
+            /**
+             * Alquilada
+             * @default false
+             */
+            alquilada: boolean;
+            /**
+             * Orden
+             * @default 0
+             */
+            orden: number;
+            /**
+             * Sede Id
+             * @description Por defecto, la sede principal
+             */
+            sede_id?: number | null;
+        };
+        /** UnidadLeer */
+        UnidadLeer: {
+            /** Id */
+            id: number;
+            /** Sede Id */
+            sede_id: number;
+            /** Nombre */
+            nombre: string;
+            /** Alquilada */
+            alquilada: boolean;
+            /** Orden */
+            orden: number;
+            /** Activo */
+            activo: boolean;
+        };
         /**
          * UsuarioActual
          * @description Identidad del usuario en sesión, para la cabecera de la aplicación.
@@ -1153,6 +6109,46 @@ export interface components {
             doctor_id?: number | null;
             /** Doctor Nombre */
             doctor_nombre?: string | null;
+        };
+        /** UsuarioActualizar */
+        UsuarioActualizar: {
+            rol?: components["schemas"]["RolUsuario"] | null;
+            /** Doctor Id */
+            doctor_id?: number | null;
+            /** Activo */
+            activo?: boolean | null;
+        };
+        /** UsuarioCrear */
+        UsuarioCrear: {
+            /**
+             * Email
+             * Format: email
+             */
+            email: string;
+            rol: components["schemas"]["RolUsuario"];
+            /** Doctor Id */
+            doctor_id?: number | null;
+            /** Password */
+            password: string;
+        };
+        /** UsuarioLeer */
+        UsuarioLeer: {
+            /** Id */
+            id: number;
+            /** Email */
+            email: string;
+            rol: components["schemas"]["RolUsuario"];
+            /** Doctor Id */
+            doctor_id: number | null;
+            /** Doctor Nombre */
+            doctor_nombre: string | null;
+            /** Activo */
+            activo: boolean;
+            /**
+             * Creado En
+             * Format: date-time
+             */
+            creado_en: string;
         };
         /** ValidationError */
         ValidationError: {
@@ -1293,7 +6289,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": Record<string, never>[];
+                    "application/json": components["schemas"]["CondicionMedicaCatalogo"][];
                 };
             };
         };
@@ -1313,7 +6309,80 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": Record<string, never>[];
+                    "application/json": components["schemas"]["AlergiaCatalogo"][];
+                };
+            };
+        };
+    };
+    estados_cita_api_v1_catalogos_estados_cita_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EstadoCitaLeer"][];
+                };
+            };
+        };
+    };
+    clinica_api_v1_catalogos_clinica_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClinicaLeer"];
+                };
+            };
+        };
+    };
+    actualizar_clinica_api_v1_catalogos_clinica_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClinicaActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClinicaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -1321,7 +6390,7 @@ export interface operations {
     listar_api_v1_pacientes_get: {
         parameters: {
             query?: {
-                /** @description Nombre, expediente o documento */
+                /** @description Nombre, expediente, documento o teléfono */
                 buscar?: string | null;
                 incluir_inactivos?: boolean;
                 limite?: number;
@@ -1802,6 +6871,3805 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["DienteEstado-Output"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listar_api_v1_citas_get: {
+        parameters: {
+            query?: {
+                /** @description Inicio del tramo, incluido */
+                desde?: string | null;
+                /** @description Fin del tramo, excluido */
+                hasta?: string | null;
+                paciente_id?: number | null;
+                doctor_id?: number | null;
+                unidad_id?: number | null;
+                estado?: components["schemas"]["EstadoCita"] | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CitaLeer"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    crear_api_v1_citas_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CitaCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CitaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    obtener_api_v1_citas__cita_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                cita_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CitaDetalle"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_api_v1_citas__cita_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                cita_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CitaActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CitaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cambiar_estado_api_v1_citas__cita_id__estado_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                cita_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CambioEstado"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CitaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    marcar_recordatorio_api_v1_citas__cita_id__recordatorio_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                cita_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CitaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    historial_del_paciente_api_v1_pacientes__paciente_id__historial_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Historial"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    crear_consulta_api_v1_pacientes__paciente_id__consultas_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConsultaCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConsultaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    obtener_consulta_api_v1_consultas__consulta_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                consulta_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConsultaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    borrar_consulta_api_v1_consultas__consulta_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                consulta_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_consulta_api_v1_consultas__consulta_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                consulta_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConsultaActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConsultaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    crear_plan_api_v1_pacientes__paciente_id__planes_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlanCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlanLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    obtener_plan_api_v1_planes__plan_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                plan_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlanLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    borrar_plan_api_v1_planes__plan_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                plan_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_plan_api_v1_planes__plan_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                plan_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlanActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlanLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    crear_item_api_v1_planes__plan_id__items_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                plan_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ItemEscribir"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlanLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    borrar_item_api_v1_planes__plan_id__items__item_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                plan_id: number;
+                item_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlanLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_item_api_v1_planes__plan_id__items__item_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                plan_id: number;
+                item_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ItemActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlanLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    estado_de_cuenta_api_v1_pacientes__paciente_id__cuenta_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EstadoDeCuenta"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    registrar_pago_api_v1_pacientes__paciente_id__pagos_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PagoCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PagoLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    recibo_api_v1_pagos__pago_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pago_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Recibo"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_pago_api_v1_pagos__pago_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pago_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PagoActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PagoLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    anular_pago_api_v1_pagos__pago_id__anular_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pago_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PagoAnular"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PagoLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cuentas_por_cobrar_api_v1_cuentas_por_cobrar_get: {
+        parameters: {
+            query?: {
+                buscar?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CuentasPorCobrar"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    caja_api_v1_caja_get: {
+        parameters: {
+            query?: {
+                /** @description Por defecto, hoy */
+                desde?: string | null;
+                /** @description Incluido. Por defecto, igual a desde */
+                hasta?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Caja"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listar_plantillas_api_v1_plantillas_get: {
+        parameters: {
+            query?: {
+                incluir_inactivas?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlantillaLeer"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    crear_plantilla_api_v1_plantillas_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlantillaEscribir"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlantillaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_plantilla_api_v1_plantillas__plantilla_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                plantilla_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlantillaActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlantillaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    documentos_del_paciente_api_v1_pacientes__paciente_id__documentos_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentosDelPaciente"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    emitir_api_v1_pacientes__paciente_id__documentos_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DocumentoCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentoLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    borrador_api_v1_pacientes__paciente_id__documentos_borrador_get: {
+        parameters: {
+            query: {
+                plantilla_id: number;
+                consulta_id?: number | null;
+                plan_id?: number | null;
+            };
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Borrador"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    obtener_documento_api_v1_documentos__documento_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                documento_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentoLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    anular_api_v1_documentos__documento_id__anular_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                documento_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DocumentoAnular"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentoLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    enlace_de_firma_api_v1_documentos__documento_id__enlace_firma_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                documento_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnlaceFirma"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    documento_para_firmar_api_v1_firma__token__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentoParaFirmar"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    firmar_api_v1_firma__token__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FirmaCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    recetar_api_v1_pacientes__paciente_id__recetas_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecetaCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecetaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    categorias_de_gasto_api_v1_categorias_gasto_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NombreLeer"][];
+                };
+            };
+        };
+    };
+    crear_categoria_de_gasto_api_v1_categorias_gasto_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NombreCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NombreLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    categorias_de_insumo_api_v1_categorias_insumo_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NombreLeer"][];
+                };
+            };
+        };
+    };
+    crear_categoria_de_insumo_api_v1_categorias_insumo_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NombreCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NombreLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    proveedores_api_v1_proveedores_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProveedorLeer"][];
+                };
+            };
+        };
+    };
+    listar_gastos_api_v1_gastos_get: {
+        parameters: {
+            query?: {
+                /** @description Por defecto, el día 1 del mes */
+                desde?: string | null;
+                /** @description Incluido. Por defecto, hoy */
+                hasta?: string | null;
+                tipo?: string | null;
+                categoria_id?: number | null;
+                doctor_id?: number | null;
+                buscar?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Gastos"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    registrar_gasto_api_v1_gastos_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GastoCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GastoLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    anular_gasto_api_v1_gastos__gasto_id__anular_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                gasto_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GastoAnular"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GastoLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    inventario_api_v1_insumos_get: {
+        parameters: {
+            query?: {
+                incluir_inactivos?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Inventario"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    crear_insumo_api_v1_insumos_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InsumoCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InsumoLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_insumo_api_v1_insumos__insumo_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                insumo_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InsumoActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InsumoLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    kardex_api_v1_insumos__insumo_id__movimientos_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                insumo_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MovimientoLeer"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mover_insumo_api_v1_insumos__insumo_id__movimientos_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                insumo_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MovimientoCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InsumoLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    receta_del_servicio_api_v1_servicios__servicio_id__insumos_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                servicio_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecetaInsumoLeer"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    guardar_receta_api_v1_servicios__servicio_id__insumos_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                servicio_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecetaInsumo"][];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecetaInsumoLeer"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    costos_de_servicio_api_v1_costos_servicio_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CostoServicio"][];
+                };
+            };
+        };
+    };
+    resumen_api_v1_informes_resumen_get: {
+        parameters: {
+            query?: {
+                /** @description Por defecto, el día 1 del mes */
+                desde?: string | null;
+                /** @description Incluido. Por defecto, hoy */
+                hasta?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Resumen"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    descargar_api_v1_archivos__archivo_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                archivo_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listar_api_v1_pacientes__paciente_id__archivos_get: {
+        parameters: {
+            query?: {
+                consulta_id?: number | null;
+            };
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ArchivoClinicoLeer"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    subir_api_v1_pacientes__paciente_id__archivos_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_subir_api_v1_pacientes__paciente_id__archivos_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ArchivoClinicoLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    quitar_api_v1_archivos_clinicos__documento_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                documento_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_api_v1_archivos_clinicos__documento_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                documento_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ArchivoClinicoActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ArchivoClinicoLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    adjuntar_a_pago_api_v1_pagos__pago_id__comprobante_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pago_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_adjuntar_a_pago_api_v1_pagos__pago_id__comprobante_put"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ArchivoLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    quitar_de_pago_api_v1_pagos__pago_id__comprobante_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pago_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    adjuntar_a_gasto_api_v1_gastos__gasto_id__comprobante_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                gasto_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_adjuntar_a_gasto_api_v1_gastos__gasto_id__comprobante_put"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ArchivoLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    quitar_de_gasto_api_v1_gastos__gasto_id__comprobante_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                gasto_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listar_sistemas_api_v1_sistemas_implante_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SistemaLeer"][];
+                };
+            };
+        };
+    };
+    crear_sistema_api_v1_sistemas_implante_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SistemaCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SistemaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    implantes_del_paciente_api_v1_pacientes__paciente_id__implantes_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImplanteLeer"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    registrar_implante_api_v1_pacientes__paciente_id__implantes_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImplanteCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImplanteLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_implante_api_v1_implantes__implante_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                implante_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImplanteActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImplanteLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    registrar_evento_api_v1_implantes__implante_id__eventos_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                implante_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EventoCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImplanteLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    buscar_por_lote_api_v1_implantes_get: {
+        parameters: {
+            query: {
+                /** @description Lote, completo o un tramo */
+                lote: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImplanteConPaciente"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listar_secuencias_api_v1_secuencias_ncf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SecuenciaLeer"][];
+                };
+            };
+        };
+    };
+    crear_secuencia_api_v1_secuencias_ncf_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SecuenciaCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SecuenciaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_secuencia_api_v1_secuencias_ncf__secuencia_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                secuencia_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SecuenciaActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SecuenciaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    facturas_del_paciente_api_v1_pacientes__paciente_id__facturas_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FacturasDelPaciente"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    emitir_factura_api_v1_pacientes__paciente_id__facturas_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FacturaCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FacturaImprimible"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    obtener_factura_api_v1_facturas__factura_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                factura_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FacturaImprimible"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    anular_factura_api_v1_facturas__factura_id__anular_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                factura_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FacturaAnular"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FacturaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    caja_del_dia_api_v1_caja_dia_get: {
+        parameters: {
+            query?: {
+                /** @description Por defecto, hoy */
+                fecha?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CajaDelDia"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listar_cierres_api_v1_caja_cierres_get: {
+        parameters: {
+            query?: {
+                limite?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CierreLeer"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cerrar_caja_api_v1_caja_cierres_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CierreCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CierreLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reabrir_caja_api_v1_caja_cierres__cierre_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                cierre_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    seguros_del_paciente_api_v1_pacientes__paciente_id__seguros_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SeguroLeer"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    agregar_seguro_api_v1_pacientes__paciente_id__seguros_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SeguroEscribir"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SeguroLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_seguro_api_v1_seguros__seguro_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                seguro_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SeguroEscribir"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SeguroLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    quitar_seguro_api_v1_seguros__seguro_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                seguro_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resumen_del_paciente_api_v1_pacientes__paciente_id__resumen_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paciente_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ResumenClinico"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reporte_del_doctor_api_v1_informes_doctores__doctor_id__get: {
+        parameters: {
+            query?: {
+                /** @description Por defecto, el día 1 del mes */
+                desde?: string | null;
+                /** @description Incluido. Por defecto, hoy */
+                hasta?: string | null;
+            };
+            header?: never;
+            path: {
+                doctor_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReporteDoctor"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    estado_api_v1_onboarding_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OnboardingLeer"];
+                };
+            };
+        };
+    };
+    revisar_catalogo_api_v1_onboarding_revisar_catalogo_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OnboardingLeer"];
+                };
+            };
+        };
+    };
+    cerrar_api_v1_onboarding_cerrar_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CerrarGuia"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OnboardingLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reabrir_api_v1_onboarding_cierre_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    listar_listas_api_v1_listas_precio_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListaPrecioLeer"][];
+                };
+            };
+        };
+    };
+    crear_lista_api_v1_listas_precio_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ListaPrecioCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListaPrecioLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listar_aseguradoras_api_v1_aseguradoras_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AseguradoraLeer"][];
+                };
+            };
+        };
+    };
+    actualizar_lista_api_v1_listas_precio__lista_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                lista_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ListaPrecioActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListaPrecioLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listar_categorias_api_v1_categorias_servicio_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoriaLeer"][];
+                };
+            };
+        };
+    };
+    crear_categoria_api_v1_categorias_servicio_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CategoriaCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoriaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    borrar_categoria_api_v1_categorias_servicio__categoria_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                categoria_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_categoria_api_v1_categorias_servicio__categoria_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                categoria_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CategoriaActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoriaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listar_servicios_api_v1_servicios_get: {
+        parameters: {
+            query?: {
+                /** @description Nombre, código o categoría */
+                buscar?: string | null;
+                categoria_id?: number | null;
+                incluir_inactivos?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ServicioLeer"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    crear_servicio_api_v1_servicios_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ServicioCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ServicioLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    obtener_servicio_api_v1_servicios__servicio_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                servicio_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ServicioLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    borrar_servicio_api_v1_servicios__servicio_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                servicio_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_servicio_api_v1_servicios__servicio_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                servicio_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ServicioActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ServicioLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    subir_logo_api_v1_catalogos_clinica_logo_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_subir_logo_api_v1_catalogos_clinica_logo_put"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClinicaLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    quitar_logo_api_v1_catalogos_clinica_logo_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    listar_especialidades_api_v1_especialidades_get: {
+        parameters: {
+            query?: {
+                incluir_inactivas?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EspecialidadLeer"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    crear_especialidad_api_v1_especialidades_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EspecialidadCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EspecialidadLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    borrar_especialidad_api_v1_especialidades__especialidad_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                especialidad_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_especialidad_api_v1_especialidades__especialidad_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                especialidad_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EspecialidadActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EspecialidadLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listar_unidades_api_v1_unidades_get: {
+        parameters: {
+            query?: {
+                incluir_inactivas?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UnidadLeer"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    crear_unidad_api_v1_unidades_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UnidadCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UnidadLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    borrar_unidad_api_v1_unidades__unidad_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                unidad_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_unidad_api_v1_unidades__unidad_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                unidad_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UnidadActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UnidadLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listar_doctores_api_v1_doctores_get: {
+        parameters: {
+            query?: {
+                incluir_inactivos?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DoctorLeer"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    crear_doctor_api_v1_doctores_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DoctorCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DoctorLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_doctor_api_v1_doctores__doctor_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                doctor_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DoctorActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DoctorLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listar_api_v1_usuarios_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UsuarioLeer"][];
+                };
+            };
+        };
+    };
+    crear_api_v1_usuarios_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UsuarioCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UsuarioLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_api_v1_usuarios__usuario_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                usuario_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UsuarioActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UsuarioLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cambiar_password_api_v1_usuarios__usuario_id__password_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                usuario_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PasswordNueva"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {

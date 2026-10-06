@@ -1,14 +1,15 @@
-import { useCallback, useMemo, type ReactNode } from "react"
+import { useCallback, useMemo, useSyncExternalStore, type ReactNode } from "react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { apiFetch } from "../../api/client"
-import { guardarTokens, leerTokens, limpiarSesion } from "../../api/sesion"
+import { guardarTokens, haySesion, limpiarSesion, suscribirSesion } from "../../api/sesion"
 import type { Tokens, UsuarioActual } from "../../api/tipos"
 import { ContextoAuth, type Sesion } from "./contexto"
 
 export function ProveedorAuth({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient()
-  const hayTokens = leerTokens() !== null
+  // Reactivo: «Salir», o un 401 sin remedio, cambia la pantalla sin recargar.
+  const hayTokens = useSyncExternalStore(suscribirSesion, haySesion)
 
   const { data: usuario, isPending } = useQuery({
     queryKey: ["auth", "me"],
@@ -36,10 +37,12 @@ export function ProveedorAuth({ children }: { children: ReactNode }) {
   )
 
   const salir = useCallback(() => {
-    limpiarSesion()
-    // Se vacía la caché entera: sus datos son de un paciente y un usuario
-    // concretos, y en una clínica el siguiente turno usa el mismo equipo.
+    // Primero se vacía la caché, y después se cierra la sesión: así ninguna
+    // consulta que siga montada vuelve a pedir datos con un token ya borrado.
+    // Sus datos son de un paciente y un usuario concretos, y en una clínica el
+    // siguiente turno usa el mismo equipo.
     queryClient.clear()
+    limpiarSesion()
   }, [queryClient])
 
   const valor = useMemo<Sesion>(

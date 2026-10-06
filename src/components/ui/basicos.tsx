@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode } from "react"
+import type { ButtonHTMLAttributes, ReactNode } from "react"
 
 /* Primitivas de interfaz. Deliberadamente pocas y sin variantes de color: la
    saturación está reservada al dato clínico. */
@@ -21,37 +21,6 @@ export function Boton({ variante = "solido", className = "", ...props }: BotonPr
         disabled:opacity-50 ${ESTILOS_BOTON[variante]} ${className}`}
       {...props}
     />
-  )
-}
-
-type CampoProps = InputHTMLAttributes<HTMLInputElement> & {
-  etiqueta: string
-  error?: string
-}
-
-export function Campo({ etiqueta, error, className = "", id, ...props }: CampoProps) {
-  const campoId = id ?? `campo-${etiqueta.toLowerCase().replace(/\s+/g, "-")}`
-
-  return (
-    <div className={className}>
-      <label htmlFor={campoId} className="block text-sm font-medium">
-        {etiqueta}
-      </label>
-      <input
-        id={campoId}
-        aria-invalid={error ? true : undefined}
-        aria-describedby={error ? `${campoId}-error` : undefined}
-        className={`mt-1.5 block w-full rounded-lg border bg-superficie px-3 py-2 text-sm
-          placeholder:text-tinta-suave/60
-          ${error ? "border-tinta" : "border-linea-fuerte"}`}
-        {...props}
-      />
-      {error && (
-        <p id={`${campoId}-error`} className="mt-1.5 text-sm text-tinta">
-          {error}
-        </p>
-      )}
-    </div>
   )
 }
 
@@ -91,5 +60,3 @@ export function ErrorCarga({ error, className = "" }: { error: unknown; classNam
     </div>
   )
 }
-
-export { VolverAtras } from "./VolverAtras"

@@ -1,18 +1,14 @@
-import { LOGOTIPOS } from "./isotipos"
-
 type LogoProps = {
-  /** `blanco` para cabeceras oscuras. */
-  variante?: "color" | "blanco"
   className?: string
 }
 
-/** Logotipo completo: isotipo, filete malva y firma. */
-export function Logo({ variante = "color", className }: LogoProps) {
+/** Logotipo horizontal de DentalMaster: isotipo y nombre. */
+export function Logo({ className = "h-12" }: LogoProps) {
   return (
     <img
-      src={variante === "blanco" ? LOGOTIPOS.blanco : LOGOTIPOS.color}
-      alt="Dr. Gabriel Martínez, implantólogo"
-      className={`h-10 w-auto ${className ?? ""}`}
+      src="/marca/dentalmaster-horizontal.png"
+      alt="DentalMaster"
+      className={`w-auto ${className}`}
     />
   )
 }

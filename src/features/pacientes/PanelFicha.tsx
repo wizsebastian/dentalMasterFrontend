@@ -1,6 +1,12 @@
+import { useState } from "react"
+import { Pencil } from "lucide-react"
+
 import { ApiError } from "../../api/client"
 import { Cargando } from "../../components/brand"
-import { ErrorCarga, Tarjeta, Vacio } from "../../components/ui"
+import { Boton, ErrorCarga, Tarjeta, Vacio } from "../../components/ui"
+import { useAuth } from "../auth/contexto"
+import { fecha } from "../../lib/formato"
+import { DialogoFicha } from "./DialogoFicha"
 import { useFicha } from "./consultas"
 
 function Dato({ etiqueta, valor }: { etiqueta: string; valor: React.ReactNode }) {
@@ -46,7 +52,12 @@ function Habitos({ ficha }: { ficha: Record<string, unknown> }) {
 }
 
 export function PanelFicha({ pacienteId }: { pacienteId: number }) {
+  const { puede } = useAuth()
   const { data: ficha, isPending, error } = useFicha(pacienteId)
+  const [editando, setEditando] = useState(false)
+
+  // Los mismos roles que acepta la API para escribir la ficha.
+  const edita = puede("doctor", "asistente")
 
   if (isPending) {
     return (
@@ -61,14 +72,39 @@ export function PanelFicha({ pacienteId }: { pacienteId: number }) {
     if (!sinFicha) return <ErrorCarga error={error} />
 
     return (
-      <Vacio
-        titulo="Este paciente no tiene ficha médica"
-        descripcion="La historia clínica se abre en la primera consulta."
-      />
+      <>
+        <Vacio
+          titulo="Este paciente no tiene ficha médica"
+          descripcion="Sin ficha no hay alertas: alergias y condiciones de riesgo salen de aquí."
+          accion={
+            edita ? <Boton onClick={() => setEditando(true)}>Abrir ficha médica</Boton> : undefined
+          }
+        />
+        <DialogoFicha
+          abierto={editando}
+          alCerrar={() => setEditando(false)}
+          pacienteId={pacienteId}
+        />
+      </>
     )
   }
 
   return (
+    <div>
+      {edita && (
+        <div className="mb-4 flex justify-end">
+          <Boton variante="contorno" onClick={() => setEditando(true)}>
+            <Pencil className="h-4 w-4" aria-hidden />
+            Editar ficha
+          </Boton>
+        </div>
+      )}
+      <DialogoFicha
+        abierto={editando}
+        alCerrar={() => setEditando(false)}
+        pacienteId={pacienteId}
+        ficha={ficha}
+      />
     <div className="grid gap-4 lg:grid-cols-2">
       <Tarjeta className="p-5">
         <h2 className="text-sm font-semibold">Motivo y antecedentes</h2>
@@ -83,7 +119,7 @@ export function PanelFicha({ pacienteId }: { pacienteId: number }) {
             etiqueta="Última visita dental"
             valor={
               ficha.ultima_visita_dental ? (
-                <span className="tabular font-mono">{ficha.ultima_visita_dental}</span>
+                <span className="tabular">{fecha(ficha.ultima_visita_dental)}</span>
               ) : (
                 "—"
               )
@@ -170,6 +206,7 @@ export function PanelFicha({ pacienteId }: { pacienteId: number }) {
           )}
         </div>
       </Tarjeta>
+    </div>
     </div>
   )
 }
