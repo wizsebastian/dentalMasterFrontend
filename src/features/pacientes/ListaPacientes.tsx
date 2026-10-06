@@ -1,17 +1,70 @@
 import { useState } from "react"
-import { Search } from "lucide-react"
+import { Search, UserPlus } from "lucide-react"
 import { Link } from "react-router-dom"
 
-import { Cargando } from "../../components/brand"
-import { ErrorCarga, Tarjeta, Vacio } from "../../components/ui"
+import type { PacienteResumen } from "../../api/tipos"
+import {
+  Boton,
+  ErrorCarga,
+  EsqueletoTabla,
+  Paginacion,
+  Tabla,
+  Tarjeta,
+  Vacio,
+  type Columna,
+} from "../../components/ui"
+import { useAuth } from "../auth/contexto"
+import { doctor, edad, telefono } from "../../lib/formato"
+import { useLayout } from "../../rutas/contexto"
 import { usePacientes } from "./consultas"
 
 const POR_PAGINA = 25
 
+const COLUMNAS: Columna<PacienteResumen>[] = [
+  {
+    id: "expediente",
+    titulo: "Expediente",
+    celda: (p) => (
+      <Link to={`/pacientes/${p.id}`} className="tabular font-mono text-marca hover:underline">
+        {p.codigo}
+      </Link>
+    ),
+  },
+  {
+    id: "paciente",
+    titulo: "Paciente",
+    className: "font-medium",
+    celda: (p) => `${p.apellidos}, ${p.nombres}`,
+  },
+  {
+    id: "cedula",
+    titulo: "Cédula",
+    className: "tabular font-mono text-tinta-suave",
+    celda: (p) => p.documento ?? "—",
+  },
+  { id: "edad", titulo: "Edad", className: "tabular text-tinta-suave", celda: (p) => edad(p.edad) },
+  {
+    id: "celular",
+    titulo: "Celular",
+    className: "tabular font-mono text-tinta-suave",
+    celda: (p) => telefono(p.celular),
+  },
+  {
+    id: "doctor",
+    titulo: "Doctor tratante",
+    className: "text-tinta-suave",
+    celda: (p) => doctor(p.doctor_tratante_nombre),
+  },
+]
+
 export function ListaPacientes() {
+  const { puede } = useAuth()
+  const { nuevoPaciente } = useLayout()
   const [buscar, setBuscar] = useState("")
   const [offset, setOffset] = useState(0)
   const { data, isPending, isFetching, error } = usePacientes(buscar, offset, POR_PAGINA)
+
+  const puedeAlta = puede("doctor", "asistente", "recepcion")
 
   function alBuscar(valor: string) {
     setBuscar(valor)
@@ -32,27 +85,33 @@ export function ListaPacientes() {
           )}
         </div>
 
-        <div className="relative">
-          <Search
-            className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-tinta-suave"
-            aria-hidden
-          />
-          <input
-            type="search"
-            value={buscar}
-            onChange={(e) => alBuscar(e.target.value)}
-            placeholder="Nombre, expediente o cédula"
-            aria-label="Buscar pacientes"
-            className="w-72 rounded-lg border border-linea-fuerte bg-superficie py-2 pl-9 pr-3 text-sm placeholder:text-tinta-suave/60"
-          />
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="relative">
+            <Search
+              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-tinta-suave"
+              aria-hidden
+            />
+            <input
+              type="search"
+              value={buscar}
+              onChange={(e) => alBuscar(e.target.value)}
+              placeholder="Nombre, expediente, cédula o teléfono"
+              aria-label="Buscar pacientes"
+              className="w-80 max-w-full rounded-lg border border-linea-fuerte bg-superficie py-2 pl-9 pr-3 text-sm placeholder:text-tinta-suave/60"
+            />
+          </div>
+          {puedeAlta && (
+            <Boton onClick={nuevoPaciente}>
+              <UserPlus className="h-4 w-4" aria-hidden />
+              Nuevo paciente
+            </Boton>
+          )}
         </div>
       </div>
 
       <Tarjeta className="mt-6 overflow-hidden">
         {isPending ? (
-          <div className="grid place-items-center py-14 text-marca">
-            <Cargando label="Cargando pacientes" />
-          </div>
+          <EsqueletoTabla />
         ) : error ? (
           <ErrorCarga error={error} className="m-4 border-0" />
         ) : data.items.length === 0 ? (
@@ -60,75 +119,22 @@ export function ListaPacientes() {
             titulo={buscar.trim() ? "Ningún paciente coincide" : "Todavía no hay pacientes"}
             descripcion={
               buscar.trim()
-                ? "Prueba con el número de expediente o la cédula."
+                ? "Prueba con el número de expediente, la cédula o el teléfono."
                 : "Los expedientes que registres aparecerán aquí."
+            }
+            accion={
+              puedeAlta && !buscar.trim() ? (
+                <Boton onClick={nuevoPaciente}>Crear el primer expediente</Boton>
+              ) : undefined
             }
           />
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="border-b border-linea text-left text-tinta-suave">
-                <tr>
-                  <th className="px-4 py-2.5 font-medium">Expediente</th>
-                  <th className="px-4 py-2.5 font-medium">Paciente</th>
-                  <th className="px-4 py-2.5 font-medium">Cédula</th>
-                  <th className="px-4 py-2.5 font-medium">Edad</th>
-                  <th className="px-4 py-2.5 font-medium">Celular</th>
-                </tr>
-              </thead>
-              <tbody className={isFetching ? "opacity-60 transition-opacity" : undefined}>
-                {data.items.map((paciente) => (
-                  <tr key={paciente.id} className="border-b border-linea last:border-0 hover:bg-esmalte">
-                    <td className="px-4 py-2.5">
-                      <Link
-                        to={`/pacientes/${paciente.id}`}
-                        className="tabular font-mono text-marca hover:underline"
-                      >
-                        {paciente.codigo}
-                      </Link>
-                    </td>
-                    <td className="px-4 py-2.5 font-medium">
-                      {paciente.apellidos}, {paciente.nombres}
-                    </td>
-                    <td className="tabular px-4 py-2.5 font-mono text-tinta-suave">
-                      {paciente.documento ?? "—"}
-                    </td>
-                    <td className="tabular px-4 py-2.5 text-tinta-suave">{paciente.edad}</td>
-                    <td className="tabular px-4 py-2.5 font-mono text-tinta-suave">
-                      {paciente.celular ?? "—"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <Tabla columnas={COLUMNAS} filas={data.items} clave={(p) => p.id} atenuada={isFetching} />
         )}
       </Tarjeta>
 
-      {data && data.total > POR_PAGINA && (
-        <div className="mt-4 flex items-center justify-between text-sm">
-          <span className="tabular text-tinta-suave">
-            {offset + 1}–{Math.min(offset + POR_PAGINA, data.total)} de {data.total}
-          </span>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => setOffset(Math.max(0, offset - POR_PAGINA))}
-              disabled={offset === 0}
-              className="rounded-lg border border-linea-fuerte px-3 py-1.5 disabled:opacity-40"
-            >
-              Anterior
-            </button>
-            <button
-              type="button"
-              onClick={() => setOffset(offset + POR_PAGINA)}
-              disabled={offset + POR_PAGINA >= data.total}
-              className="rounded-lg border border-linea-fuerte px-3 py-1.5 disabled:opacity-40"
-            >
-              Siguiente
-            </button>
-          </div>
-        </div>
+      {data && (
+        <Paginacion offset={offset} limite={POR_PAGINA} total={data.total} alCambiar={setOffset} />
       )}
     </div>
   )

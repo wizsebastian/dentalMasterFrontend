@@ -13,12 +13,12 @@ pag.on('pageerror', e => errs.push(e.message))
 const check = (n, ok, d='') => { console.log(`${ok?'PASS':'FAIL'}  ${n}${d?` — ${d}`:''}`); if(!ok) fallos.push(n) }
 
 await pag.goto(B, { waitUntil: 'domcontentloaded' }); await pag.waitForTimeout(1800)
-check('el login ofrece los dos accesos', await pag.getByRole('link', { name: /En arcada/ }).isVisible()
-  && await pag.getByRole('link', { name: /Con librería/ }).isVisible())
+check('el login ya no enseña los bancos de pruebas', await pag.getByRole('link', { name: /En arcada/ }).count() === 0
+  && await pag.getByRole('link', { name: /Con librería/ }).count() === 0)
 await pag.screenshot({ path: '/salida/botones-login.png' })
 
 // Arcada: ir y volver
-await pag.getByRole('link', { name: /En arcada/ }).click()
+await pag.goto(`${B}/odontogram`, { waitUntil: 'domcontentloaded' })
 await pag.waitForTimeout(1800)
 check('abre la arcada', pag.url().endsWith('/odontogram'))
 check('la arcada tiene botón volver', await pag.getByRole('link', { name: 'Volver' }).isVisible())
@@ -26,7 +26,7 @@ await pag.getByRole('link', { name: 'Volver' }).click(); await pag.waitForTimeou
 check('vuelve al login desde la arcada', await pag.getByText('Entra a la clínica').isVisible(), pag.url())
 
 // Librería: ir y volver
-await pag.getByRole('link', { name: /Con librería/ }).click()
+await pag.goto(`${B}/odontogram-especial`, { waitUntil: 'domcontentloaded' })
 await pag.waitForTimeout(7000)
 check('abre la de librería', pag.url().endsWith('/odontogram-especial'))
 check('la de librería tiene botón volver', await pag.getByRole('link', { name: 'Volver' }).isVisible())

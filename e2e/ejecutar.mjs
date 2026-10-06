@@ -21,7 +21,8 @@ if (!ip) {
 
 // Un argumento opcional elige el guion: `node e2e/ejecutar.mjs botones`
 const guion = `${process.argv[2] ?? "smoke"}.mjs`
-const base = `http://${ip}:5173`
+// PUERTO permite apuntar a un segundo servidor de desarrollo sin parar el de :5173.
+const base = `http://${ip}:${process.env.PUERTO ?? "5173"}`
 console.log(`Probando ${guion} contra ${base}\n`)
 
 execFileSync(

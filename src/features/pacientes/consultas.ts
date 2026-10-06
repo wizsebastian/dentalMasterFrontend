@@ -11,6 +11,8 @@ import type {
   Hallazgo,
   Odontograma,
   OdontogramaResumen,
+  PacienteActualizar,
+  PacienteCrear,
   PacienteDetalle,
   PaginaPacientes,
 } from "../../api/tipos"
@@ -32,6 +34,29 @@ export function usePaciente(id: number) {
   return useQuery({
     queryKey: ["paciente", id],
     queryFn: () => apiFetch<PacienteDetalle>(`${V1}/pacientes/${id}`),
+  })
+}
+
+export function useCrearPaciente() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (datos: PacienteCrear) =>
+      apiFetch<PacienteDetalle>(`${V1}/pacientes`, { method: "POST", body: datos }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["pacientes"] }),
+  })
+}
+
+export function useActualizarPaciente(id: number) {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (datos: PacienteActualizar) =>
+      apiFetch<PacienteDetalle>(`${V1}/pacientes/${id}`, { method: "PATCH", body: datos }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["paciente", id] })
+      queryClient.invalidateQueries({ queryKey: ["pacientes"] })
+    },
   })
 }
 
@@ -101,7 +126,11 @@ export function useCrearVersion(pacienteId: number) {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (datos: { observaciones?: string; copiar_hallazgos: boolean }) =>
+    mutationFn: (datos: {
+      denticion?: "permanente" | "temporal"
+      observaciones?: string
+      copiar_hallazgos: boolean
+    }) =>
       apiFetch<Odontograma>(`${V1}/pacientes/${pacienteId}/odontograma`, {
         method: "POST",
         body: datos,
