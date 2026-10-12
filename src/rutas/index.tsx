@@ -19,6 +19,7 @@ import { PantallaPaso } from "../features/onboarding/PantallaPaso"
 import { PantallaInventario } from "../features/inventario/PantallaInventario"
 import { ExpedientePaciente } from "../features/pacientes/ExpedientePaciente"
 import { ListaPacientes } from "../features/pacientes/ListaPacientes"
+import { PantallaGuia } from "../features/guia/PantallaGuia"
 import { BancoArcada, BancoLibreria } from "./bancos-de-pruebas"
 import { Protegido } from "./Protegido"
 
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
   // Firma de un documento por enlace. Fuera de la sesión: quien firma no entra
   // a la aplicación; el enlace sólo abre ese documento.
   { path: "/firmar/:token", element: <PantallaFirmar /> },
+  // Guía interactiva del sistema. También fuera de la sesión: quien la recorre
+  // se identifica con el código de su guía, no con una cuenta.
+  { path: "/guia", element: <PantallaGuia /> },
+  { path: "/guia/:codigo", element: <PantallaGuia /> },
   {
     path: "/",
     element: <Protegido />,

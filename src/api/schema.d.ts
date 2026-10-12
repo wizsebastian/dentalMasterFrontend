@@ -1571,30 +1571,11 @@ export interface paths {
         put?: never;
         /**
          * Cerrar
-         * @description Termina la guía. Exige lo obligatorio, salvo «Omitir por ahora».
+         * @description Termina la guía. No se puede omitir: exige lo obligatorio (los datos de la
+         *     clínica y un doctor), porque una clínica a medias no está lista para trabajar.
          */
         post: operations["cerrar_api_v1_onboarding_cerrar_post"];
         delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/onboarding/cierre": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /**
-         * Reabrir
-         * @description Vuelve a ofrecer la guía («Ver guía de primeros pasos»).
-         */
-        delete: operations["reabrir_api_v1_onboarding_cierre_delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1912,6 +1893,114 @@ export interface paths {
         put?: never;
         /** Cambiar Password */
         post: operations["cambiar_password_api_v1_usuarios__usuario_id__password_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/guia/sesiones": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Crear Sesion */
+        post: operations["crear_sesion_api_v1_guia_sesiones_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/guia/sesiones/{codigo}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Leer Sesion */
+        get: operations["leer_sesion_api_v1_guia_sesiones__codigo__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/guia/sesiones/{codigo}/pasos/{paso_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Guardar Paso */
+        put: operations["guardar_paso_api_v1_guia_sesiones__codigo__pasos__paso_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/guia/sesiones/{codigo}/general": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Guardar General */
+        put: operations["guardar_general_api_v1_guia_sesiones__codigo__general_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/guia/resumen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Resumen
+         * @description Quién va por dónde y en qué pasos se atasca la gente.
+         */
+        get: operations["resumen_api_v1_guia_resumen_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/guia/exportar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Exportar
+         * @description Todo lo registrado, con la bitácora de cambios de cada sesión.
+         */
+        get: operations["exportar_api_v1_guia_exportar_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -2239,15 +2328,6 @@ export interface components {
              * @default 0
              */
             servicios: number;
-        };
-        /** CerrarGuia */
-        CerrarGuia: {
-            /**
-             * Forzar
-             * @description Cerrar aunque falte lo obligatorio («Omitir por ahora»)
-             * @default false
-             */
-            forzar: boolean;
         };
         /** CierreCrear */
         CierreCrear: {
@@ -3896,6 +3976,158 @@ export interface components {
             por_categoria: components["schemas"]["TotalPorNombre"][];
             /** Items */
             items: components["schemas"]["GastoLeer"][];
+        };
+        /** GuiaEventoLeer */
+        GuiaEventoLeer: {
+            /** Paso Id */
+            paso_id: string;
+            /** Estado */
+            estado: string;
+            /** Nota */
+            nota: string;
+            /**
+             * Creado En
+             * Format: date-time
+             */
+            creado_en: string;
+        };
+        /** GuiaGeneralEscribir */
+        GuiaGeneralEscribir: {
+            /** Texto */
+            texto: string;
+        };
+        /** GuiaPasoEscribir */
+        GuiaPasoEscribir: {
+            /**
+             * Estado
+             * @enum {string}
+             */
+            estado: "" | "ok" | "falla" | "duda";
+            /**
+             * Nota
+             * @default
+             */
+            nota: string;
+        };
+        /**
+         * GuiaPasoResumen
+         * @description Un paso visto por todas las sesiones: dónde se atasca la gente.
+         */
+        GuiaPasoResumen: {
+            /** Paso Id */
+            paso_id: string;
+            /** Ok */
+            ok: number;
+            /** Falla */
+            falla: number;
+            /** Duda */
+            duda: number;
+        };
+        /** GuiaRespuestaLeer */
+        GuiaRespuestaLeer: {
+            /** Paso Id */
+            paso_id: string;
+            /**
+             * Estado
+             * @enum {string}
+             */
+            estado: "" | "ok" | "falla" | "duda";
+            /** Nota */
+            nota: string;
+            /**
+             * Actualizado En
+             * Format: date-time
+             */
+            actualizado_en: string;
+        };
+        /** GuiaResumen */
+        GuiaResumen: {
+            /** Sesiones */
+            sesiones: components["schemas"]["GuiaSesionResumen"][];
+            /** Pasos */
+            pasos: components["schemas"]["GuiaPasoResumen"][];
+        };
+        /** GuiaSesionCrear */
+        GuiaSesionCrear: {
+            /** Nombre */
+            nombre: string;
+            /** Rol */
+            rol?: string | null;
+        };
+        /** GuiaSesionExportada */
+        GuiaSesionExportada: {
+            /** Codigo */
+            codigo: string;
+            /** Nombre */
+            nombre: string;
+            /** Rol */
+            rol: string | null;
+            /** Impresion General */
+            impresion_general: string;
+            /**
+             * Creado En
+             * Format: date-time
+             */
+            creado_en: string;
+            /**
+             * Actualizado En
+             * Format: date-time
+             */
+            actualizado_en: string;
+            /** Respuestas */
+            respuestas: components["schemas"]["GuiaRespuestaLeer"][];
+            /** Eventos */
+            eventos: components["schemas"]["GuiaEventoLeer"][];
+        };
+        /** GuiaSesionLeer */
+        GuiaSesionLeer: {
+            /** Codigo */
+            codigo: string;
+            /** Nombre */
+            nombre: string;
+            /** Rol */
+            rol: string | null;
+            /** Impresion General */
+            impresion_general: string;
+            /**
+             * Creado En
+             * Format: date-time
+             */
+            creado_en: string;
+            /**
+             * Actualizado En
+             * Format: date-time
+             */
+            actualizado_en: string;
+            /** Respuestas */
+            respuestas: components["schemas"]["GuiaRespuestaLeer"][];
+        };
+        /** GuiaSesionResumen */
+        GuiaSesionResumen: {
+            /** Codigo */
+            codigo: string;
+            /** Nombre */
+            nombre: string;
+            /** Rol */
+            rol: string | null;
+            /**
+             * Creado En
+             * Format: date-time
+             */
+            creado_en: string;
+            /**
+             * Actualizado En
+             * Format: date-time
+             */
+            actualizado_en: string;
+            /** Ok */
+            ok: number;
+            /** Falla */
+            falla: number;
+            /** Duda */
+            duda: number;
+            /** Notas */
+            notas: number;
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -9724,11 +9956,7 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CerrarGuia"];
-            };
-        };
+        requestBody?: never;
         responses: {
             /** @description Successful Response */
             200: {
@@ -9738,33 +9966,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["OnboardingLeer"];
                 };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    reabrir_api_v1_onboarding_cierre_delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
         };
     };
@@ -10678,6 +10879,181 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    crear_sesion_api_v1_guia_sesiones_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GuiaSesionCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuiaSesionLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    leer_sesion_api_v1_guia_sesiones__codigo__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                codigo: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuiaSesionLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    guardar_paso_api_v1_guia_sesiones__codigo__pasos__paso_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                codigo: string;
+                paso_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GuiaPasoEscribir"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuiaSesionLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    guardar_general_api_v1_guia_sesiones__codigo__general_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                codigo: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GuiaGeneralEscribir"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuiaSesionLeer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resumen_api_v1_guia_resumen_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuiaResumen"];
+                };
+            };
+        };
+    };
+    exportar_api_v1_guia_exportar_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuiaSesionExportada"][];
                 };
             };
         };

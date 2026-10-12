@@ -143,3 +143,7 @@ export type ReporteDoctor = Esquemas["ReporteDoctor"]
 
 export type Onboarding = Esquemas["OnboardingLeer"]
 export type PasoOnboarding = Esquemas["PasoLeer"]
+
+export type GuiaSesion = Esquemas["GuiaSesionLeer"]
+export type GuiaRespuesta = Esquemas["GuiaRespuestaLeer"]
+export type GuiaEstado = GuiaRespuesta["estado"]
