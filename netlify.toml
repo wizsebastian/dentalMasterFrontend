@@ -1,0 +1,30 @@
+[build]
+command = "npm run build"
+publish = "dist"
+
+# El frontend llama siempre a rutas relativas bajo /api (y a /health): en
+# desarrollo las sirve el proxy de Vite, aquí las sirve este proxy de Netlify
+# hacia la API del VPS. Así el navegador ve un solo origen, igual que en
+# producción "de verdad" (frontend y API detrás del mismo nginx) — sin esto,
+# /api/v1/auth/login cae en el 404 de Netlify porque Netlify sólo sirve
+# estáticos. Van antes del catch-all de abajo: Netlify evalúa en orden y usa
+# la primera regla que matchea.
+[[redirects]]
+  from = "/api/*"
+  to = "https://api-dental.wizsebastian.com/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/health"
+  to = "https://api-dental.wizsebastian.com/health"
+  status = 200
+  force = true
+
+# SPA: cualquier otra ruta (/pacientes/1, /bienvenida, /firmar/:token…) debe
+# devolver index.html para que el router de React la resuelva en el cliente;
+# si no, recargar o entrar directo a un enlace da 404 de Netlify.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
